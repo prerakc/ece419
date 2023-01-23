@@ -104,3 +104,30 @@
 2023-01-23 01:21:02,746 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59928
 2023-01-23 01:21:09,436 INFO  [Thread-1] root: READ 80
 2023-01-23 01:21:09,436 INFO  [Thread-1] root: 9
+2023-01-23 09:39:24,102 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 09:39:24,124 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 09:39:52,248 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50108
+2023-01-23 09:40:08,945 INFO  [Thread-1] root: READ 71
+2023-01-23 09:40:08,946 INFO  [Thread-1] root: 11
+2023-01-23 09:40:19,809 INFO  [Thread-1] root: READ 80
+2023-01-23 09:40:19,810 INFO  [Thread-1] root: 11
+2023-01-23 09:40:29,361 INFO  [Thread-1] root: READ 80
+2023-01-23 09:40:29,361 INFO  [Thread-1] root: 17
+2023-01-23 09:40:38,769 INFO  [Thread-1] root: READ 71
+2023-01-23 09:40:38,770 INFO  [Thread-1] root: 12
+2023-01-23 09:41:26,563 INFO  [Thread-1] root: READ 80
+2023-01-23 09:41:26,564 INFO  [Thread-1] root: 12
+2023-01-23 09:42:31,840 INFO  [Thread-1] root: READ 71
+2023-01-23 09:42:31,841 INFO  [Thread-1] root: 12
+2023-01-23 09:42:41,487 INFO  [Thread-1] root: READ 80
+2023-01-23 09:42:41,487 INFO  [Thread-1] root: 22
+2023-01-23 09:42:48,147 INFO  [Thread-1] root: READ 80
+2023-01-23 09:42:48,148 INFO  [Thread-1] root: 35
+2023-01-23 09:43:02,733 INFO  [Thread-1] root: READ 71
+2023-01-23 09:43:02,734 INFO  [Thread-1] root: 13
+2023-01-23 09:44:22,574 INFO  [Thread-1] root: READ -1
+2023-01-23 09:44:22,576 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 09:44:46,360 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50109
+2023-01-23 09:44:49,105 INFO  [Thread-2] root: READ 71
+2023-01-23 09:44:49,106 INFO  [Thread-2] root: 13
+2023-01-23 09:45:15,786 ERROR [Thread-2] root: Error! Connection lost!

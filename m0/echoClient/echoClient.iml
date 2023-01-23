@@ -7,10 +7,13 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="echoClient" level="project" />
-    <orderEntry type="library" name="libs1" level="project" />
+    <orderEntry type="library" name="m1 - Copy" level="project" />
     <orderEntry type="library" name="libs" level="project" />
+    <orderEntry type="library" name="m1" level="project" />
     <orderEntry type="library" name="echoServer" level="project" />
     <orderEntry type="library" name="libs2" level="project" />
+    <orderEntry type="library" name="libs3" level="project" />
+    <orderEntry type="library" name="echoClient" level="project" />
+    <orderEntry type="library" name="libs1" level="project" />
   </component>
 </module>

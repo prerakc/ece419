@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
 
 public class KVServer extends Thread implements IKVServer {
 	private static Logger logger = Logger.getRootLogger();
@@ -18,6 +19,8 @@ public class KVServer extends Thread implements IKVServer {
 	private int cacheSize;
 	private String strategy;
 	private boolean running;
+
+	private HashMap<String, String> storage;
 
 
 
@@ -36,6 +39,8 @@ public class KVServer extends Thread implements IKVServer {
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
+
+		this.storage = new HashMap<String, String>();
 	}
 	
 	@Override
@@ -65,7 +70,10 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public boolean inStorage(String key){
 		// TODO Auto-generated method stub
-		return false;
+		boolean match = storage.containsKey(key);
+		return match;
+
+//		return false;
 	}
 
 	@Override
@@ -77,12 +85,20 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public String getKV(String key) throws Exception{
 		// TODO Auto-generated method stub
+		if (inStorage(key)) {
+			return storage.get(key);
+		}
 		return "";
 	}
 
 	@Override
     public void putKV(String key, String value) throws Exception{
 		// TODO Auto-generated method stub
+		if (value.isEmpty()) {
+			storage.remove(key);
+		} else {
+			storage.put(key, value);
+		}
 	}
 
 	@Override
@@ -105,7 +121,7 @@ public class KVServer extends Thread implements IKVServer {
 				try {
 					Socket client = serverSocket.accept();
 					TempClientConnection connection =
-							new TempClientConnection(client);
+							new TempClientConnection(client, this);
 					new Thread(connection).start();
 
 					logger.info("Connected to "

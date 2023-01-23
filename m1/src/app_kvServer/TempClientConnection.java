@@ -1,6 +1,7 @@
 package app_kvServer;
 
 import org.apache.log4j.Logger;
+import shared.messages.IKVMessage.StatusType;
 import shared.messages.KVMessage;
 
 import java.io.IOException;
@@ -28,13 +29,16 @@ public class TempClientConnection implements Runnable {
 	private InputStream input;
 	private OutputStream output;
 
+	private KVServer server;
+
 	/**
 	 * Constructs a new CientConnection object for a given TCP socket.
 	 * @param clientSocket the Socket object for the client connection.
 	 */
-	public TempClientConnection(Socket clientSocket) {
+	public TempClientConnection(Socket clientSocket, KVServer server) {
 		this.clientSocket = clientSocket;
 		this.isOpen = true;
+		this.server = server;
 	}
 	
 	/**
@@ -57,7 +61,8 @@ public class TempClientConnection implements Runnable {
 //					if (latestMsg == null) {
 //						continue;
 //					}
-					sendMessage(latestMsg);
+					KVMessage responseMsg = handleMessage(latestMsg);
+					sendMessage(responseMsg);
 					
 				/* connection either terminated by the client or lost due to 
 				 * network problems*/	
@@ -165,7 +170,53 @@ public class TempClientConnection implements Runnable {
 
 		return new KVMessage(msgBytes);
     }
-	
+
+	private KVMessage handleMessage(KVMessage message) {
+		StatusType status = message.getStatus();
+		String key = message.getKey();
+		String value = message.getValue();
+
+		KVMessage responseMessage = null;
+
+		try {
+			switch (status) {
+				case GET:
+					if (server.inStorage(key)) {
+						value = server.getKV(key);
+						responseMessage = new KVMessage(StatusType.GET_SUCCESS, key, value);
+					} else {
+						responseMessage = new KVMessage(StatusType.GET_ERROR, key, value);
+					}
+					break;
+				case PUT:
+					if (server.inStorage(key)) {
+						if (value.isEmpty()) {
+							server.putKV(key, value);
+							responseMessage = new KVMessage(StatusType.DELETE_SUCCESS, key, value);
+						} else {
+							server.putKV(key, value);
+							responseMessage = new KVMessage(StatusType.PUT_UPDATE, key, value);
+						}
+					} else {
+						if (value.isEmpty()) {
+							responseMessage = new KVMessage(StatusType.DELETE_ERROR, key, value);
+						} else {
+							server.putKV(key, value);
+							responseMessage = new KVMessage(StatusType.PUT_SUCCESS, key, value);
+						}
+					}
+					break;
+				default:
+					logger.info("Unexpected message of status " + message.getStatus().toString());
+					responseMessage = message;
+					break;
+			}
+		} catch (Exception e) {
+
+		}
+
+		return responseMessage;
+	}
 
 	
 }
