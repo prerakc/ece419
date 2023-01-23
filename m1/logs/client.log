@@ -1,0 +1,29 @@
+2023-01-22 23:06:43,577 INFO  [main] root: KVClient: Established connection to storage server
+2023-01-22 23:50:06,205 INFO  [main] root: KVClient: Established connection to storage server
+2023-01-22 23:51:45,490 INFO  [main] root: HERE 1
+2023-01-22 23:51:45,491 INFO  [main] root: HERE 2
+2023-01-22 23:51:45,491 INFO  [main] root: HERE 3
+2023-01-22 23:51:45,491 INFO  [main] root: READ 71
+2023-01-22 23:51:53,913 INFO  [main] root: HERE 1
+2023-01-22 23:54:18,210 INFO  [main] root: HERE 1
+2023-01-22 23:54:18,210 INFO  [main] root: HERE 2
+2023-01-22 23:54:18,211 INFO  [main] root: HERE 3
+2023-01-22 23:54:18,211 INFO  [main] root: READ 80
+2023-01-22 23:54:20,650 INFO  [main] root: HERE 1
+2023-01-22 23:54:20,650 INFO  [main] root: HERE 2
+2023-01-22 23:54:20,650 INFO  [main] root: HERE 3
+2023-01-22 23:54:20,651 INFO  [main] root: READ 71
+2023-01-22 23:54:47,081 INFO  [main] root: HERE 1
+2023-01-22 23:55:00,082 INFO  [main] root: HERE 1
+2023-01-22 23:55:08,474 INFO  [main] root: HERE 1
+2023-01-22 23:55:10,561 INFO  [main] root: HERE 1
+2023-01-22 23:56:02,306 INFO  [main] root: KVClient: Established connection to storage server
+2023-01-22 23:56:04,266 INFO  [main] root: HERE 1
+2023-01-22 23:56:04,266 INFO  [main] root: HERE 2
+2023-01-22 23:56:04,266 INFO  [main] root: HERE 3
+2023-01-22 23:56:04,268 INFO  [main] root: READ 80
+2023-01-23 01:21:09,436 INFO  [main] root: HERE 1
+2023-01-23 01:21:09,436 INFO  [main] root: HERE 2
+2023-01-23 01:21:09,436 INFO  [main] root: HERE 3
+2023-01-23 01:21:09,437 INFO  [main] root: READ 80
+2023-01-23 01:21:14,098 INFO  [main] root: HERE 1

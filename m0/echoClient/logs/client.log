@@ -5,3 +5,18 @@
 2017-01-09 10:40:20,188 INFO  [main] root: try to close connection ...
 2017-01-09 10:40:20,188 INFO  [main] root: tearing down the connection ...
 2017-01-09 10:40:20,189 INFO  [main] root: connection closed!
+2023-01-22 13:10:18,467 INFO  [main] root: Connection established
+2023-01-22 13:10:18,469 INFO  [Thread-0] root: Receive message:	 'Connection to MSRG Echo server established: /127.0.0.1 / 25565'
+2023-01-22 14:40:44,378 INFO  [main] root: Unable to parse argument <port>
+java.lang.NumberFormatException: For input string: "blah"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Integer.parseInt(Integer.java:668)
+	at java.base/java.lang.Integer.parseInt(Integer.java:786)
+	at ui.Application.handleCommand(Application.java:55)
+	at ui.Application.run(Application.java:35)
+	at ui.Application.main(Application.java:232)
+2023-01-22 14:53:01,892 ERROR [Thread-0] root: Connection lost!
+2023-01-22 14:53:01,892 INFO  [Thread-0] root: tearing down the connection ...
+2023-01-22 14:53:01,893 INFO  [Thread-0] root: connection closed!
+2023-01-22 14:56:03,282 INFO  [main] root: try to close connection ...
+2023-01-22 14:56:03,282 INFO  [main] root: tearing down the connection ...

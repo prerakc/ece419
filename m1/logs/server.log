@@ -1,0 +1,106 @@
+2023-01-22 22:53:29,392 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 22:53:29,397 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 22:54:32,548 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59263
+2023-01-22 23:06:29,790 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:06:29,795 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:06:43,582 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59296
+2023-01-22 23:20:51,022 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:20:51,028 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:21:06,064 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59387
+2023-01-22 23:21:39,792 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59392
+2023-01-22 23:22:37,007 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59405
+2023-01-22 23:25:39,428 ERROR [Thread-3] root: Error! Connection lost!
+2023-01-22 23:25:46,359 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:25:46,364 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:25:53,352 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59441
+2023-01-22 23:26:29,944 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:26:29,949 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:26:39,656 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59444
+2023-01-22 23:26:43,016 INFO  [Thread-1] root: 131072
+2023-01-22 23:27:47,592 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:27:47,597 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:27:57,264 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59458
+2023-01-22 23:28:00,944 INFO  [Thread-1] root: 131072
+2023-01-22 23:30:28,104 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:30:28,109 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:30:39,064 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59467
+2023-01-22 23:30:43,984 INFO  [Thread-1] root: READ -1
+2023-01-22 23:30:43,992 INFO  [Thread-1] root: 131072
+2023-01-22 23:32:46,550 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:32:46,555 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:32:52,944 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59477
+2023-01-22 23:32:54,377 INFO  [Thread-1] root: READ -1
+2023-01-22 23:32:54,378 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-22 23:45:57,017 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:45:57,022 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:46:01,072 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59514
+2023-01-22 23:46:05,090 INFO  [Thread-1] root: READ 80
+2023-01-22 23:46:05,090 INFO  [Thread-1] root: 14
+2023-01-22 23:47:41,601 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:47:41,606 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:47:48,682 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59524
+2023-01-22 23:47:51,794 INFO  [Thread-1] root: READ 80
+2023-01-22 23:47:51,794 INFO  [Thread-1] root: 17
+2023-01-22 23:47:57,385 INFO  [Thread-1] root: READ -1
+2023-01-22 23:47:57,385 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-22 23:48:02,506 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59528
+2023-01-22 23:48:13,289 INFO  [Thread-2] root: READ 71
+2023-01-22 23:48:13,289 INFO  [Thread-2] root: 11
+2023-01-22 23:49:17,241 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:49:17,246 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:49:26,026 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59533
+2023-01-22 23:49:59,929 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:49:59,934 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:50:06,210 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59544
+2023-01-22 23:51:20,904 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:51:20,910 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:51:37,683 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59549
+2023-01-22 23:51:39,666 INFO  [Thread-1] root: READ 71
+2023-01-22 23:51:39,666 INFO  [Thread-1] root: 11
+2023-01-22 23:51:45,491 INFO  [Thread-1] root: READ 71
+2023-01-22 23:51:45,491 INFO  [Thread-1] root: 11
+2023-01-22 23:53:58,098 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:53:58,104 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:54:05,939 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59567
+2023-01-22 23:54:09,642 INFO  [Thread-1] root: READ 80
+2023-01-22 23:54:09,643 INFO  [Thread-1] root: 17
+2023-01-22 23:54:18,210 INFO  [Thread-1] root: READ 80
+2023-01-22 23:54:18,211 INFO  [Thread-1] root: 17
+2023-01-22 23:54:20,650 INFO  [Thread-1] root: READ 71
+2023-01-22 23:54:20,650 INFO  [Thread-1] root: 11
+2023-01-22 23:55:04,922 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:55:04,927 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:56:02,312 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59589
+2023-01-22 23:56:04,266 INFO  [Thread-1] root: READ 80
+2023-01-22 23:56:04,267 INFO  [Thread-1] root: 17
+2023-01-22 23:56:13,002 INFO  [Thread-1] root: READ -1
+2023-01-22 23:56:13,002 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 01:06:58,745 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:06:58,750 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:07:32,824 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59890
+2023-01-23 01:07:51,114 INFO  [Thread-1] root: READ -1
+2023-01-23 01:07:51,114 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 01:09:46,091 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:09:46,097 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:09:54,419 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59899
+2023-01-23 01:09:57,434 INFO  [Thread-1] root: READ -1
+2023-01-23 01:09:57,434 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 01:12:32,162 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:12:32,167 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:12:40,411 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59907
+2023-01-23 01:14:50,593 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:14:50,598 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:14:54,604 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59909
+2023-01-23 01:14:59,482 INFO  [Thread-1] root: READ -1
+2023-01-23 01:14:59,483 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 01:19:52,276 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:19:52,282 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:20:02,996 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59924
+2023-01-23 01:20:05,868 INFO  [Thread-1] root: READ -1
+2023-01-23 01:20:05,868 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 01:20:16,796 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59927
+2023-01-23 01:20:58,739 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:20:58,744 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:21:02,746 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59928
+2023-01-23 01:21:09,436 INFO  [Thread-1] root: READ 80
+2023-01-23 01:21:09,436 INFO  [Thread-1] root: 9

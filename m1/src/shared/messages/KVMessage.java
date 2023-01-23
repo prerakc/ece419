@@ -1,37 +1,73 @@
 package shared.messages;
 
-public interface KVMessage {
-	
-	public enum StatusType {
-		GET, 			/* Get - request */
-		GET_ERROR, 		/* requested tuple (i.e. value) not found */
-		GET_SUCCESS, 	/* requested tuple (i.e. value) found */
-		PUT, 			/* Put - request */
-		PUT_SUCCESS, 	/* Put - request successful, tuple inserted */
-		PUT_UPDATE, 	/* Put - request successful, i.e. value updated */
-		PUT_ERROR, 		/* Put - request not successful */
-		DELETE_SUCCESS, /* Delete - request successful */
-		DELETE_ERROR 	/* Delete - request successful */
-	}
+import org.apache.log4j.Logger;
 
-	/**
-	 * @return the key that is associated with this message, 
-	 * 		null if not key is associated.
-	 */
-	public String getKey();
-	
-	/**
-	 * @return the value that is associated with this message, 
-	 * 		null if not value is associated.
-	 */
-	public String getValue();
-	
-	/**
-	 * @return a status string that is used to identify request types, 
-	 * response types and error types associated to the message.
-	 */
-	public StatusType getStatus();
-	
+import java.nio.charset.StandardCharsets;
+
+public class KVMessage implements IKVMessage {
+    private Logger logger = Logger.getRootLogger();
+
+    private static final char LINE_FEED = 0x0A;
+    private static final char RETURN = 0x0D;
+    private static final char DELIMITER = 0x1F;
+
+    private StatusType status;
+    private String key;
+    private String value;
+
+    private byte[] serialized;
+
+    public KVMessage (StatusType status, String key, String value) {
+        this.status = status;
+        this.key = key;
+        this.value = value;
+
+        String messageString = status.toString() + DELIMITER + key + DELIMITER + value + DELIMITER;
+
+        byte[] messageBytes = messageString.getBytes(StandardCharsets.UTF_8);
+        byte[] controlBytes = new byte[]{LINE_FEED, RETURN};
+        byte[] tmp = new byte[messageBytes.length + controlBytes.length];
+
+        System.arraycopy(messageBytes, 0, tmp, 0, messageBytes.length);
+        System.arraycopy(controlBytes, 0, tmp, messageBytes.length, controlBytes.length);
+
+        serialized = tmp;
+    }
+
+    public KVMessage (byte[] serialized) {
+        String messageString = new String(serialized, StandardCharsets.UTF_8);
+
+        String[] fields = messageString.split(String.valueOf(DELIMITER), 4);
+
+        this.status = StatusType.valueOf(fields[0].toUpperCase());
+        this.key = fields[1];
+        this.value = fields[2];
+
+        byte[] controlBytes = new byte[]{LINE_FEED, RETURN};
+        byte[] tmp = new byte[serialized.length + controlBytes.length];
+
+        System.arraycopy(serialized, 0, tmp, 0, serialized.length);
+        System.arraycopy(controlBytes, 0, tmp, serialized.length, controlBytes.length);
+
+        this.serialized = tmp;
+    }
+
+    @Override
+    public String getKey() {
+        return key;
+    }
+
+    @Override
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public StatusType getStatus() {
+        return status;
+    }
+
+    public byte[] getBytes() {
+        return serialized;
+    }
 }
-
-
