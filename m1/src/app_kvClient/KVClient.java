@@ -39,7 +39,7 @@ public class KVClient implements IKVClient {
     }
 
     private void disconnect() {
-        if(kvStore != null) {
+        if(kvStore != null && kvStore.isRunning()) {
             kvStore.disconnect();
             kvStore = null;
             System.out.println(PROMPT + "Disconnected from server");
@@ -101,9 +101,9 @@ public class KVClient implements IKVClient {
                     }
                     try {
                         IKVMessage ret = kvStore.put(key, value.toString());
-                        System.out.println("STATUS: " + ret.getStatus().toString());
-                        System.out.println("KEY: " + ret.getKey());
-                        System.out.println("VALUE: " + ret.getValue());
+                        System.out.println(PROMPT + "STATUS: " + ret.getStatus().toString());
+                        System.out.println(PROMPT + "KEY: " + ret.getKey());
+                        System.out.println(PROMPT + "VALUE: " + ret.getValue());
                     } catch (IOException ioe) {
                         printError("Server not available");
                         disconnect();
@@ -124,9 +124,9 @@ public class KVClient implements IKVClient {
                     String key = tokens[1];
                     try {
                         IKVMessage ret = kvStore.get(key);
-                        System.out.println("STATUS: " + ret.getStatus().toString());
-                        System.out.println("KEY: " + ret.getKey());
-                        System.out.println("VALUE: " + ret.getValue());
+                        System.out.println(PROMPT + "STATUS: " + ret.getStatus().toString());
+                        System.out.println(PROMPT + "KEY: " + ret.getKey());
+                        System.out.println(PROMPT + "VALUE: " + ret.getValue());
                     } catch (IOException ioe) {
                         printError("Server not available");
                         disconnect();

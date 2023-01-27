@@ -37,7 +37,7 @@ public class KVStore implements KVCommInterface {
 	@Override
 	public void disconnect() {
 		// TODO Auto-generated method stub
-		if (kvCommunication != null) {
+		if (isRunning()) {
 			kvCommunication.closeConnection();
 			kvCommunication = null;
 		}

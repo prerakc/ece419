@@ -131,3 +131,33 @@
 2023-01-23 09:44:49,105 INFO  [Thread-2] root: READ 71
 2023-01-23 09:44:49,106 INFO  [Thread-2] root: 13
 2023-01-23 09:45:15,786 ERROR [Thread-2] root: Error! Connection lost!
+2023-01-26 13:00:19,161 INFO  [Thread-0] root: Initialize server ...
+2023-01-26 13:00:19,176 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-26 13:00:29,289 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50389
+2023-01-26 13:00:34,887 INFO  [Thread-1] root: READ 71
+2023-01-26 13:00:34,887 INFO  [Thread-1] root: 11
+2023-01-26 13:02:23,249 INFO  [Thread-0] root: Initialize server ...
+2023-01-26 13:02:23,265 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-26 13:02:30,035 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50392
+2023-01-26 13:02:35,038 INFO  [Thread-1] root: READ 80
+2023-01-26 13:02:35,038 INFO  [Thread-1] root: 13
+2023-01-26 13:14:31,681 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-26 13:14:49,036 INFO  [Thread-0] root: Initialize server ...
+2023-01-26 13:14:49,036 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-26 13:14:54,801 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50451
+2023-01-26 13:14:58,537 INFO  [Thread-1] root: READ -1
+2023-01-26 13:14:58,542 INFO  [Thread-1] root: 131072
+2023-01-26 13:15:31,551 INFO  [Thread-0] root: Initialize server ...
+2023-01-26 13:15:31,566 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-26 13:15:35,292 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50453
+2023-01-26 13:15:40,671 INFO  [Thread-1] root: READ -1
+2023-01-26 13:15:40,686 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-27 14:05:20,508 INFO  [Thread-0] root: Initialize server ...
+2023-01-27 14:05:20,521 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-27 14:05:29,656 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50110
+2023-01-27 14:06:30,517 ERROR [Thread-1] root: Error! Connection lost!
+java.io.IOException: Input stream closed
+	at shared.communication.KVCommunication.receiveMessage(KVCommunication.java:59)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-01-27 14:07:17,852 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50111

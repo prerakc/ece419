@@ -170,12 +170,14 @@ public class KVServer extends Thread implements IKVServer {
 	public static void main(String[] args) {
 		try {
 			new LogSetup("logs/server.log", Level.ALL);
-			if(args.length != 1) {
+			if(args.length != 3) {
 				System.out.println("Error! Invalid number of arguments!");
-				System.out.println("Usage: Server <port>!");
+				System.out.println("Usage: Server <port> <cachesize> <cachetype>!");
 			} else {
 				int port = Integer.parseInt(args[0]);
-				new KVServer(port, 0, "").start();
+				int cacheSize = Integer.parseInt(args[1]);
+				String strategy = args[2];
+				new KVServer(port, cacheSize, strategy).start();
 			}
 		} catch (IOException e) {
 			System.out.println("Error! Unable to initialize logger!");
@@ -183,7 +185,7 @@ public class KVServer extends Thread implements IKVServer {
 			System.exit(1);
 		} catch (NumberFormatException nfe) {
 			System.out.println("Error! Invalid argument <port>! Not a number!");
-			System.out.println("Usage: Server <port>!");
+			System.out.println("Usage: Server <port> <cachesize> <cachetype>!");
 			System.exit(1);
 		}
 	}
