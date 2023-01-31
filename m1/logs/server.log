@@ -161,3 +161,39 @@ java.io.IOException: Input stream closed
 	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
 	at java.base/java.lang.Thread.run(Thread.java:833)
 2023-01-27 14:07:17,852 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50111
+2023-01-28 15:54:55,049 INFO  [Thread-0] root: Initialize server ...
+2023-01-28 15:54:55,065 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-28 15:56:15,128 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50934
+2023-01-28 15:59:27,233 INFO  [Thread-0] root: Initialize server ...
+2023-01-28 15:59:27,250 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-28 15:59:46,886 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50988
+2023-01-28 16:00:27,530 INFO  [Thread-0] root: Initialize server ...
+2023-01-28 16:00:27,537 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-28 16:00:34,549 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50992
+2023-01-28 16:01:13,251 INFO  [Thread-0] root: Initialize server ...
+2023-01-28 16:01:13,259 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-28 16:01:25,201 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50995
+2023-01-30 18:54:27,002 INFO  [Thread-0] root: Initialize server ...
+2023-01-30 18:54:27,018 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-30 18:55:17,979 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 59972
+2023-01-30 18:55:24,162 INFO  [Thread-1] root: Received a message of type 'GET' with key 'foo' and value ''
+2023-01-30 18:55:24,162 ERROR [Thread-1] root: Key 'foo' is not in the database
+2023-01-30 18:55:24,162 INFO  [Thread-1] root: Sent a message of type 'GET_ERROR' with key 'foo' and value ''
+2023-01-30 18:55:39,718 INFO  [Thread-1] root: Received a message of type 'GET' with key 'hello' and value ''
+2023-01-30 18:55:39,718 INFO  [Thread-1] root: Retrieved value 'world' for key 'hello' from database
+2023-01-30 18:55:39,718 INFO  [Thread-1] root: Sent a message of type 'GET_SUCCESS' with key 'hello' and value 'world'
+2023-01-30 18:56:09,919 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'foo' and value 'bar'
+2023-01-30 18:56:09,919 INFO  [Thread-1] root: Added key 'foo' and value 'bar' to database
+2023-01-30 18:56:09,934 INFO  [Thread-1] root: Sent a message of type 'PUT_SUCCESS' with key 'foo' and value 'bar'
+2023-01-30 18:56:36,589 INFO  [Thread-1] root: Received a message of type 'GET' with key 'foo' and value ''
+2023-01-30 18:56:36,589 INFO  [Thread-1] root: Retrieved value 'bar' for key 'foo' from database
+2023-01-30 18:56:36,589 INFO  [Thread-1] root: Sent a message of type 'GET_SUCCESS' with key 'foo' and value 'bar'
+2023-01-30 18:56:42,313 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'foo' and value 'poo'
+2023-01-30 18:56:42,313 INFO  [Thread-1] root: Updated value associated with key 'foo' to 'poo'
+2023-01-30 18:56:42,313 INFO  [Thread-1] root: Sent a message of type 'PUT_UPDATE' with key 'foo' and value 'poo'
+2023-01-30 18:57:42,326 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'blah' and value ''
+2023-01-30 18:57:42,326 ERROR [Thread-1] root: Key 'blah' is not in the database
+2023-01-30 18:57:42,326 INFO  [Thread-1] root: Sent a message of type 'DELETE_ERROR' with key 'blah' and value ''
+2023-01-30 18:58:26,637 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'foo' and value ''
+2023-01-30 18:58:26,637 INFO  [Thread-1] root: Deleted key 'foo' from database
+2023-01-30 18:58:26,637 INFO  [Thread-1] root: Sent a message of type 'DELETE_SUCCESS' with key 'foo' and value ''

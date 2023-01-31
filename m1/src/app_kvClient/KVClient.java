@@ -72,12 +72,16 @@ public class KVClient implements IKVClient {
                     newConnection(serverAddress, serverPort);
                 } catch(NumberFormatException nfe) {
                     printError("No valid address. Port must be a number!");
+                    logger.info("Unable to parse argument <port>", nfe);
                 } catch (UnknownHostException e) {
                     printError("Unknown Host!");
+                    logger.info("Unknown Host!", e);
                 } catch (IOException e) {
                     printError("Could not establish connection!");
+                    logger.warn("Could not establish connection!", e);
                 } catch (Exception e) {
                     printError("Unexpected exception: " + e.getMessage());
+                    logger.error("Unexpected exception", e);
                 }
             } else {
                 printError("Invalid number of parameters!");
@@ -101,14 +105,14 @@ public class KVClient implements IKVClient {
                     }
                     try {
                         IKVMessage ret = kvStore.put(key, value.toString());
-                        System.out.println(PROMPT + "STATUS: " + ret.getStatus().toString());
-                        System.out.println(PROMPT + "KEY: " + ret.getKey());
-                        System.out.println(PROMPT + "VALUE: " + ret.getValue());
+                        printMessage(ret);
                     } catch (IOException ioe) {
                         printError("Server not available");
+                        logger.warn("Server not available", ioe);
                         disconnect();
                     } catch (Exception e) {
                         printError("Unexpected exception: " + e.getMessage());
+                        logger.error("Unexpected exception", e);
                     }
                 } else {
                     printError("Not connected to server!");
@@ -124,14 +128,14 @@ public class KVClient implements IKVClient {
                     String key = tokens[1];
                     try {
                         IKVMessage ret = kvStore.get(key);
-                        System.out.println(PROMPT + "STATUS: " + ret.getStatus().toString());
-                        System.out.println(PROMPT + "KEY: " + ret.getKey());
-                        System.out.println(PROMPT + "VALUE: " + ret.getValue());
+                        printMessage(ret);
                     } catch (IOException ioe) {
                         printError("Server not available");
+                        logger.warn("Server not available", ioe);
                         disconnect();
                     } catch (Exception e) {
                         printError("Unexpected exception: " + e.getMessage());
+                        logger.error("Unexpected exception", e);
                     }
                 } else {
                     printError("Not connected to server!");
@@ -169,6 +173,12 @@ public class KVClient implements IKVClient {
             printError("Unknown command");
             printHelp();
         }
+    }
+
+    private void printMessage(IKVMessage message) {
+        System.out.println(PROMPT + "STATUS: " + message.getStatus().toString());
+        System.out.println(PROMPT + "KEY: " + message.getKey());
+        System.out.println(PROMPT + "VALUE: " + message.getValue());
     }
 
     private void printHelp() {

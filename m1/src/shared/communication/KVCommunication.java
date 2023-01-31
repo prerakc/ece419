@@ -44,6 +44,7 @@ public class KVCommunication {
         byte[] serialized = message.getBytes();
         output.write(serialized, 0, serialized.length);
         output.flush();
+        logger.info(String.format("Sent a message of type '%s' with key '%s' and value '%s'", message.getStatus().toString(), message.getKey(), message.getValue()));
     }
 
     public KVMessage receiveMessage() throws IOException {
@@ -100,7 +101,11 @@ public class KVCommunication {
 
         msgBytes = tmp;
 
-        return new KVMessage(msgBytes);
+        KVMessage message = new KVMessage(msgBytes);
+
+        logger.info(String.format("Received a message of type '%s' with key '%s' and value '%s'", message.getStatus().toString(), message.getKey(), message.getValue()));
+
+        return message;
     }
 
     public boolean isOpen() {

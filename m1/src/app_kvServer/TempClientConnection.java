@@ -52,7 +52,7 @@ public class TempClientConnection implements Runnable {
 			/* connection either terminated by the client or lost due to
 			 * network problems*/
 			} catch (IOException ioe) {
-				logger.error("Error! Connection lost!", ioe);
+				logger.error("Error! Connection lost!");
 				isOpen = false;
 			}
 		}
@@ -65,45 +65,53 @@ public class TempClientConnection implements Runnable {
 		String key = message.getKey();
 		String value = message.getValue();
 
-		KVMessage responseMessage = null;
+		StatusType responseStatus;
+		String responseValue = value;
 
-		try {
-			switch (status) {
-				case GET:
-					if (server.inStorage(key)) {
-						value = server.getKV(key);
-						responseMessage = new KVMessage(StatusType.GET_SUCCESS, key, value);
-					} else {
-						responseMessage = new KVMessage(StatusType.GET_ERROR, key, value);
+		switch (status) {
+			case GET:
+				try {
+					responseValue = server.getKV(key);
+					responseStatus = StatusType.GET_SUCCESS;
+					logger.info(String.format("Retrieved value '%s' for key '%s' from the database", responseValue, key));
+				} catch (Exception e) {
+					responseStatus = StatusType.GET_ERROR;
+					logger.error(e.getMessage());
+				}
+				break;
+			case PUT:
+				if (value.isEmpty()) {
+					try {
+						server.deleteKV(key);
+						responseStatus = StatusType.DELETE_SUCCESS;
+						logger.info(String.format("Deleted key '%s' from the database", key));
+					} catch (Exception e) {
+						responseStatus = StatusType.DELETE_ERROR;
+						logger.error(e.getMessage());
 					}
-					break;
-				case PUT:
-					if (server.inStorage(key)) {
-						if (value.isEmpty()) {
-							server.putKV(key, value);
-							responseMessage = new KVMessage(StatusType.DELETE_SUCCESS, key, value);
+				} else {
+					boolean existingKey = server.inStorage(key);
+					try {
+						server.putKV(key, value);
+						if (existingKey) {
+							responseStatus = StatusType.PUT_UPDATE;
+							logger.info(String.format("Updated value associated with key '%s' to '%s'", key, value));
 						} else {
-							server.putKV(key, value);
-							responseMessage = new KVMessage(StatusType.PUT_UPDATE, key, value);
+							responseStatus = StatusType.PUT_SUCCESS;
+							logger.info(String.format("Added key '%s' and value '%s' to the database", key, value));
 						}
-					} else {
-						if (value.isEmpty()) {
-							responseMessage = new KVMessage(StatusType.DELETE_ERROR, key, value);
-						} else {
-							server.putKV(key, value);
-							responseMessage = new KVMessage(StatusType.PUT_SUCCESS, key, value);
-						}
+					} catch (Exception e) {
+						responseStatus = StatusType.PUT_ERROR;
+						logger.error(e.getMessage());
 					}
-					break;
-				default:
-					logger.info("Unexpected message of status " + message.getStatus().toString());
-					responseMessage = message;
-					break;
-			}
-		} catch (Exception e) {
-
+				}
+				break;
+			default:
+				logger.info("Unexpected message status: " + status);
+				responseStatus = status;
+				break;
 		}
 
-		return responseMessage;
+		return new KVMessage(responseStatus, key, responseValue);
 	}
 }

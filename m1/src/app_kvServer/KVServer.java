@@ -3,13 +3,14 @@ package app_kvServer;
 import logger.LogSetup;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import storage.KVStorage;
 
-import java.net.BindException;
-import java.net.ServerSocket;
+import java.net.*;
 
 import java.io.IOException;
-import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 
 public class KVServer extends Thread implements IKVServer {
 	private static Logger logger = Logger.getRootLogger();
@@ -20,7 +21,12 @@ public class KVServer extends Thread implements IKVServer {
 	private String strategy;
 	private boolean running;
 
-	private HashMap<String, String> storage;
+	private String dataDirectory = "./data";
+	private String dataProperties = "database.properties";
+
+	private KVStorage storage;
+
+	private ArrayList<Thread> threads;
 
 
 
@@ -40,20 +46,28 @@ public class KVServer extends Thread implements IKVServer {
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
 
-		this.storage = new HashMap<String, String>();
+		this.storage = new KVStorage(dataDirectory, dataProperties);
+
+		this.threads = new ArrayList<Thread>();
 	}
 	
 	@Override
 	public int getPort(){
 		// TODO Auto-generated method stub
-		return -1;
+		return port;
 	}
 
 	@Override
-    public String getHostname(){
-		// TODO Auto-generated method stub
-		return null;
+	public String getHostname(){
+		String hostname = "";
+		try {
+			hostname = InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+			logger.error("The server hostname cannot be resolved. \n", e);
+		}
+		return hostname;
 	}
+
 
 	@Override
     public CacheStrategy getCacheStrategy(){
@@ -64,16 +78,13 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public int getCacheSize(){
 		// TODO Auto-generated method stub
-		return -1;
+		return cacheSize;
 	}
 
 	@Override
     public boolean inStorage(String key){
 		// TODO Auto-generated method stub
-		boolean match = storage.containsKey(key);
-		return match;
-
-//		return false;
+		return storage.exists(key);
 	}
 
 	@Override
@@ -85,19 +96,39 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public String getKV(String key) throws Exception{
 		// TODO Auto-generated method stub
-		if (inStorage(key)) {
-			return storage.get(key);
+		if(!inStorage(key)) {
+			throw new Exception(String.format("Key '%s' is not in the database", key));
 		}
-		return "";
+
+		String value = storage.get(key);
+
+		if(value == null) {
+			throw new Exception(String.format("Failed to get key '%s' from the database", key));
+		} else {
+			return value;
+		}
 	}
 
 	@Override
     public void putKV(String key, String value) throws Exception{
 		// TODO Auto-generated method stub
 		if (value.isEmpty()) {
-			storage.remove(key);
-		} else {
-			storage.put(key, value);
+			throw new Exception("Cannot put a key with null value into the database");
+		}
+
+		if (!storage.put(key, value)) {
+			throw new Exception(String.format("Failed to put key '%s' and value '%s' into the database", key, value));
+		}
+
+	}
+
+	public void deleteKV(String key) throws Exception{
+		if(!inStorage(key)) {
+			throw new Exception(String.format("Key '%s' is not in the database", key));
+		}
+
+		if(!storage.delete(key)) {
+			throw new Exception(String.format("Failed to delete key '%s' from the database", key));
 		}
 	}
 
@@ -109,6 +140,7 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public void clearStorage(){
 		// TODO Auto-generated method stub
+		storage.clear();
 	}
 
 	@Override
@@ -120,9 +152,14 @@ public class KVServer extends Thread implements IKVServer {
 			while(isRunning()){
 				try {
 					Socket client = serverSocket.accept();
-					TempClientConnection connection =
-							new TempClientConnection(client, this);
-					new Thread(connection).start();
+
+					TempClientConnection connection = new TempClientConnection(client, this);
+
+					Thread thread = new Thread(connection);
+
+					thread.start();
+
+					threads.add(thread);
 
 					logger.info("Connected to "
 							+ client.getInetAddress().getHostName()
@@ -160,11 +197,28 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public void kill(){
 		// TODO Auto-generated method stub
+		running = false;
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			logger.error("Error! " +
+					"Unable to close socket on port: " + port, e);
+		}
 	}
 
 	@Override
     public void close(){
 		// TODO Auto-generated method stub
+		running = false;
+		try {
+			for (Thread thread: threads) {
+				thread.interrupt();
+			}
+			serverSocket.close();
+		} catch (IOException e) {
+			logger.error("Error! " +
+					"Unable to close socket on port: " + port, e);
+		}
 	}
 
 	public static void main(String[] args) {
