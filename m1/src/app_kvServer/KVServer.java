@@ -125,7 +125,7 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public void putKV(String key, String value) throws Exception{
 		// TODO Auto-generated method stub
-		if (value.isEmpty()) {
+		if (value == null) {
 			throw new Exception("Cannot put a key with null value into the database");
 		}
 
