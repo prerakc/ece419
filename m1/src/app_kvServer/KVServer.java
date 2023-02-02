@@ -50,6 +50,19 @@ public class KVServer extends Thread implements IKVServer {
 
 		this.threads = new ArrayList<Thread>();
 	}
+
+	public KVServer(int port, int cacheSize, String strategy,String dataDir, String dataProps) {
+		// TODO Auto-generated method stub
+		this.port = port;
+		this.cacheSize = cacheSize;
+		this.strategy = strategy;
+		
+		this.dataDirectory = dataDir;
+		this.dataProperties = dataProps;
+		this.storage = new KVStorage(dataDirectory, dataProperties);
+
+		this.threads = new ArrayList<Thread>();
+	}
 	
 	@Override
 	public int getPort(){

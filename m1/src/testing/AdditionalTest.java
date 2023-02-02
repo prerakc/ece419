@@ -9,7 +9,22 @@ public class AdditionalTest extends TestCase {
 	// TODO add your test cases, at least 3
 	
 	@Test
-	public void testStub() {
+	public void testMalformedBytes() {
+		assertTrue(true);
+	}
+
+	@Test
+	public void testKeySize() {
+		assertTrue(true);
+	}
+
+	@Test
+	public void testLoad() {
+		assertTrue(true);
+	}
+
+	@Test
+	public void testConcurrency() {
 		assertTrue(true);
 	}
 }

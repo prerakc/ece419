@@ -197,3 +197,16 @@ java.io.IOException: Input stream closed
 2023-01-30 18:58:26,637 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'foo' and value ''
 2023-01-30 18:58:26,637 INFO  [Thread-1] root: Deleted key 'foo' from database
 2023-01-30 18:58:26,637 INFO  [Thread-1] root: Sent a message of type 'DELETE_SUCCESS' with key 'foo' and value ''
+2023-02-01 21:18:25,859 INFO  [Thread-0] root: Initialize server ...
+2023-02-01 21:18:25,862 INFO  [Thread-0] root: Server listening on port: 3557
+2023-02-01 21:19:32,993 INFO  [Thread-0] root: Connected to localhost on port 58186
+2023-02-01 21:19:46,200 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'bungus' and value 'shmungus'
+2023-02-01 21:19:46,213 INFO  [Thread-1] root: Added key 'bungus' and value 'shmungus' to database
+2023-02-01 21:19:46,214 INFO  [Thread-1] root: Sent a message of type 'PUT_SUCCESS' with key 'bungus' and value 'shmungus'
+2023-02-01 21:20:08,636 INFO  [Thread-1] root: Received a message of type 'GET' with key 'shmungus' and value ''
+2023-02-01 21:20:08,637 ERROR [Thread-1] root: Key 'shmungus' is not in the database
+2023-02-01 21:20:08,638 INFO  [Thread-1] root: Sent a message of type 'GET_ERROR' with key 'shmungus' and value ''
+2023-02-01 21:20:23,695 INFO  [Thread-1] root: Received a message of type 'GET' with key 'bungus' and value ''
+2023-02-01 21:20:23,696 INFO  [Thread-1] root: Retrieved value 'shmungus' for key 'bungus' from database
+2023-02-01 21:20:23,697 INFO  [Thread-1] root: Sent a message of type 'GET_SUCCESS' with key 'bungus' and value 'shmungus'
+2023-02-01 21:21:56,279 ERROR [Thread-1] root: Error! Connection lost!
