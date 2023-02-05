@@ -181,8 +181,8 @@ public class AdditionalTest extends TestCase {
 		IKVMessage response = null;
 		Exception ex = null;
 
-		String key = "foo";
-		String value = "bar";
+		String key = "getMultiClientKey";
+		String value = "getMultiClientValue";
 
 		try {
 			kvClient.put(key, value);
@@ -207,7 +207,7 @@ public class AdditionalTest extends TestCase {
 			} catch (Exception e) {
 				ex = e;
 			}
-			assertTrue(ex == null && response.getValue().equals("bar"));
+			assertTrue(ex == null && response.getValue().equals("getMultiClientValue"));
 			assertTrue(response.getStatus() == StatusType.GET_SUCCESS );
 		}
 
@@ -257,7 +257,7 @@ public class AdditionalTest extends TestCase {
 	public void testUpdateMultiClient() {
 		int numClients = 10;
 		KVStore[] kvClientArr = new KVStore[numClients];
-		String key = "foo";
+		String key = "putMultiUpdateKey";
 		
 		IKVMessage response = null;
 		Exception ex = null;
@@ -281,7 +281,11 @@ public class AdditionalTest extends TestCase {
 				ex = e;
 			}
 			assertTrue(ex == null && response.getValue().equals(Integer.toString(i)));
-			assertTrue(response.getStatus() == StatusType.PUT_UPDATE );
+			if (i == 0) {
+				assertTrue(response.getStatus() == StatusType.PUT_SUCCESS );
+			} else {
+				assertTrue(response.getStatus() == StatusType.PUT_UPDATE );
+			}
 		}
 
 		for(int i =0; i<numClients; i++){
