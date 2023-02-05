@@ -47,6 +47,12 @@ public class KVStore implements KVCommInterface {
 	@Override
 	public IKVMessage put(String key, String value) throws Exception {
 		// TODO Auto-generated method stub
+		if(!verifyKey(key)){
+			return new KVMessage(IKVMessage.StatusType.PUT_ERROR, key, value);
+		}
+		if(!verifyValue(value)){
+			return new KVMessage(IKVMessage.StatusType.PUT_ERROR, key, value);
+		}
 		KVMessage message = new KVMessage(IKVMessage.StatusType.PUT, key, value);
 		kvCommunication.sendMessage(message);
 		return kvCommunication.receiveMessage();
@@ -55,6 +61,9 @@ public class KVStore implements KVCommInterface {
 	@Override
 	public IKVMessage get(String key) throws Exception {
 		// TODO Auto-generated method stub
+		if(!verifyKey(key)){
+			return new KVMessage(IKVMessage.StatusType.GET_ERROR, key, "");
+		}
 		KVMessage message = new KVMessage(IKVMessage.StatusType.GET, key, "");
 		kvCommunication.sendMessage(message);
 		return kvCommunication.receiveMessage();
@@ -62,5 +71,44 @@ public class KVStore implements KVCommInterface {
 
 	public boolean isRunning() {
 		return (kvCommunication != null) && kvCommunication.isOpen();
+	}
+
+	public boolean verifyKey(String key){
+		if (key == null){
+			logger.info(String.format("Key cannot be null!"));
+			return false;
+		}
+
+		if (isKeyTooBig(key)){
+			logger.info(String.format("Key is too large!"));
+			return false;
+		}
+
+		if (key.isEmpty()){
+			logger.info(String.format("Key cannot be empty!"));
+			return false;
+		}
+		
+		return true;
+	}
+
+	public boolean verifyValue(String value){
+		if (value == null){
+			logger.info(String.format("Value cannot be null"));
+			return false;
+		}
+		if (isValueTooBig(value)){
+			logger.info(String.format("Value is too large!"));
+			return false;
+		}
+		return true;
+	}
+
+	public boolean isKeyTooBig(String key){
+		return key.length() >= 1024;
+	}
+
+	public boolean isValueTooBig(String value){
+		return value.length() >= 1024*10;
 	}
 }

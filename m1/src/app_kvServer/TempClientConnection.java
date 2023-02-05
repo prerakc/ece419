@@ -80,7 +80,7 @@ public class TempClientConnection implements Runnable {
 				}
 				break;
 			case PUT:
-				if (value.isEmpty()) {
+				if (value.equals("null") || value.isEmpty()) {
 					try {
 						server.deleteKV(key);
 						responseStatus = StatusType.DELETE_SUCCESS;
