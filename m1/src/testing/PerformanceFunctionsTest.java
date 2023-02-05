@@ -62,7 +62,7 @@ public class PerformanceFunctionsTest extends TestCase{
 		
 
 		//  80% puts, 20% gets
-		putNumber = (int)(totalTest * 0.9);
+		putNumber = (int)(totalTest * 0.8);
 		getNumber = totalTest - putNumber;
         
         startTime = System.currentTimeMillis();
