@@ -52,7 +52,7 @@ public class PerformanceFunctionsTest extends TestCase{
 	@Test
 	public void testPerformance(){
 		
-		int totalTest = 1;
+		int totalTest = 5000;
 		int putNumber;
 		int getNumber;
 
