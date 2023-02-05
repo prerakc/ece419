@@ -68,7 +68,7 @@ public class AdditionalTest extends TestCase {
 
 	@Test
 	public void testBlankValueDelete(){
-		String key = "validKey";
+		String key = "blankKey";
 		String value = "validValue";
 		IKVMessage response = null;
 		Exception ex = null;
@@ -293,7 +293,7 @@ public class AdditionalTest extends TestCase {
 	public void testDeleteMultiClient() {
 		int numClients = 10;
 		KVStore[] kvClientArr = new KVStore[numClients];
-		String key = "foo";
+		String key = "toBeDeleted";
 		
 		IKVMessage response = null;
 		Exception ex = null;
