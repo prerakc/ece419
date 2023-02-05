@@ -9,6 +9,7 @@ import app_kvServer.KVServer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import logger.LogSetup;
+import testing.TestingVars;
 
 
 public class AllTests {
@@ -20,7 +21,7 @@ public class AllTests {
 			//TODO SAYING ERROR CONNECTION LOST FOR EACH TEST
 			clearTestData();
 			new LogSetup("logs/testing/test.log", Level.ERROR);
-			new KVServer(50000, 10, "FIFO",dataDir,dbName).start();
+			new KVServer(TestingVars.port, 10, "FIFO",dataDir,dbName).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

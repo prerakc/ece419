@@ -8,6 +8,7 @@ import client.KVStore;
 import junit.framework.TestCase;
 import shared.messages.IKVMessage;
 import shared.messages.IKVMessage.StatusType;
+import testing.TestingVars;
 
 public class AdditionalTest extends TestCase {
 	
@@ -16,7 +17,7 @@ public class AdditionalTest extends TestCase {
 	private KVStore kvClient;
 	
 	public void setUp() {
-		kvClient = new KVStore("localhost", 50000);
+		kvClient = new KVStore("localhost", TestingVars.port);
 		try {
 			kvClient.connect();
 		} catch (Exception e) {
@@ -40,8 +41,6 @@ public class AdditionalTest extends TestCase {
 		} catch (Exception e) {
 			ex = e;
 		}
-		System.out.println("****************************");
-		System.out.println(ex);
 		assertTrue(ex == null && response.getStatus() == StatusType.GET_ERROR);
 
 		try {
@@ -68,19 +67,20 @@ public class AdditionalTest extends TestCase {
 	}
 
 	@Test
-	public void testBlankValue(){
+	public void testBlankValueDelete(){
 		String key = "validKey";
+		String value = "validValue";
 		IKVMessage response = null;
 		Exception ex = null;
 
 		try {
+			response = kvClient.put(key, value);
 			response = kvClient.put(key, "");
-			response = kvClient.get(key);
 		} catch (Exception e) {
 			ex = e;
 		}
 		
-		assertTrue(ex == null && response.getValue().equals(""));
+		assertTrue(ex == null && response.getStatus() == StatusType.DELETE_SUCCESS);
 	}
 
 	@Test
@@ -162,6 +162,15 @@ public class AdditionalTest extends TestCase {
 		}
 
 		assertTrue(ex == null && response.getStatus() == StatusType.DELETE_ERROR);
+
+		try {
+			response = kvClient.put(key, "");
+			
+		} catch (Exception e) {
+			ex = e;
+		}
+
+		assertTrue(ex == null && response.getStatus() == StatusType.DELETE_ERROR);
 	}
 
 	@Test
@@ -183,7 +192,7 @@ public class AdditionalTest extends TestCase {
 		
 
 		for(int i =0; i<numClients; i++){
-			kvClientArr[i] = new KVStore("localhost", 50000);
+			kvClientArr[i] = new KVStore("localhost", TestingVars.port);
 			try {
 				kvClientArr[i].connect();
 			} catch (Exception e) {
@@ -199,7 +208,7 @@ public class AdditionalTest extends TestCase {
 				ex = e;
 			}
 			assertTrue(ex == null && response.getValue().equals("bar"));
-		
+			assertTrue(response.getStatus() == StatusType.GET_SUCCESS );
 		}
 
 		for(int i =0; i<numClients; i++){
@@ -219,7 +228,7 @@ public class AdditionalTest extends TestCase {
 		
 
 		for(int i =0; i<numClients; i++){
-			kvClientArr[i] = new KVStore("localhost", 50000);
+			kvClientArr[i] = new KVStore("localhost", TestingVars.port);
 			try {
 				kvClientArr[i].connect();
 			} catch (Exception e) {
@@ -235,6 +244,7 @@ public class AdditionalTest extends TestCase {
 				ex = e;
 			}
 			assertTrue(ex == null && response.getValue().equals(Integer.toString(i)));
+			assertTrue(response.getStatus() == StatusType.PUT_SUCCESS );
 		
 		}
 
@@ -255,7 +265,7 @@ public class AdditionalTest extends TestCase {
 		
 
 		for(int i =0; i<numClients; i++){
-			kvClientArr[i] = new KVStore("localhost", 50000);
+			kvClientArr[i] = new KVStore("localhost", TestingVars.port);
 			try {
 				kvClientArr[i].connect();
 			} catch (Exception e) {
@@ -271,11 +281,48 @@ public class AdditionalTest extends TestCase {
 				ex = e;
 			}
 			assertTrue(ex == null && response.getValue().equals(Integer.toString(i)));
-		
+			assertTrue(response.getStatus() == StatusType.PUT_UPDATE );
 		}
 
 		for(int i =0; i<numClients; i++){
 			kvClientArr[i].disconnect();
 		}
 	}
+
+	@Test
+	public void testDeleteMultiClient() {
+		int numClients = 10;
+		KVStore[] kvClientArr = new KVStore[numClients];
+		String key = "foo";
+		
+		IKVMessage response = null;
+		Exception ex = null;
+
+		
+
+		for(int i =0; i<numClients; i++){
+			kvClientArr[i] = new KVStore("localhost", TestingVars.port);
+			try {
+				kvClientArr[i].connect();
+			} catch (Exception e) {
+				ex = e;
+			}
+			assert(ex == null);
+		}
+
+		for(int i = 0; i<numClients; i++){
+			try {
+				response = kvClientArr[i].put(key, Integer.toString(i));
+				response = kvClientArr[i].put(key, "null");
+			} catch (Exception e) {
+				ex = e;
+			}
+			assertTrue(ex == null && response.getStatus() == StatusType.DELETE_SUCCESS);
+		}
+
+		for(int i =0; i<numClients; i++){
+			kvClientArr[i].disconnect();
+		}
+	}
+
 }
