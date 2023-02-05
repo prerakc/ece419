@@ -74,6 +74,11 @@ public class KVStore implements KVCommInterface {
 	}
 
 	public boolean verifyKey(String key){
+		if (key == null){
+			logger.info(String.format("Key cannot be null!"));
+			return false;
+		}
+
 		if (isKeyTooBig(key)){
 			logger.info(String.format("Key is too large!"));
 			return false;
@@ -83,10 +88,15 @@ public class KVStore implements KVCommInterface {
 			logger.info(String.format("Key cannot be empty!"));
 			return false;
 		}
+		
 		return true;
 	}
 
 	public boolean verifyValue(String value){
+		if (value == null){
+			logger.info(String.format("Value cannot be null"));
+			return false;
+		}
 		if (isValueTooBig(value)){
 			logger.info(String.format("Value is too large!"));
 			return false;
