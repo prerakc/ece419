@@ -8,6 +8,7 @@ import client.KVStore;
 import junit.framework.TestCase;
 import shared.messages.IKVMessage;
 import shared.messages.IKVMessage.StatusType;
+import testing.TestingVars;
 
 public class AdditionalTest extends TestCase {
 	
@@ -16,7 +17,7 @@ public class AdditionalTest extends TestCase {
 	private KVStore kvClient;
 	
 	public void setUp() {
-		kvClient = new KVStore("localhost", 50000);
+		kvClient = new KVStore("localhost", TestingVars.port);
 		try {
 			kvClient.connect();
 		} catch (Exception e) {
@@ -70,17 +71,18 @@ public class AdditionalTest extends TestCase {
 	@Test
 	public void testBlankValue(){
 		String key = "validKey";
+		String value = "validValue";
 		IKVMessage response = null;
 		Exception ex = null;
 
 		try {
+			response = kvClient.put(key, value);
 			response = kvClient.put(key, "");
-			response = kvClient.get(key);
 		} catch (Exception e) {
 			ex = e;
 		}
 		
-		assertTrue(ex == null && response.getValue().equals(""));
+		assertTrue(ex == null && response.getStatus() == StatusType.DELETE_SUCCESS);
 	}
 
 	@Test
@@ -183,7 +185,7 @@ public class AdditionalTest extends TestCase {
 		
 
 		for(int i =0; i<numClients; i++){
-			kvClientArr[i] = new KVStore("localhost", 50000);
+			kvClientArr[i] = new KVStore("localhost", TestingVars.port);
 			try {
 				kvClientArr[i].connect();
 			} catch (Exception e) {
@@ -219,7 +221,7 @@ public class AdditionalTest extends TestCase {
 		
 
 		for(int i =0; i<numClients; i++){
-			kvClientArr[i] = new KVStore("localhost", 50000);
+			kvClientArr[i] = new KVStore("localhost", TestingVars.port);
 			try {
 				kvClientArr[i].connect();
 			} catch (Exception e) {
@@ -255,7 +257,7 @@ public class AdditionalTest extends TestCase {
 		
 
 		for(int i =0; i<numClients; i++){
-			kvClientArr[i] = new KVStore("localhost", 50000);
+			kvClientArr[i] = new KVStore("localhost", TestingVars.port);
 			try {
 				kvClientArr[i].connect();
 			} catch (Exception e) {
