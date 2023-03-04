@@ -119,6 +119,10 @@ public class TempClientConnection implements Runnable {
 					}
 				}
 				break;
+			case KEYRANGE:
+				responseValue = server.getMetaDataKeyRanges();
+				responseStatus = StatusType.KEYRANGE_SUCCESS;
+				break;
 			default:
 				logger.info("Unexpected message status: " + status);
 				responseStatus = status;
