@@ -28,7 +28,7 @@ public class ECSNode implements IECSNode{
 
 
     public ECSNode(String nodeName, String nodeHost, int nodePort){
-        this(nodeName, nodeHost, nodePort, null);
+        this(nodeName, nodeHost, nodePort, new String[]{"",""});
     }
 
     public ECSNode(String nodeName, String nodeHost, int nodePort, String[] hashRange){
@@ -109,7 +109,7 @@ public class ECSNode implements IECSNode{
     public static Map<String, ECSNode> deserializeToECSNodeMap(String payload) throws IllegalArgumentException{
 	
 		if (payload == null || payload.trim().isEmpty()){
-            throw new IllegalArgumentException("The payload cannot be deserialized to an ECS Node Map: payload was empty!");;
+            throw new IllegalArgumentException("The payload cannot be deserialized to an ECS Node Map: payload was empty!");
         }
 		
 		String[] serializedArray = payload.split(Config.ECS_DELIMITER);

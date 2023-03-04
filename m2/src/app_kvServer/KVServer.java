@@ -3,6 +3,8 @@ package app_kvServer;
 import logger.LogSetup;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+
+import app_kvECS.ECSClient;
 import storage.KVStorage;
 import storage.HashRing;
 import ecs.ServerStatus;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+
 public class KVServer extends Thread implements IKVServer {
 	private static Logger logger = Logger.getRootLogger();
 
@@ -23,7 +26,7 @@ public class KVServer extends Thread implements IKVServer {
 	private int cacheSize;
 	private String strategy;
 	private boolean running;
-	private String serverName;
+	private static String serverName;
 
 	private String dataDirectory = "./data";
 	private String dataProperties = "database.properties";
@@ -35,7 +38,9 @@ public class KVServer extends Thread implements IKVServer {
 	private HashRing metaData;
 
 	private ECSNode serverNode;
-
+	private static ECSClient ecsClient;
+	private String ecsServer;
+	private int ecsPort;
 
 	/**
 	 * Start KV Server at given port
@@ -48,7 +53,7 @@ public class KVServer extends Thread implements IKVServer {
 	 *           and "LFU".
 	 */
 	 //TODO: add support for serverName
-	public KVServer(int port, int cacheSize, String strategy) {
+	public KVServer(int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
 		// TODO Auto-generated method stub
 		this.port = port;
 		this.cacheSize = cacheSize;
@@ -61,6 +66,10 @@ public class KVServer extends Thread implements IKVServer {
 		this.metaData = new HashRing();
 		// start up ecs node
 		this.serverNode = new ECSNode("tempName", this.getHostname(), this.port);
+
+		this.serverName = String.format("%s:%d",this.getHostname(),port);
+		KVServer.ecsClient = new ECSClient(ecsServer,ecsPort,false);
+		KVServer.ecsClient.addKVServer(KVServer.serverName);
 	}
 
 	public KVServer(int port, int cacheSize, String strategy,String dataDir, String dataProps) {
@@ -76,6 +85,8 @@ public class KVServer extends Thread implements IKVServer {
 		this.threads = new ArrayList<Thread>();
 
 		this.metaData = new HashRing();
+
+		//this.ecsClient = new ECSClient(false);
 	}
 	
 	@Override
@@ -173,6 +184,11 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public void run(){
 		// TODO Auto-generated method stub
+		Runtime.getRuntime().addShutdownHook(new Thread(){
+			public void run(){
+				KVServer.ecsClient.removeKVServer(KVServer.serverName);
+			}
+		});
 		running = initializeServer();
 
 		if(serverSocket != null) {
@@ -198,6 +214,7 @@ public class KVServer extends Thread implements IKVServer {
 			}
 		}
 		logger.info("Server stopped.");
+		
 	}
 
 	private boolean isRunning() {
@@ -261,15 +278,17 @@ public class KVServer extends Thread implements IKVServer {
 
 	public static void main(String[] args) {
 		try {
-			new LogSetup("logs/server.log", Level.ALL);
-			if(args.length != 3) {
+			new LogSetup("logs/server.log", Level.INFO);
+			if(args.length != 5) {
 				System.out.println("Error! Invalid number of arguments!");
-				System.out.println("Usage: Server <port> <cachesize> <cachetype>!");
+				System.out.println("Usage: Server <port> <cachesize> <cachetype> <ECS_server> <ECS_port>!");
 			} else {
 				int port = Integer.parseInt(args[0]);
 				int cacheSize = Integer.parseInt(args[1]);
 				String strategy = args[2];
-				new KVServer(port, cacheSize, strategy).start();
+				String ecsServer = args[3];
+				int ecsPort = Integer.parseInt(args[4]);
+				new KVServer(port, cacheSize, strategy, ecsServer,ecsPort).start();
 			}
 		} catch (IOException e) {
 			System.out.println("Error! Unable to initialize logger!");
