@@ -14,7 +14,7 @@ import shared.messages.IKVMessage.StatusType;
 import org.apache.log4j.Logger;
 
 
-
+//TODO: consolidate ipporthash and name
 public class ECSNode implements IECSNode{
 
     private Logger logger = Logger.getRootLogger();
@@ -75,10 +75,15 @@ public class ECSNode implements IECSNode{
         sb.append(this.name);
         sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.host);
+        sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.port);
+        sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.hashRange[0]);
+        sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.hashRange[1]);
+        sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.status);
+        sb.append(Config.ECS_DELIMITER);
 		return sb.toString();
 	}
 

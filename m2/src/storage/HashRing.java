@@ -1,8 +1,8 @@
 package storage;
 
 import java.util.*;
-import java.util.Map.Entry;
 import java.math.*;
+import java.lang.StringBuilder;
 import ecs.ECSNode;
 import shared.Config;
 
@@ -10,9 +10,12 @@ import logger.LogSetup;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import java.util.Map.Entry;
+
 public class HashRing implements IHashRing {
 
     private static Logger logger = Logger.getRootLogger();
+    //TODO:  may need to swtich to different ordered map structure (conncurrent skiplist map)
     private TreeMap<String, ECSNode> map;
 
     public HashRing() {
@@ -105,5 +108,76 @@ public class HashRing implements IHashRing {
 
         return ring;
     }
+
+    public String getSerializedHashRanges(){
+        StringBuilder sb = new StringBuilder();
+        for (String key : map.keySet()) {
+            ECSNode node = map.get(key);
+            String[] hashRange = node.getNodeHashRange();
+            sb.append(hashRange[0]);
+            sb.append(Config.ECS_PROPS_DELIMITER);
+            sb.append(hashRange[1]);
+            sb.append(Config.ECS_PROPS_DELIMITER);
+            sb.append("<" + node.getNodeHost() + ":" + node.getNodeHost() + ">");
+            sb.append(Config.ECS_DELIMITER);
+        }
+        sb.append("\r\n");
+        return sb.toString();
+    }
+
+
+    public ECSNode getPredecessorNodeFromIpHash(String serverHash){
+        //handle name is null
+
+        //handle map is null
+        if(this.map.size() < 2)
+            return null;
+
+        ECSNode node = this.map.get(serverHash);
+        Entry<String, ECSNode> predecessorEntry = this.map.lowerEntry(serverHash);
+        predecessorEntry = predecessorEntry == null ? this.map.firstEntry() : predecessorEntry;
+        return (predecessorEntry == null ? null : predecessorEntry.getValue());
+    }
+
+    public String getPredecessorHashFromHash(String serverHash){
+        ECSNode node = this.getPredecessorNodeFromIpHash(serverHash);
+        if(node == null){
+            return null;
+        }
+        return node.getIpPortHash();
+    }
+
+    public ECSNode getSuccessorNodeFromIpHash(String serverHash){
+        //handle name is null
+
+        //handle map is null
+        if(this.map.size() < 2)
+            return null;
+
+        ECSNode node = this.map.get(serverHash);
+        Entry<String, ECSNode> successorEntry = this.map.higherEntry(serverHash);
+        successorEntry = (successorEntry == null ? this.map.firstEntry() : successorEntry);
+        return (successorEntry == null ? null : successorEntry.getValue());
+    }
+
+
+    public String getSuccessorHashFromHash(String serverHash){
+        ECSNode node = this.getSuccessorNodeFromIpHash(serverHash);
+        if(node == null){
+            return null;
+        }
+        return node.getIpPortHash();
+    }
+
+    // public void removeEntriesBetweenrange(String low, String high){
+    //     Map<String, ECSNode> toBeRemoved = this.getEntriesBetweenRange(low, high);
+    //     for(String key: toBeRemoved.keySet()){
+    //         this.map.remove(key);
+    //     }
+    // }
+
+    // public Map getEntriesBetweenRange(String low, String high){
+    //     return this.map.subMap(low, true, high, true);
+    // }
 
 }
