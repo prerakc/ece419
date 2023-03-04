@@ -135,7 +135,7 @@ public class HashRing implements IHashRing {
 
         ECSNode node = this.map.get(serverHash);
         Entry<String, ECSNode> predecessorEntry = this.map.lowerEntry(serverHash);
-        predecessorEntry = predecessorEntry == null ? this.map.firstEntry() : predecessorEntry;
+        predecessorEntry = predecessorEntry == null ? this.map.lastEntry() : predecessorEntry;
         return (predecessorEntry == null ? null : predecessorEntry.getValue());
     }
 
