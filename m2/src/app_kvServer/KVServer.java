@@ -257,6 +257,10 @@ public class KVServer extends Thread implements IKVServer {
 	public String serializeHashRing() throws Exception{
 		return this.serverNode.serialize();
 	}
+
+	public String getMetaDataKeyRanges(){
+		return this.metaData.getSerializedHashRanges();
+	}
 	
 
 	public static void main(String[] args) {
