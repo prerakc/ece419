@@ -1,11 +1,42 @@
 package app_kvECS;
 
 import java.util.Map;
+import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
+
+
+import logger.LogSetup;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import ecs.IECSNode;
+import shared.zookeeper_comms.ZKManagerImpl;
+import ecs.ECS;
+
+import java.io.UnsupportedEncodingException;
+import java.util.concurrent.CountDownLatch;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.Watcher.Event.EventType;
+import org.apache.zookeeper.data.Stat;
+
+import org.apache.zookeeper.AsyncCallback.DataCallback;
+
+import org.apache.zookeeper.Watcher.Event.KeeperState;
 
 public class ECSClient implements IECSClient {
+    private static Logger logger = Logger.getRootLogger();
+
+    List<IECSNode> kvNodes;
+    private ECS ecs;
+    
+    
+    public ECSClient(){
+        this.ecs = new ECS();
+    }
 
     @Override
     public boolean start() {
@@ -68,6 +99,15 @@ public class ECSClient implements IECSClient {
     }
 
     public static void main(String[] args) {
-        // TODO
+        try {
+            new LogSetup("logs/ECS.log", Level.INFO);
+            new ECSClient();
+        } catch (IOException e) {
+            System.out.println("Error! Unable to initialize logger!");
+            e.printStackTrace();
+            System.exit(1);
+        }
+        while(true){}
     }
+
 }

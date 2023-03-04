@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
 
+import org.apache.zookeeper.ZooKeeper;
+
+import shared.zookeeper_comms.*;
+
 public class KVServer extends Thread implements IKVServer {
 	private static Logger logger = Logger.getRootLogger();
 
@@ -21,14 +25,15 @@ public class KVServer extends Thread implements IKVServer {
 	private String strategy;
 	private boolean running;
 
+	private boolean balancing;
+	private String bootstrapServer;
+
 	private String dataDirectory = "./data";
 	private String dataProperties = "database.properties";
 
 	private KVStorage storage;
 
 	private ArrayList<Thread> threads;
-
-
 
 	/**
 	 * Start KV Server at given port
@@ -45,6 +50,7 @@ public class KVServer extends Thread implements IKVServer {
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
+		this.bootstrapServer = bootstrapServer;
 
 		this.storage = new KVStorage(dataDirectory, dataProperties);
 
@@ -56,11 +62,10 @@ public class KVServer extends Thread implements IKVServer {
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
-		
 		this.dataDirectory = dataDir;
 		this.dataProperties = dataProps;
 		this.storage = new KVStorage(dataDirectory, dataProperties);
-
+		this.bootstrapServer = bootstrapServer;
 		this.threads = new ArrayList<Thread>();
 	}
 	
@@ -192,6 +197,13 @@ public class KVServer extends Thread implements IKVServer {
 
 	private boolean initializeServer() {
 		logger.info("Initialize server ...");
+
+		try {
+			ZKManager zkm = new ZKManagerImpl();
+		} catch (IOException | InterruptedException e){
+			logger.error("Port " + port + " is already bound!");
+		}
+	
 		try {
 			serverSocket = new ServerSocket(port);
 			logger.info("Server listening on port: "
