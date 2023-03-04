@@ -11,7 +11,15 @@ public interface IKVMessage {
 		PUT_UPDATE, 	/* Put - request successful, i.e. value updated */
 		PUT_ERROR, 		/* Put - request not successful */
 		DELETE_SUCCESS, /* Delete - request successful */
-		DELETE_ERROR 	/* Delete - request successful */
+		DELETE_ERROR, 	/* Delete - request successful */
+
+		SERVER_NOT_AVAILABLE,    
+        SERVER_IDLE,       
+        SERVER_IN_USE,    
+
+		SERVER_STOPPED, 		/* Server not active; No clients requests are processed */
+		SERVER_REMOVED,	     	/* Server is in process of shutting down due to REMOVE command operation */
+		SERVER_NOT_RESPONSIBLE 		/* Server is not responsible for the provided Key */
 	}
 
 	/**

@@ -4,6 +4,11 @@ import org.apache.log4j.Logger;
 import shared.communication.KVCommunication;
 import shared.messages.IKVMessage;
 import shared.messages.KVMessage;
+import storage.HashUtils;
+import storage.HashRing;
+import shared.Config;
+import ecs.ECSNode;
+import java.util.Map;
 
 import java.net.Socket;
 
@@ -16,6 +21,8 @@ public class KVStore implements KVCommInterface {
 	private Socket clientSocket;
 	private KVCommunication kvCommunication;
 
+	private HashRing metaData;
+
 	/**
 	 * Initialize KVStore with address and port of KVServer
 	 * @param address the address of the KVServer
@@ -25,6 +32,7 @@ public class KVStore implements KVCommInterface {
 		// TODO Auto-generated method stub
 		this.address = address;
 		this.port = port;
+		this.metaData = new HashRing();
 	}
 
 	@Override
@@ -66,8 +74,15 @@ public class KVStore implements KVCommInterface {
 		}
 		KVMessage message = new KVMessage(IKVMessage.StatusType.GET, key, "");
 		kvCommunication.sendMessage(message);
+		KVMessage ackMessage = kvCommunication.receiveMessage();
+		boolean sentToCorrectServer = messageSentToCorrectServer(ackMessage);
+		while(!sentToCorrectServer){
+			updateConnection(key, ackMessage);
+			kvCommunication.sendMessage(message);
+		}
 		return kvCommunication.receiveMessage();
 	}
+
 
 	public boolean isRunning() {
 		return (kvCommunication != null) && kvCommunication.isOpen();
@@ -111,4 +126,49 @@ public class KVStore implements KVCommInterface {
 	public boolean isValueTooBig(String value){
 		return value.length() >= 1024*10;
 	}
+
+	public void updateMetaData(String metaDataPayload){
+		//can put bnoth of these functions into a singular deserializeToHashRing
+		try{
+			Map<String,ECSNode>  nodesMap = ECSNode.deserializeToECSNodeMap(metaDataPayload);
+			System.out.println("******************");
+			System.out.println(nodesMap.isEmpty());
+			this.metaData = HashRing.getHashRingFromNodeMap(nodesMap);
+		}catch(Exception e){
+			logger.error("Unable to deserialize metadata payload! \n", e);
+		}
+	}
+
+	public void updateConnection(String key, KVMessage message){
+		updateMetaData(message.getValue());
+		String hashValue = HashUtils.getFixedSizeHashString(key, Config.HASH_STRING_SIZE);
+		ECSNode node = metaData.getServerForHashValue(hashValue);
+		
+		// disconnect form old server and connect to correct server
+		try{
+			disconnect();
+			this.address = node.getNodeHost();
+			this.port = node.getNodePort();
+		}catch(Exception e){
+
+		}
+		try{
+			connect();
+		}catch(Exception e){
+			
+		}
+
+		//print that connection was updated
+
+	}
+
+	public boolean messageSentToCorrectServer(IKVMessage message){
+		// if the server is not responsible or it is removed
+		return (message.getStatus() == KVMessage.StatusType.SERVER_NOT_RESPONSIBLE || message.getStatus() == KVMessage.StatusType.SERVER_REMOVED);
+		
+
+	}
+
+
+
 }
