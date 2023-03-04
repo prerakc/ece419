@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import shared.communication.KVCommunication;
 import shared.messages.IKVMessage.StatusType;
 import shared.messages.KVMessage;
+import ecs.ServerStatus;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -71,9 +72,15 @@ public class TempClientConnection implements Runnable {
 		switch (status) {
 			case GET:
 				try {
-					responseValue = server.getKV(key);
-					responseStatus = StatusType.GET_SUCCESS;
-					logger.info(String.format("Retrieved value '%s' for key '%s' from the database", responseValue, key));
+					if(!server.isResponsibleForRequest(key)){
+						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+						responseValue = server.serializeHashRing();
+						logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
+					}else{
+						responseValue = server.getKV(key);
+						responseStatus = StatusType.GET_SUCCESS;
+						logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
+					}
 				} catch (Exception e) {
 					responseStatus = StatusType.GET_ERROR;
 					logger.error(e.getMessage());
@@ -82,9 +89,15 @@ public class TempClientConnection implements Runnable {
 			case PUT:
 				if (value.equals("null") || value.isEmpty()) {
 					try {
-						server.deleteKV(key);
-						responseStatus = StatusType.DELETE_SUCCESS;
-						logger.info(String.format("Deleted key '%s' from the database", key));
+						if(!server.isResponsibleForRequest(key)){
+							responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+							responseValue = server.serializeHashRing();
+							logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
+						}else{
+							server.deleteKV(key);
+							responseStatus = StatusType.DELETE_SUCCESS;
+							logger.info(String.format("Deleted key '%s' from the database", key));
+						}
 					} catch (Exception e) {
 						responseStatus = StatusType.DELETE_ERROR;
 						logger.error(e.getMessage());

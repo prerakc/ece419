@@ -4,6 +4,9 @@ import logger.LogSetup;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import storage.KVStorage;
+import storage.HashRing;
+import ecs.ServerStatus;
+import ecs.ECSNode;
 
 import java.net.*;
 
@@ -11,10 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
-
-import org.apache.zookeeper.ZooKeeper;
-
-import shared.zookeeper_comms.*;
 
 public class KVServer extends Thread implements IKVServer {
 	private static Logger logger = Logger.getRootLogger();
@@ -24,9 +23,7 @@ public class KVServer extends Thread implements IKVServer {
 	private int cacheSize;
 	private String strategy;
 	private boolean running;
-
-	private boolean balancing;
-	private String bootstrapServer;
+	private String serverName;
 
 	private String dataDirectory = "./data";
 	private String dataProperties = "database.properties";
@@ -34,6 +31,11 @@ public class KVServer extends Thread implements IKVServer {
 	private KVStorage storage;
 
 	private ArrayList<Thread> threads;
+	
+	private HashRing metaData;
+
+	private ECSNode serverNode;
+
 
 	/**
 	 * Start KV Server at given port
@@ -45,16 +47,20 @@ public class KVServer extends Thread implements IKVServer {
 	 *           currently not contained in the cache. Options are "FIFO", "LRU",
 	 *           and "LFU".
 	 */
+	 //TODO: add support for serverName
 	public KVServer(int port, int cacheSize, String strategy) {
 		// TODO Auto-generated method stub
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
-		this.bootstrapServer = bootstrapServer;
 
 		this.storage = new KVStorage(dataDirectory, dataProperties);
 
 		this.threads = new ArrayList<Thread>();
+
+		this.metaData = new HashRing();
+		// start up ecs node
+		this.serverNode = new ECSNode("tempName", this.getHostname(), this.port);
 	}
 
 	public KVServer(int port, int cacheSize, String strategy,String dataDir, String dataProps) {
@@ -62,11 +68,14 @@ public class KVServer extends Thread implements IKVServer {
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
+		
 		this.dataDirectory = dataDir;
 		this.dataProperties = dataProps;
 		this.storage = new KVStorage(dataDirectory, dataProperties);
-		this.bootstrapServer = bootstrapServer;
+
 		this.threads = new ArrayList<Thread>();
+
+		this.metaData = new HashRing();
 	}
 	
 	@Override
@@ -197,13 +206,6 @@ public class KVServer extends Thread implements IKVServer {
 
 	private boolean initializeServer() {
 		logger.info("Initialize server ...");
-
-		try {
-			ZKManager zkm = new ZKManagerImpl();
-		} catch (IOException | InterruptedException e){
-			logger.error("Port " + port + " is already bound!");
-		}
-	
 		try {
 			serverSocket = new ServerSocket(port);
 			logger.info("Server listening on port: "
@@ -245,6 +247,17 @@ public class KVServer extends Thread implements IKVServer {
 					"Unable to close socket on port: " + port, e);
 		}
 	}
+
+	public boolean isResponsibleForRequest(String key){
+		// see if key is between the hash range of the ECSNode
+		String[] hashRange = this.serverNode.getNodeHashRange();
+		return (key.compareTo(hashRange[0]) >= 0) &&  (key.compareTo(hashRange[1]) <= 1);
+	}
+
+	public String serializeHashRing() throws Exception{
+		return this.serverNode.serialize();
+	}
+	
 
 	public static void main(String[] args) {
 		try {
