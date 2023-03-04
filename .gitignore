@@ -2,3 +2,5 @@
 out/
 bin/
 m2/zookeeper-3.4.11
+maildir/
+enron_mail_20150507.tar.gz
