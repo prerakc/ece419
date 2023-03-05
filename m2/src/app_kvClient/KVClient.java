@@ -127,7 +127,7 @@ public class KVClient implements IKVClient {
                 if (kvStore != null && kvStore.isRunning()) {
                     String key = tokens[1];
                     try {
-                        IKVMessage ret = kvStore.get(key);
+                        IKVMessage ret = kvStore.recurGet(key);
                         printMessage(ret);
                     } catch (IOException ioe) {
                         printError("Server not available");
@@ -266,7 +266,7 @@ public class KVClient implements IKVClient {
 
     public static void main(String[] args) {
         try {
-            new LogSetup("logs/client.log", Level.OFF);
+            new LogSetup("logs/client.log", Level.INFO);
             KVClient client = new KVClient();
             client.run();
         } catch (IOException e) {

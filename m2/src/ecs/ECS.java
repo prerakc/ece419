@@ -82,7 +82,6 @@ public class ECS {
 
     public static void addECSNode(String address, int port){
         ECSNode newNode = new ECSNode(String.format("%s:%d",address,port), address, port,null);
-        kvNodes.add(newNode);
 
         ECS.hr.addServer(newNode.getIpPortHash(), newNode);
         // logger.info("HR SIZE -- PRE: " + ECS.hr.getHashRing().size());
@@ -218,45 +217,60 @@ public class ECS {
         System.out.println(Arrays.toString(workerNames.toArray()));
 
         String critNode;
-        if (workerNames.size() == 0 && ECS.kvNodes.size() == 0){
+        if (workerNames.size() == 0 && ECS.hr.getHashRing().values().size() == 0){
             return;
         }
 
         List<String> kvCache = new ArrayList<String>();
-        for (IECSNode i : ECS.kvNodes) {
+        for (IECSNode i : ECS.hr.getHashRing().values()) {
             kvCache.add(i.getNodeName());
             // set all existing servers to read only before editing ranges
         }
 
+        List<String> differences = null;
         // System.out.println(Arrays.toString(kvCache.toArray()));
-        List<String> differences = new ArrayList<>(workerNames);
-        differences.removeAll(kvCache);
-        if (differences.size() == 0){
-            critNode = workerNames.size() > kvCache.size() ? workerNames.get(0) : kvCache.get(0);
+        if (workerNames.size() > kvCache.size()){
+            differences = new ArrayList<>(workerNames);
+            differences.removeAll(kvCache);
         } else {
-            critNode = differences.get(0);
+            differences = new ArrayList<>(kvCache);
+            differences.removeAll(workerNames);
         }
+        
+        logger.info(workerNames.size());
+        logger.info(kvCache.size());
+        critNode = differences.get(0);
+        
 
-        // write lock all existing nodes
-        for (String name : kvCache) {
-            try{
-                ECS.zkMng.update("/server_status/"+name, Integer.toString(StatusType.SERVER_WRITE_LOCK.ordinal()).getBytes());
-            } catch (KeeperException | InterruptedException e){
-                logger.error("Unable to update server status",e);
-            }
-        }
+
         // freeze node that is to be killed or newly added
-        try{
-            logger.info("++++++STOPPING NEWLY ADDED REMOVED SERVER+++++");
-            ECS.zkMng.update("/server_status/"+critNode, Integer.toString(StatusType.SERVER_STOPPED.ordinal()).getBytes());
-        } catch (KeeperException | InterruptedException e){
-            logger.error("Unable to update server status",e);
-        }
+        // try{
+        //     logger.info("++++++STOPPING NEWLY ADDED REMOVED SERVER+++++");
+        //     ECS.zkMng.update("/server_status/"+critNode, Integer.toString(StatusType.SERVER_STOPPED.ordinal()).getBytes());
+        // } catch (KeeperException | InterruptedException e){
+        //     logger.error("Unable to update server status",e);
+        // }
         // if adding a server
-        if (workerNames.size() > ECS.kvNodes.size()){
+        if (workerNames.size() > kvCache.size()){
+            // write lock all existing nodes
+            for (String name : kvCache) {
+                try{
+                    ECS.zkMng.update("/server_status/"+name, Integer.toString(StatusType.SERVER_WRITE_LOCK.ordinal()).getBytes());
+                } catch (KeeperException | InterruptedException e){
+                    logger.error("Unable to update server status",e);
+                }
+            }
             ECS.addECSNode(critNode.split(":")[0],Integer.parseInt(critNode.split(":")[1]));
             
         } else {
+            // write lock all existing nodes
+            for (String name : workerNames) {
+                try{
+                    ECS.zkMng.update("/server_status/"+name, Integer.toString(StatusType.SERVER_WRITE_LOCK.ordinal()).getBytes());
+                } catch (KeeperException | InterruptedException e){
+                    logger.error("Unable to update server status",e);
+                }
+            }
             // ir removing a server
             ECS.removeECSNode(critNode.split(":")[0],Integer.parseInt(critNode.split(":")[1]));
         }
@@ -273,6 +287,7 @@ public class ECS {
     
     public static void publishMetadata(){
         StringBuilder sb = new StringBuilder();
+        logger.info("PMETADAT HR: " + ECS.hr.getHashRing().keySet());
         TreeMap<String, ECSNode> hrMap = ECS.hr.getHashRing();
         // logger.info("HR SIZE publish: " + ECS.hr.getHashRing().size());
         for (ECSNode i : hrMap.values()) {

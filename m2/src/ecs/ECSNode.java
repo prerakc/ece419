@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.lang.StringBuilder;
-
+import java.util.Arrays;
 import shared.Config;
 import storage.HashUtils;
 import shared.Config;
@@ -43,11 +43,15 @@ public class ECSNode implements IECSNode{
         
         this.ipPortHash = HashUtils.getFixedSizeHashString(this.host + ":" + this.port, Config.HASH_STRING_SIZE);
 
-
+        // for (int i = 0; i < 10; i++) {
+        //     System.out.println("EXPERIMENT HASH VALUES");
+        //     System.out.println(HashUtils.getFixedSizeHashString(this.host + ":" + this.port, Config.HASH_STRING_SIZE));
+        // }
         if(hashRange == null){
             this.hashRange = new String[2];
 		    this.hashRange[0] = HashUtils.padStringLeftToSize("", Config.HASH_STRING_SIZE);
-            this.hashRange[1] = HashUtils.getFixedSizeHashString(this.ipPortHash, Config.HASH_STRING_SIZE);
+            // this.hashRange[1] = HashUtils.getFixedSizeHashString(this.ipPortHash, Config.HASH_STRING_SIZE);
+            this.hashRange[1] = this.ipPortHash;
         }else{
             this.hashRange = hashRange;
         }
@@ -98,6 +102,8 @@ public class ECSNode implements IECSNode{
             throw new IllegalArgumentException("ECS Payload is malformed: number of arguments should be six!");
         }
 		
+        // System.out.println("++++++++++++++PAYLOARD");
+        // System.out.println(Arrays.toString(arr));
 		String name = arr[0];
 		String host = arr[1];
 		int port = Integer.parseInt(arr[2]);
@@ -126,8 +132,10 @@ public class ECSNode implements IECSNode{
 		
 		Map<String, ECSNode> nodesMap = new HashMap<>();
 		for(int i = 0; i < serializedArray.length; ++i) {
+            
 			ECSNode node = deserialize(serializedArray[i]);
-            nodesMap.put(node.name, node);
+            // System.out.println("DESERIALIZED NODE NAME: "+node.getNodeHashRange()[1]);
+            nodesMap.put(node.getIpPortHash(), node);
 		}
 		
 		return nodesMap;
@@ -140,7 +148,7 @@ public class ECSNode implements IECSNode{
         StringBuilder sb = new StringBuilder();
         for(ECSNode node: map.values()){
             sb.append(node.serialize());
-            sb.append(Config.ECS_DELIMITER);            
+            // sb.append(Config.ECS_DELIMITER);            
         }
         sb.setLength(sb.length() - 1); //remove last ECS_DELIMITER
         return sb.toString();
