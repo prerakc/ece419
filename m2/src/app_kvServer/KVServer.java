@@ -9,6 +9,7 @@ import storage.KVStorage;
 import storage.HashRing;
 import ecs.ServerStatus;
 import ecs.ECSNode;
+import shared.messages.IKVMessage.StatusType;
 
 import java.net.*;
 
@@ -27,6 +28,7 @@ public class KVServer extends Thread implements IKVServer {
 	private String strategy;
 	private boolean running;
 	private static String serverName;
+	private StatusType status;
 
 	private String dataDirectory = "./data";
 	private String dataProperties = "database.properties";
@@ -58,6 +60,7 @@ public class KVServer extends Thread implements IKVServer {
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
+		this.status = StatusType.SERVER_NOT_AVAILABLE;
 
 		this.storage = new KVStorage(dataDirectory, dataProperties);
 
@@ -70,6 +73,9 @@ public class KVServer extends Thread implements IKVServer {
 		this.serverName = String.format("%s:%d",this.getHostname(),port);
 		KVServer.ecsClient = new ECSClient(ecsServer,ecsPort,false);
 		KVServer.ecsClient.addKVServer(KVServer.serverName);
+
+		this.status = StatusType.SERVER_IDLE;
+
 	}
 
 	public KVServer(int port, int cacheSize, String strategy,String dataDir, String dataProps) {
@@ -89,6 +95,10 @@ public class KVServer extends Thread implements IKVServer {
 		//this.ecsClient = new ECSClient(false);
 	}
 	
+	public StatusType getStatus(){
+		return this.status;
+	}
+
 	@Override
 	public int getPort(){
 		// TODO Auto-generated method stub
@@ -278,6 +288,10 @@ public class KVServer extends Thread implements IKVServer {
 
 	public String getMetaDataKeyRanges(){
 		return this.metaData.getSerializedHashRanges();
+	}
+
+	public String serializeMetaData(){
+		return ECSNode.serializeECSMap(this.metaData.getHashRing());
 	}
 	
 

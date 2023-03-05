@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import shared.communication.KVCommunication;
 import shared.messages.IKVMessage.StatusType;
 import shared.messages.KVMessage;
-import ecs.ServerStatus;
+import ecs.ECSNode;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -72,9 +72,17 @@ public class TempClientConnection implements Runnable {
 		switch (status) {
 			case GET:
 				try {
-					if(!server.isResponsibleForRequest(key)){
+					if(server.getStatus() != StatusType.SERVER_IDLE){
+						if(server.getStatus() == StatusType.SERVER_NOT_AVAILABLE){
+							responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+							responseValue = this.server.serializeMetaData();
+							logger.info(String.format("Server is not available. Sending back metadata"));
+						}
+					}
+					else if(!server.isResponsibleForRequest(key)){
 						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
-						responseValue = server.serializeHashRing();
+						// responseValue = server.serializeHashRing();
+						responseValue = this.server.serializeMetaData();
 						logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
 					}else{
 						responseValue = server.getKV(key);
@@ -87,17 +95,26 @@ public class TempClientConnection implements Runnable {
 				}
 				break;
 			case PUT:
-				if (value.equals("null") || value.isEmpty()) {
+				if(server.getStatus() != StatusType.SERVER_IDLE){
+					if(server.getStatus() == StatusType.SERVER_NOT_AVAILABLE){
+						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+						responseValue = this.server.serializeMetaData();
+						logger.info(String.format("Server is not available. Sending back metadata"));
+					}else if(server.getStatus() == StatusType.SERVER_WRITE_LOCK){
+						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+						responseValue = this.server.serializeMetaData();
+						logger.info("Server cannot be written to. Try request again in a few minutes.");
+					}
+				}else if(!server.isResponsibleForRequest(key)){
+					responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+					responseValue = this.server.serializeMetaData();
+					logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
+				}
+				else if (value.equals("null") || value.isEmpty()) {
 					try {
-						if(!server.isResponsibleForRequest(key)){
-							responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
-							responseValue = server.serializeHashRing();
-							logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
-						}else{
-							server.deleteKV(key);
-							responseStatus = StatusType.DELETE_SUCCESS;
-							logger.info(String.format("Deleted key '%s' from the database", key));
-						}
+						server.deleteKV(key);
+						responseStatus = StatusType.DELETE_SUCCESS;
+						logger.info(String.format("Deleted key '%s' from the database", key));
 					} catch (Exception e) {
 						responseStatus = StatusType.DELETE_ERROR;
 						logger.error(e.getMessage());
