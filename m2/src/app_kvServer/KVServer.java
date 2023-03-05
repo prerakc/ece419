@@ -58,12 +58,12 @@ public class KVServer extends Thread implements IKVServer {
 		this(port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s_%d.properties", "localhost", port));
 	}
 
-  public KVServer(int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
+  	public KVServer(int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
 		// TODO Auto-generated method stub
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
-    this.status = StatusType.SERVER_NOT_AVAILABLE;
+    	this.status = StatusType.SERVER_NOT_AVAILABLE;
 
 		this.serverName = String.format("%s:%d",this.getHostname(),port);
 
@@ -76,13 +76,13 @@ public class KVServer extends Thread implements IKVServer {
 
 		this.metaData = new HashRing();
 
-    // start up ecs node
+    	// start up ecs node
 		this.serverNode = new ECSNode("tempName", this.getHostname(), this.port);
     
-    KVServer.ecsClient = new ECSClient(ecsServer,ecsPort,false);
+    	KVServer.ecsClient = new ECSClient(ecsServer,ecsPort,false);
 		KVServer.ecsClient.addKVServer(KVServer.serverName);
     
-    this.status = StatusType.SERVER_IDLE;
+    	this.status = StatusType.SERVER_IDLE;
 	}
 	
 	public StatusType getStatus(){
