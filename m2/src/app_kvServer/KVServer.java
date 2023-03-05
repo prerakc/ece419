@@ -30,7 +30,7 @@ public class KVServer extends Thread implements IKVServer {
 	private String strategy;
 	private boolean running;
 	private static String serverName;
-	private StatusType status;
+	private static StatusType status;
 	private String address;
 	private String dataDirectory = "./data";
 	private String dataProperties = "database.properties";
@@ -65,7 +65,7 @@ public class KVServer extends Thread implements IKVServer {
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
-		this.status = StatusType.SERVER_NOT_AVAILABLE;
+		KVServer.status = StatusType.SERVER_NOT_AVAILABLE;
 
 		this.storage = new KVStorage(dataDirectory, dataProperties);
 
@@ -106,15 +106,15 @@ public class KVServer extends Thread implements IKVServer {
 	}
 	
 	public StatusType getStatus(){
-		return this.status;
+		return KVServer.status;
 	}
 
 	public static void updateStatusZK(String status){
 		// logger.info("++++++++++IN KVSERVER UPDATE STATUS+++++++++++");
 		try{
-			KVServer.serverStatus = Integer.parseInt(status);
+			KVServer.status = StatusType.values()[Integer.parseInt(status)];
 		} catch (NumberFormatException e){
-			KVServer.serverStatus = -1;
+			// KVServer.server = StatusType.valueOf(status);
 		}
 	}
 
@@ -316,7 +316,12 @@ public class KVServer extends Thread implements IKVServer {
 	}
 
 	public String serializeMetaData(){
-		return ECSNode.serializeECSMap(this.metaData.getHashRing());
+		try{
+			return ECSNode.serializeECSMap(this.metaData.getHashRing());
+		} catch (Exception e){
+			logger.error("Error serializing meta data", e);
+		}
+		return null;
 	}
 	
 

@@ -39,7 +39,7 @@ public class ECSNode implements IECSNode{
         this.name = nodeName.trim();
         this.host = nodeHost.trim();
         this.port = nodePort;
-        this.status = StatusType.SERVER_NOT_AVAILABLE;
+        this.status = StatusType.SERVER_STOPPED;
         
         this.ipPortHash = HashUtils.getFixedSizeHashString(this.host + ":" + this.port, Config.HASH_STRING_SIZE);
 

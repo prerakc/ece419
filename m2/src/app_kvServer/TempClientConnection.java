@@ -68,15 +68,23 @@ public class TempClientConnection implements Runnable {
 
 		StatusType responseStatus;
 		String responseValue = value;
-
+		responseStatus = StatusType.SERVER_NOT_AVAILABLE;
 		switch (status) {
 			case GET:
 				try {
-					if(server.getStatus() != StatusType.SERVER_IDLE){
-						if(server.getStatus() == StatusType.SERVER_NOT_AVAILABLE){
+					logger.info(server.getStatus());
+					logger.info(StatusType.SERVER_IDLE);
+					logger.info(server.getStatus() != StatusType.SERVER_IDLE);
+					
+					if(server.getStatus() != StatusType.SERVER_IDLE || server.getStatus() != StatusType.SERVER_WRITE_LOCK){
+						if(server.getStatus() == StatusType.SERVER_STOPPED){
 							responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
 							responseValue = this.server.serializeMetaData();
 							logger.info(String.format("Server is not available. Sending back metadata"));
+						} else {
+							// should never be hit
+							responseStatus = StatusType.SERVER_STOPPED;
+							responseValue = this.server.serializeMetaData();
 						}
 					}
 					else if(!server.isResponsibleForRequest(key)){
@@ -96,7 +104,7 @@ public class TempClientConnection implements Runnable {
 				break;
 			case PUT:
 				if(server.getStatus() != StatusType.SERVER_IDLE){
-					if(server.getStatus() == StatusType.SERVER_NOT_AVAILABLE){
+					if(server.getStatus() == StatusType.SERVER_STOPPED){
 						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
 						responseValue = this.server.serializeMetaData();
 						logger.info(String.format("Server is not available. Sending back metadata"));
