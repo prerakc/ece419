@@ -9,6 +9,7 @@ import app_kvECS.ECSClient;
 import storage.KVStorage;
 import storage.HashRing;
 import ecs.ECSNode;
+import shared.messages.IKVMessage.StatusType;
 
 import java.net.*;
 
@@ -25,6 +26,7 @@ public class KVServer extends Thread implements IKVServer {
 	private String strategy;
 	private boolean running;
 	private static String serverName;
+	private StatusType status;
 
 	private String dataDirectory;
 	private String dataProperties;
@@ -53,14 +55,15 @@ public class KVServer extends Thread implements IKVServer {
 	 //TODO: add support for serverName
 	public KVServer(int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
 		// TODO Auto-generated method stub
-		this(port, cacheSize, strategy, "./data", String.format("%s_%d.properties", "localhost", port));
+		this(port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s_%d.properties", "localhost", port));
 	}
 
-	public KVServer(int port, int cacheSize, String strategy, String dataDir, String dataProps) {
+  public KVServer(int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
 		// TODO Auto-generated method stub
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
+    this.status = StatusType.SERVER_NOT_AVAILABLE;
 
 		this.serverName = String.format("%s:%d",this.getHostname(),port);
 
@@ -78,8 +81,14 @@ public class KVServer extends Thread implements IKVServer {
     
     KVServer.ecsClient = new ECSClient(ecsServer,ecsPort,false);
 		KVServer.ecsClient.addKVServer(KVServer.serverName);
+    
+    this.status = StatusType.SERVER_IDLE;
 	}
 	
+	public StatusType getStatus(){
+		return this.status;
+	}
+
 	@Override
 	public int getPort(){
 		// TODO Auto-generated method stub
@@ -299,6 +308,10 @@ public class KVServer extends Thread implements IKVServer {
 
 	public String getMetaDataKeyRanges(){
 		return this.metaData.getSerializedHashRanges();
+	}
+
+	public String serializeMetaData(){
+		return ECSNode.serializeECSMap(this.metaData.getHashRing());
 	}
 	
 
