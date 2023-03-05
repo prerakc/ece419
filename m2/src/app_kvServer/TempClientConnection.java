@@ -74,9 +74,9 @@ public class TempClientConnection implements Runnable {
 				try {
 					logger.info(server.getStatus());
 					logger.info(StatusType.SERVER_IDLE);
-					logger.info(server.getStatus() != StatusType.SERVER_IDLE);
+					logger.info(server.getStatus() != StatusType.SERVER_IDLE && server.getStatus() != StatusType.SERVER_WRITE_LOCK);
 					
-					if(server.getStatus() != StatusType.SERVER_IDLE || server.getStatus() != StatusType.SERVER_WRITE_LOCK){
+					if(server.getStatus() != StatusType.SERVER_IDLE && server.getStatus() != StatusType.SERVER_WRITE_LOCK){
 						if(server.getStatus() == StatusType.SERVER_STOPPED){
 							responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
 							responseValue = this.server.serializeMetaData();
@@ -95,7 +95,7 @@ public class TempClientConnection implements Runnable {
 					}else{
 						responseValue = server.getKV(key);
 						responseStatus = StatusType.GET_SUCCESS;
-						logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
+						// logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
 					}
 				} catch (Exception e) {
 					responseStatus = StatusType.GET_ERROR;
