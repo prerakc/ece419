@@ -74,12 +74,12 @@ public class KVStore implements KVCommInterface {
 		}
 		KVMessage message = new KVMessage(IKVMessage.StatusType.GET, key, "");
 		kvCommunication.sendMessage(message);
-		KVMessage ackMessage = kvCommunication.receiveMessage();
-		boolean sentToCorrectServer = messageSentToCorrectServer(ackMessage);
-		while(!sentToCorrectServer){
-			updateConnection(key, ackMessage);
-			kvCommunication.sendMessage(message);
-		}
+//		KVMessage ackMessage = kvCommunication.receiveMessage();
+//		boolean sentToCorrectServer = messageSentToCorrectServer(ackMessage);
+//		while(!sentToCorrectServer){
+//			updateConnection(key, ackMessage);
+//			kvCommunication.sendMessage(message);
+//		}
 		return kvCommunication.receiveMessage();
 	}
 

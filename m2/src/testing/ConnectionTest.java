@@ -2,20 +2,45 @@ package testing;
 
 import java.net.UnknownHostException;
 
+import app_kvServer.KVServer;
 import client.KVStore;
 
 import junit.framework.TestCase;
-import testing.TestingVars;
+import org.junit.Test;
 
 
 public class ConnectionTest extends TestCase {
 
-	
+	private static KVServer kvServer;
+
+	private static String address = "localhost";
+	private static int port = 50069;
+	private static int cacheSize = 0;
+	private static String strategy = "foo";
+	private static String dataDir = "./data/test";
+	private static String dataProps = "connection_test.properties";
+
+//	@BeforeClass
+//	public static void setUpBeforeClass() {
+//		server = new KVServer(address, port, cacheSize, strategy, dataDir, dataProps);
+//		server.start();
+//	}
+//
+//	@AfterClass
+//	public static void tearDownAfterClass() {
+//		server.interrupt();
+//	}
+
+//	static {
+//		kvServer = new KVServer(address, port, cacheSize, strategy, dataDir, dataProps);
+//		kvServer.start();
+//	}
+
+	@Test
 	public void testConnectionSuccess() {
-		
 		Exception ex = null;
 		
-		KVStore kvClient = new KVStore("localhost", TestingVars.port);
+		KVStore kvClient = new KVStore(address, port);
 		try {
 			kvClient.connect();
 		} catch (Exception e) {
@@ -23,12 +48,14 @@ public class ConnectionTest extends TestCase {
 		}	
 		
 		assertNull(ex);
+
+		kvClient.disconnect();
 	}
-	
-	
+
+	@Test
 	public void testUnknownHost() {
 		Exception ex = null;
-		KVStore kvClient = new KVStore("unknown", TestingVars.port);
+		KVStore kvClient = new KVStore("unknown", port);
 		
 		try {
 			kvClient.connect();
@@ -38,11 +65,11 @@ public class ConnectionTest extends TestCase {
 		
 		assertTrue(ex instanceof UnknownHostException);
 	}
-	
-	
+
+	@Test
 	public void testIllegalPort() {
 		Exception ex = null;
-		KVStore kvClient = new KVStore("localhost", 123456789);
+		KVStore kvClient = new KVStore(address, 123456789);
 		
 		try {
 			kvClient.connect();
@@ -52,9 +79,5 @@ public class ConnectionTest extends TestCase {
 		
 		assertTrue(ex instanceof IllegalArgumentException);
 	}
-	
-	
-
-	
 }
 

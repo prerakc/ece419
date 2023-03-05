@@ -46,6 +46,8 @@ public class KVServer extends Thread implements IKVServer {
 
 	public static int serverStatus;
 
+	private boolean distributedMode;
+
 	/**
 	 * Start KV Server at given port
 	 * @param port given port for storage server to operate
@@ -91,6 +93,32 @@ public class KVServer extends Thread implements IKVServer {
 
 		KVServer.ecsClient.addStatusServerWatch(KVServer.serverName);
 		KVServer.ecsClient.addMetadataServerWatch(KVServer.serverName);
+
+		distributedMode = true;
+	}
+
+	public KVServer(String address,int port, int cacheSize, String strategy) {
+		// TODO Auto-generated method stub
+		this(address, port, cacheSize, strategy, "./data", String.format("%s_%d.properties", address, port));
+	}
+
+	public KVServer(String address,int port, int cacheSize, String strategy, String dataDir, String dataProps) {
+		// TODO Auto-generated method stub
+		this.address = address;
+		this.port = port;
+		this.cacheSize = cacheSize;
+		this.strategy = strategy;
+
+		this.status = StatusType.SERVER_IDLE;
+
+		this.dataDirectory = dataDir;
+		this.dataProperties = dataProps;
+
+		this.storage = new KVStorage(this.dataDirectory, this.dataProperties);
+
+		this.threads = new ArrayList<Thread>();
+
+		distributedMode = false;
 	}
 	
 	public StatusType getStatus(){
@@ -236,12 +264,15 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public void run(){
 		// TODO Auto-generated method stub
-		Runtime.getRuntime().addShutdownHook(new Thread(){
-			public void run(){
-				KVServer.ecsClient.removeKVServer(KVServer.serverName);
-				KVServer.ecsClient.removeServerStatus(KVServer.serverName);
-			}
-		});
+		if (distributedMode) {
+			Runtime.getRuntime().addShutdownHook(new Thread(){
+				public void run(){
+					KVServer.ecsClient.removeKVServer(KVServer.serverName);
+					KVServer.ecsClient.removeServerStatus(KVServer.serverName);
+				}
+			});
+		}
+
 		running = initializeServer();
 
 		if(serverSocket != null) {
@@ -319,10 +350,14 @@ public class KVServer extends Thread implements IKVServer {
 	}
 
 	public boolean isResponsibleForRequest(String key){
-		String[] hashRange = this.serverNode.getNodeHashRange();
-		if(hashRange[0].compareTo(hashRange[1]) < 0) //if hash range does not wrap around
-			return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0);
-		return (key.compareTo(hashRange[0]) < 0) ||  (key.compareTo(hashRange[1]) > 0); //hash range does wrap around
+		if (distributedMode) {
+			String[] hashRange = this.serverNode.getNodeHashRange();
+			if(hashRange[0].compareTo(hashRange[1]) < 0) //if hash range does not wrap around
+				return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0);
+			return (key.compareTo(hashRange[0]) < 0) ||  (key.compareTo(hashRange[1]) > 0); //hash range does wrap around
+		} else {
+			return true;
+		}
 	}
 
 	public String serializeHashRing() throws Exception{

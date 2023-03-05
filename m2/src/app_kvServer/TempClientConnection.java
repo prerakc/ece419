@@ -66,9 +66,9 @@ public class TempClientConnection implements Runnable {
 		String key = message.getKey();
 		String value = message.getValue();
 
-		StatusType responseStatus;
+		StatusType responseStatus = StatusType.SERVER_NOT_AVAILABLE;
 		String responseValue = value;
-		responseStatus = StatusType.SERVER_NOT_AVAILABLE;
+
 		switch (status) {
 			case GET:
 				try {
