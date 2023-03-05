@@ -59,7 +59,7 @@ public class KVServer extends Thread implements IKVServer {
 	 //TODO: add support for serverName
 	public KVServer(String address,int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
 		// TODO Auto-generated method stub
-		this(address, port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s_%d.properties", "localhost", port));
+		this(address, port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s_%d.properties", address, port));
 	}
 
 	public KVServer(String address,int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
