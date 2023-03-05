@@ -67,10 +67,7 @@ public class KVServer extends Thread implements IKVServer {
 
 		this.serverName = String.format("%s:%d",this.getHostname(),port);
 
-		this.dataDirectory = dataDir;
-		this.dataProperties = dataProps;
-
-		this.storage = new KVStorage(dataDirectory, dataProperties);
+		this.storage = new KVStorage(this.dataDirectory, this.dataProperties);
 
 		this.threads = new ArrayList<Thread>();
 
