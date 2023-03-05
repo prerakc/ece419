@@ -28,7 +28,9 @@ public class HashUtils {
         if (stringSize <= hash.length()){
             return hash;
         }
-        return padStringLeftToSize(key, Config.HASH_STRING_SIZE);
+        //TODO REMEMBER NOT USING UNFIXED HASHSIZE
+        return hash;
+        // return padStringLeftToSize(hash, Config.HASH_STRING_SIZE);
     }
 
     public static String padStringLeftToSize(String s, int size){
@@ -37,12 +39,12 @@ public class HashUtils {
         if(size  < s.length())
             return s.substring(0, size);
         
-        char[] paddingCharArr = new char[size = s.length()];
+        char[] paddingCharArr = new char[size - s.length()];
         for(int i=0; i<paddingCharArr.length; i++){
             paddingCharArr[i] = Config.PAD_CHAR;
         }
         String padded = paddingCharArr.toString() + s;
-        return padded.substring(0, size);
+        return padded;
     }
 
     

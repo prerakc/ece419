@@ -2,6 +2,7 @@ package app_kvServer;
 
 import client.KVStore;
 import logger.LogSetup;
+import shared.Config;
 import shared.messages.IKVMessage.StatusType;
 
 import org.apache.log4j.Level;
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 import app_kvECS.ECSClient;
 import storage.KVStorage;
 import storage.HashRing;
+import storage.HashUtils;
 import ecs.ECSNode;
 import shared.messages.IKVMessage.StatusType;
 
@@ -137,6 +139,7 @@ public class KVServer extends Thread implements IKVServer {
 	public static void updateMetadataZK(String status){
 		logger.info(status);
 		KVServer.metaData = HashRing.getHashRingFromNodeMap(ECSNode.deserializeToECSNodeMap(status));
+		// logger.info("ADDED IN UPDATE "+ECSNode.deserializeToECSNodeMap(status).keySet());
 	}
 
 	@Override
@@ -351,10 +354,23 @@ public class KVServer extends Thread implements IKVServer {
 
 	public boolean isResponsibleForRequest(String key){
 		if (distributedMode) {
-			String[] hashRange = this.serverNode.getNodeHashRange();
-			if(hashRange[0].compareTo(hashRange[1]) < 0) //if hash range does not wrap around
-				return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0);
-			return (key.compareTo(hashRange[0]) < 0) ||  (key.compareTo(hashRange[1]) > 0); //hash range does wrap around
+      logger.info(this.serverNode.getIpPortHash());
+      logger.info(KVServer.metaData.getHashRing().keySet());
+      String[] hashRange = KVServer.metaData.getHashRing().get(this.serverNode.getIpPortHash()).getNodeHashRange();
+      // String[] hashRange = this.serverNode.getNodeHashRange();
+      key = HashUtils.getFixedSizeHashString(key, Config.HASH_STRING_SIZE);
+      logger.info("THE KEY IS: " + key);
+      logger.info("THE RANGE LOWER IS: " + hashRange[0]);
+      logger.info("THE RANGE UPPER IS: " + hashRange[1]);
+
+      if(hashRange[0].compareTo(hashRange[1]) < 0){//if hash range does not wrap around 
+        logger.info("key.compareTo(hashRange[0]) > 0: " + (key.compareTo(hashRange[0]) > 0));
+        logger.info("key.compareTo(hashRange[1] " + (key.compareTo(hashRange[1]) <= 0));
+        return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0);
+      }
+      logger.info("key.compareTo(hashRange[0]) < 0: " + (key.compareTo(hashRange[0]) < 0));
+      logger.info("key.compareTo(hashRange[1]) > 0 " + (key.compareTo(hashRange[1]) > 0));
+      return (key.compareTo(hashRange[0]) < 0) ||  (key.compareTo(hashRange[1]) > 0); //hash range does wrap around
 		} else {
 			return true;
 		}
