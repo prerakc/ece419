@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import java.util.Map.Entry;
 
-public class HashRing implements IHashRing {
+public class HashRing {
 
     private static Logger logger = Logger.getRootLogger();
     //TODO:  may need to swtich to different ordered map structure (conncurrent skiplist map)
@@ -50,13 +50,11 @@ public class HashRing implements IHashRing {
         return getServerForHashValue(hash);
     }
 
-    @Override
     public String getServerNameForHashValue(String hashValue){
         ECSNode node = getServerForHashValue(hashValue);
         return (node == null) ? null : node.getNodeName();
     }
 
-    @Override
     public String getServerNameForKVKey(String kvKey) {
         ECSNode node = getServerForKVKey(kvKey);
         return (node == null) ? null : node.getNodeName();
