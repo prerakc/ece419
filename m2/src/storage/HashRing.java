@@ -35,16 +35,6 @@ public class HashRing implements IHashRing {
 
     public void clear() {
         this.map.clear();
-    } 
-
-    public String getServerNameForKVKey(String kvKey) {
-        String hash = HashUtils.getFixedSizeHashString(kvKey, Config.HASH_STRING_SIZE);
-        String key = map.ceilingKey(hash);
-
-        if (key == null) {
-            return getFirstValue().getNodeName();
-        }
-        return map.get(key).getNodeName();
     }
 
     public ECSNode getServerForHashValue(String hashValue){
@@ -55,21 +45,33 @@ public class HashRing implements IHashRing {
         return map.get(key);
     }
 
+    public ECSNode getServerForKVKey(String kvKey) {
+        String hash = HashUtils.getFixedSizeHashString(kvKey, Config.HASH_STRING_SIZE);
+        return getServerForHashValue(hash);
+    }
+
     @Override
     public String getServerNameForHashValue(String hashValue){
-        String key = map.ceilingKey(hashValue);
-        if(key == null){
-            return getFirstValue().getNodeName();
-        }
-        return map.get(key).getNodeName();
+        ECSNode node = getServerForHashValue(hashValue);
+        return (node == null) ? null : node.getNodeName();
+    }
+
+    @Override
+    public String getServerNameForKVKey(String kvKey) {
+        ECSNode node = getServerForKVKey(kvKey);
+        return (node == null) ? null : node.getNodeName();
     }
 
     public ECSNode getFirstValue(){
-        String key = map.firstKey();
-        if (map.firstKey() == null) {
+        try {
+            String key = map.firstKey();
+            if (key == null) {
+                return null;
+            }
+            return map.get(key);
+        } catch (NoSuchElementException nse) {
             return null;
         }
-        return map.get(key);
     }
 
     private void setMapFromNodeMap(Map<String, ECSNode> nodesMap){

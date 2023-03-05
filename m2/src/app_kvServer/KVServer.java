@@ -1,5 +1,6 @@
 package app_kvServer;
 
+import client.KVStore;
 import logger.LogSetup;
 import shared.messages.IKVMessage.StatusType;
 
@@ -9,16 +10,13 @@ import org.apache.log4j.Logger;
 import app_kvECS.ECSClient;
 import storage.KVStorage;
 import storage.HashRing;
-import ecs.ServerStatus;
 import ecs.ECSNode;
 import shared.messages.IKVMessage.StatusType;
 
 import java.net.*;
 import java.lang.Integer;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 
 public class KVServer extends Thread implements IKVServer {
@@ -66,6 +64,11 @@ public class KVServer extends Thread implements IKVServer {
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
 		KVServer.status = StatusType.SERVER_NOT_AVAILABLE;
+
+		this.serverName = String.format("%s:%d",this.getHostname(),port);
+
+		this.dataDirectory = dataDir;
+		this.dataProperties = dataProps;
 
 		this.storage = new KVStorage(dataDirectory, dataProperties);
 
@@ -201,6 +204,36 @@ public class KVServer extends Thread implements IKVServer {
 
 		if(!storage.delete(key)) {
 			throw new Exception(String.format("Failed to delete key '%s' from the database", key));
+		}
+	}
+
+	public void moveData() {
+		// assume metadata has been updated before the function is called (i.e. metadata no longer contains this server)
+
+		// this is the last server
+		if (metaData.getHashRing().isEmpty()) {
+			return;
+		}
+
+		try {
+			Map<String, String> db = storage.getDatabase();
+
+			String randomKey = db.entrySet().iterator().next().getKey();
+
+			ECSNode successor = metaData.getServerForKVKey(randomKey);
+
+			KVStore client = new KVStore(successor.getNodeHost(), successor.getNodePort());
+
+			client.connect();
+
+			for (Map.Entry<String, String> kvPair : db.entrySet()) {
+				client.put(kvPair.getKey(), kvPair.getValue());
+			}
+
+			client.disconnect();
+
+			storage.clear();
+		} catch (Exception ignored) { // assuming KVStore connect() and put() don't throw errors
 		}
 	}
 
