@@ -6,12 +6,11 @@ import app_kvServer.KVServer;
 import client.KVStore;
 
 import junit.framework.TestCase;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 
 public class ConnectionTest extends TestCase {
-
-	private static KVServer kvServer;
 
 	private static String address = "localhost";
 	private static int port = 50069;
@@ -20,21 +19,9 @@ public class ConnectionTest extends TestCase {
 	private static String dataDir = "./data/test";
 	private static String dataProps = "connection_test.properties";
 
-//	@BeforeClass
-//	public static void setUpBeforeClass() {
-//		server = new KVServer(address, port, cacheSize, strategy, dataDir, dataProps);
-//		server.start();
-//	}
-//
-//	@AfterClass
-//	public static void tearDownAfterClass() {
-//		server.interrupt();
-//	}
-
-//	static {
-//		kvServer = new KVServer(address, port, cacheSize, strategy, dataDir, dataProps);
-//		kvServer.start();
-//	}
+	static {
+		new KVServer(address, port, cacheSize, strategy, dataDir, dataProps).start();
+	}
 
 	@Test
 	public void testConnectionSuccess() {
@@ -80,4 +67,3 @@ public class ConnectionTest extends TestCase {
 		assertTrue(ex instanceof IllegalArgumentException);
 	}
 }
-

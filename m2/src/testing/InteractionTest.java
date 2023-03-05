@@ -12,22 +12,24 @@ import testing.TestingVars;
 
 public class InteractionTest extends TestCase {
 
-	private static KVServer kvServer;
-
 	private static String address = "localhost";
-	private static int port = 50069;
+	private static int port = 50070;
 	private static int cacheSize = 0;
 	private static String strategy = "foo";
 	private static String dataDir = "./data/test";
-	private static String dataProps = "connection_test.properties";
+	private static String dataProps = "interaction_test.properties";
 
 	private KVStore kvClient;
+
+	static {
+		new KVServer(address, port, cacheSize, strategy, dataDir, dataProps).start();
+	}
 
 	public void setUp() {
 		kvClient = new KVStore(address, port);
 		try {
 			kvClient.connect();
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 		}
 	}
 
@@ -44,7 +46,6 @@ public class InteractionTest extends TestCase {
 
 		try {
 			response = kvClient.put(key, value);
-			System.out.println(response.getStatus().toString());
 		} catch (Exception e) {
 			ex = e;
 		}
@@ -73,15 +74,12 @@ public class InteractionTest extends TestCase {
 		String key = "updateTestValue";
 		String initialValue = "initial";
 		String updatedValue = "updated";
-
 		IKVMessage response = null;
 		Exception ex = null;
 
 		try {
 			kvClient.put(key, initialValue);
 			response = kvClient.put(key, updatedValue);
-			System.out.println(response.getStatus().toString());
-
 		} catch (Exception e) {
 			ex = e;
 		}
@@ -94,15 +92,12 @@ public class InteractionTest extends TestCase {
 	public void testDelete() {
 		String key = "deleteTestValue";
 		String value = "toDelete";
-
 		IKVMessage response = null;
 		Exception ex = null;
 
 		try {
 			kvClient.put(key, value);
 			response = kvClient.put(key, "null");
-			System.out.println(response.getStatus().toString());
-
 		} catch (Exception e) {
 			ex = e;
 		}
@@ -117,29 +112,28 @@ public class InteractionTest extends TestCase {
 		IKVMessage response = null;
 		Exception ex = null;
 
-			try {
-				kvClient.put(key, value);
-				response = kvClient.get(key);
-				System.out.println("here " + response.getStatus().toString() + String.format(" %s %s", response.getKey().toString(), response.getValue().toString()));
-			} catch (Exception e) {
-				ex = e;
-			}
+		try {
+			kvClient.put(key, value);
+			response = kvClient.get(key);
+		} catch (Exception e) {
+			ex = e;
+		}
 
 		assertTrue(ex == null && response.getValue().equals("bar"));
 	}
 
-//	@Test
-//	public void testGetUnsetValue() {
-//		String key = "an unset value";
-//		IKVMessage response = null;
-//		Exception ex = null;
-//
-//		try {
-//			response = kvClient.get(key);
-//		} catch (Exception e) {
-//			ex = e;
-//		}
-//
-//		assertTrue(ex == null && response.getStatus() == StatusType.GET_ERROR);
-//	}
+	@Test
+	public void testGetUnsetValue() {
+		String key = "an unset value";
+		IKVMessage response = null;
+		Exception ex = null;
+
+		try {
+			response = kvClient.get(key);
+		} catch (Exception e) {
+			ex = e;
+		}
+
+		assertTrue(ex == null && response.getStatus() == StatusType.GET_ERROR);
+	}
 }
