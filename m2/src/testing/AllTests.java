@@ -44,8 +44,8 @@ public class AllTests {
 		clientSuite.addTestSuite(ConnectionTest.class);
 		clientSuite.addTestSuite(InteractionTest.class);
 		clientSuite.addTestSuite(NonDistributedTest.class);
+//		clientSuite.addTestSuite(NonDistributedPerformanceTest.class);
 
 		return clientSuite;
 	}
-	
 }

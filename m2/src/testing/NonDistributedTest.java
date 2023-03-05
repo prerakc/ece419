@@ -22,7 +22,7 @@ public class NonDistributedTest extends TestCase {
 	private static int cacheSize = 0;
 	private static String strategy = "foo";
 	private static String dataDir = "./data/test";
-	private static String dataProps = "interaction_test.properties";
+	private static String dataProps = "non_distributed_test.properties";
 
 	static {
 		new KVServer(address, port, cacheSize, strategy, dataDir, dataProps).start();
