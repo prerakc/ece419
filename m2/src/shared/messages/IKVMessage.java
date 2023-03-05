@@ -15,10 +15,12 @@ public interface IKVMessage {
 
 		SERVER_NOT_AVAILABLE,    
         SERVER_IDLE,       
-        SERVER_IN_USE,    
+        SERVER_IN_USE,
+		KEYRANGE,
+		KEYRANGE_SUCCESS,    
 
 		SERVER_STOPPED, 		/* Server not active; No clients requests are processed */
-		SERVER_REMOVED,	     	/* Server is in process of shutting down due to REMOVE command operation */
+		SERVER_WRITE_LOCK,
 		SERVER_NOT_RESPONSIBLE 		/* Server is not responsible for the provided Key */
 	}
 

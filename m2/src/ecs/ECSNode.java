@@ -14,7 +14,7 @@ import shared.messages.IKVMessage.StatusType;
 import org.apache.log4j.Logger;
 
 
-
+//TODO: consolidate ipporthash and name
 public class ECSNode implements IECSNode{
 
     private Logger logger = Logger.getRootLogger();
@@ -28,7 +28,7 @@ public class ECSNode implements IECSNode{
 
 
     public ECSNode(String nodeName, String nodeHost, int nodePort){
-        this(nodeName, nodeHost, nodePort, null);
+        this(nodeName, nodeHost, nodePort, new String[]{"",""});
     }
 
     public ECSNode(String nodeName, String nodeHost, int nodePort, String[] hashRange){
@@ -40,6 +40,8 @@ public class ECSNode implements IECSNode{
         this.host = nodeHost.trim();
         this.port = nodePort;
         this.status = StatusType.SERVER_NOT_AVAILABLE;
+        
+        this.ipPortHash = HashUtils.getFixedSizeHashString(this.host + ":" + this.port, Config.HASH_STRING_SIZE);
 
 
         if(hashRange == null){
@@ -75,10 +77,15 @@ public class ECSNode implements IECSNode{
         sb.append(this.name);
         sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.host);
+        sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.port);
+        sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.hashRange[0]);
+        sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.hashRange[1]);
+        sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.status);
+        sb.append(Config.ECS_DELIMITER);
 		return sb.toString();
 	}
 
@@ -109,7 +116,7 @@ public class ECSNode implements IECSNode{
     public static Map<String, ECSNode> deserializeToECSNodeMap(String payload) throws IllegalArgumentException{
 	
 		if (payload == null || payload.trim().isEmpty()){
-            throw new IllegalArgumentException("The payload cannot be deserialized to an ECS Node Map: payload was empty!");;
+            throw new IllegalArgumentException("The payload cannot be deserialized to an ECS Node Map: payload was empty!");
         }
 		
 		String[] serializedArray = payload.split(Config.ECS_DELIMITER);
@@ -118,13 +125,27 @@ public class ECSNode implements IECSNode{
         }
 		
 		Map<String, ECSNode> nodesMap = new HashMap<>();
-		for(int i = 1; i < serializedArray.length; ++i) {
+		for(int i = 0; i < serializedArray.length; ++i) {
 			ECSNode node = deserialize(serializedArray[i]);
             nodesMap.put(node.name, node);
 		}
 		
 		return nodesMap;
 	}
+
+    public static String serializeECSMap(Map<String, ECSNode> map) throws IllegalArgumentException {
+        if(map == null || map.size() == 0){
+            throw new IllegalArgumentException("Cannot serialize an empty map!");
+        }
+        StringBuilder sb = new StringBuilder();
+        for(ECSNode node: map.values()){
+            sb.append(node.serialize());
+            sb.append(Config.ECS_DELIMITER);            
+        }
+        sb.setLength(sb.length() - 1); //remove last ECS_DELIMITER
+        return sb.toString();
+
+    }
 
 
     private boolean verifyNodeName(String nodeName){

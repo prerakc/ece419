@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.*;
+import java.util.Map.Entry;
 
 public class KVStorage {
     private static Logger logger = Logger.getRootLogger();
@@ -103,5 +104,31 @@ public class KVStorage {
         db.clear();
         persist();
         logger.info("Database wiped");
+    }
+
+    public synchronized List<Entry<String, String>> findEntriesInRange(String low, String high) {
+		
+		List<Entry<String, String>> ret = new ArrayList<>();
+		for(Entry<String, String> entry: db.entrySet()){
+            if(isKeyInRange(entry.getKey(), low, high)){
+                ret.add(entry);
+            }
+        }
+		return ret;
+	}
+
+
+    public synchronized void removeEntriesBetweenrange(String low, String high){
+        List<Entry<String, String>> toBeRemoved = this.findEntriesInRange(low, high);
+        for(Entry<String, String> entry: toBeRemoved){
+            db.remove(entry.getKey());
+        }
+        persist();
+    }
+
+    public boolean isKeyInRange(String key, String low, String high){
+		if(low.compareTo(high) < 0) //if hash range does not wrap around
+			return (key.compareTo(low) > 0) &&  (key.compareTo(high) <= 0);
+		return (key.compareTo(low) < 0) ||  (key.compareTo(high) > 0); //hash range does wrap around
     }
 }
