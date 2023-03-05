@@ -120,7 +120,7 @@ public class InteractionTest extends TestCase {
 			try {
 				kvClient.put(key, value);
 				response = kvClient.get(key);
-				System.out.println(response.getStatus().toString());
+				System.out.println("here " + response.getStatus().toString() + String.format(" %s %s", response.getKey().toString(), response.getValue().toString()));
 			} catch (Exception e) {
 				ex = e;
 			}

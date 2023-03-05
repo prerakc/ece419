@@ -74,13 +74,15 @@ public class KVStore implements KVCommInterface {
 		}
 		KVMessage message = new KVMessage(IKVMessage.StatusType.GET, key, "");
 		kvCommunication.sendMessage(message);
-//		KVMessage ackMessage = kvCommunication.receiveMessage();
-//		boolean sentToCorrectServer = messageSentToCorrectServer(ackMessage);
-//		while(!sentToCorrectServer){
-//			updateConnection(key, ackMessage);
-//			kvCommunication.sendMessage(message);
-//		}
-		return kvCommunication.receiveMessage();
+		KVMessage ackMessage = kvCommunication.receiveMessage();
+		boolean sentToCorrectServer = messageSentToCorrectServer(ackMessage);
+		while(!sentToCorrectServer){
+			updateConnection(key, ackMessage);
+			kvCommunication.sendMessage(message);
+			ackMessage = kvCommunication.receiveMessage();
+			sentToCorrectServer = messageSentToCorrectServer(ackMessage);
+		}
+		return ackMessage;
 	}
 
 	public IKVMessage keyrange() throws Exception {
@@ -170,7 +172,7 @@ public class KVStore implements KVCommInterface {
 
 	public boolean messageSentToCorrectServer(IKVMessage message){
 		// if the server is not responsible or it is removed
-		return (message.getStatus() == KVMessage.StatusType.SERVER_NOT_RESPONSIBLE);
+		return (message.getStatus() != KVMessage.StatusType.SERVER_NOT_RESPONSIBLE);
 
 		// return (message.getStatus() == KVMessage.StatusType.SERVER_NOT_RESPONSIBLE || message.getStatus() == KVMessage.StatusType.SERVER_REMOVED);
 		
