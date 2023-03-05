@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 import shared.zookeeper_comms.ZKManagerImpl;
 import storage.HashRing;
-
+import java.util.TreeMap;
 import java.util.Collections;
 import java.util.ArrayList;
 import org.apache.zookeeper.AsyncCallback.ChildrenCallback;
@@ -52,7 +52,7 @@ public class ECS {
 
         if (ecsMaster){
             try {
-                zkMng.getZNodeChildrenCallback("/workers", ECS.serverListWatchCallback(), ECS.getChildrenChangeCallback());
+                ECS.zkMng.getZNodeChildrenCallback("/workers", ECS.serverListWatchCallback(), ECS.getChildrenChangeCallback());
             } catch (InterruptedException | IOException | KeeperException e){
                 System.out.println("ERROR");
                 logger.error("Unexpected exception", e);
@@ -61,73 +61,63 @@ public class ECS {
     }
 
     public static void addECSNode(String address, int port){
-        ECSNode newNode = new ECSNode(String.format("Server %s",address), address, port,null);
+        ECSNode newNode = new ECSNode(String.format("%s:%d",address,port), address, port,null);
         kvNodes.add(newNode);
 
-        hr.addServer(newNode.getIpPortHash(), newNode);
+        ECS.hr.addServer(newNode.getIpPortHash(), newNode);
+        // logger.info("HR SIZE -- PRE: " + ECS.hr.getHashRing().size());
 
         //if there is only one node in ring 
-        if (hr.getHashRing().size() == 1){
+        if (ECS.hr.getHashRing().size() == 1){
             System.out.println(newNode.getIpPortHash());
-            hr.getFirstValue().assignHashRange(newNode.getIpPortHash(), newNode.getIpPortHash());
+            ECS.hr.getFirstValue().assignHashRange(newNode.getIpPortHash(), newNode.getIpPortHash());
         } else {
-        //TODO CORNER CASE OF LESS THAN 3 NODES, UPDATE THE STATUS OF NODES DURRING CHANGE
-        ECSNode pred = hr.getPredecessorNodeFromIpHash(newNode.getIpPortHash());
-        ECSNode succ = hr.getSuccessorNodeFromIpHash(newNode.getIpPortHash());
+            //TODO CORNER CASE OF LESS THAN 3 NODES, UPDATE THE STATUS OF NODES DURRING CHANGE
+            ECSNode pred = ECS.hr.getPredecessorNodeFromIpHash(newNode.getIpPortHash());
+            ECSNode succ = ECS.hr.getSuccessorNodeFromIpHash(newNode.getIpPortHash());
 
-        logger.info("BEFORE CHANGE newNode upper: " + newNode.getNodeHashRange()[1]);
-        logger.info("BEFORE CHANGE newNode lower: " + newNode.getNodeHashRange()[0]);
+            newNode.assignHashRange(pred.getNodeHashRange()[1], newNode.getNodeHashRange()[1]);
+            succ.assignHashRange(newNode.getNodeHashRange()[1], succ.getNodeHashRange()[1]);
 
-        logger.info("BEFORE CHANGE succ upper: " + succ.getNodeHashRange()[1]);
-        logger.info("BEFORE CHANGE succ lower: " + succ.getNodeHashRange()[0]);
+            // remove the old version of nodes
+            ECS.hr.addServer(newNode.getIpPortHash(), newNode);
+            
+            ECS.hr.removeServer(pred.getIpPortHash());
+            ECS.hr.addServer(pred.getIpPortHash(), pred);
+            // if only two servers connected
+            if (ECS.hr.getHashRing().size() == 2){
+                ECS.hr.removeServer(succ.getIpPortHash());
+                ECS.hr.addServer(succ.getIpPortHash(), succ);
+            }
 
-        logger.info("BEFORE CHANGE pred upper: " + pred.getNodeHashRange()[1]);
-        logger.info("BEFORE CHANGE pred lower: " + pred.getNodeHashRange()[0]);
-
-        newNode.assignHashRange(pred.getNodeHashRange()[1], newNode.getNodeHashRange()[1]);
-        succ.assignHashRange(newNode.getNodeHashRange()[1], succ.getNodeHashRange()[1]);
-
-        logger.info("newNode upper: " + newNode.getNodeHashRange()[1]);
-        logger.info("newNode lower: " + newNode.getNodeHashRange()[0]);
-
-        logger.info("succ upper: " + succ.getNodeHashRange()[1]);
-        logger.info("succ lower: " + succ.getNodeHashRange()[0]);
-
-        logger.info("pred upper: " + pred.getNodeHashRange()[1]);
-        logger.info("pred lower: " + pred.getNodeHashRange()[0]);
-        // remove the old version of nodes 
         }
+        // logger.info("HR SIZE -- POST: " + ECS.hr.getHashRing().size());
     }
 
     public static void removeECSNode(String address, int port){
-        ECSNode removeNode = new ECSNode(String.format("Server %s",address), address, port,null);
-        hr.removeServer(removeNode.getIpPortHash());
+        ECSNode removeNode = new ECSNode(String.format("%s:%d",address,port), address, port,null);
+        ECS.hr.removeServer(removeNode.getIpPortHash());
+        if (ECS.hr.getHashRing().size() == 1){
+            System.out.println(removeNode.getIpPortHash());
+            ECS.hr.getFirstValue().assignHashRange(removeNode.getIpPortHash(), removeNode.getIpPortHash());
+        } else if (ECS.hr.getHashRing().size() == 0){
+            
+        } else {
+            ECSNode pred = ECS.hr.getPredecessorNodeFromIpHash(removeNode.getIpPortHash());
+            ECSNode succ = ECS.hr.getSuccessorNodeFromIpHash(removeNode.getIpPortHash());
 
-        ECSNode pred = hr.getPredecessorNodeFromIpHash(removeNode.getIpPortHash());
-        ECSNode succ = hr.getSuccessorNodeFromIpHash(removeNode.getIpPortHash());
+            succ.assignHashRange(pred.getNodeHashRange()[1], succ.getNodeHashRange()[1]);
 
-        logger.info("BEFORE CHANGE removeNode upper: " + removeNode.getNodeHashRange()[1]);
-        logger.info("BEFORE CHANGE removeNode lower: " + removeNode.getNodeHashRange()[0]);
 
-        logger.info("BEFORE CHANGE succ upper: " + succ.getNodeHashRange()[1]);
-        logger.info("BEFORE CHANGE succ lower: " + succ.getNodeHashRange()[0]);
+            // remove the old version of nodes
+            ECS.hr.addServer(removeNode.getIpPortHash(), removeNode);
+                
+            ECS.hr.removeServer(pred.getIpPortHash());
+            ECS.hr.addServer(pred.getIpPortHash(), pred);
 
-        logger.info("BEFORE CHANGE pred upper: " + pred.getNodeHashRange()[1]);
-        logger.info("BEFORE CHANGE pred lower: " + pred.getNodeHashRange()[0]);
-
-        //pred.assignHashRange(pred.getNodeHashRange()[1], newNode.getNodeHashRange()[1]);
-        succ.assignHashRange(pred.getNodeHashRange()[1], succ.getNodeHashRange()[1]);
-
-        logger.info("removeNode upper: " + removeNode.getNodeHashRange()[1]);
-        logger.info("removeNode lower: " + removeNode.getNodeHashRange()[0]);
-
-        logger.info("succ upper: " + succ.getNodeHashRange()[1]);
-        logger.info("succ lower: " + succ.getNodeHashRange()[0]);
-
-        logger.info("pred upper: " + pred.getNodeHashRange()[1]);
-        logger.info("pred lower: " + pred.getNodeHashRange()[0]);
-
-        
+            ECS.hr.addServer(succ.getIpPortHash(), succ);
+            ECS.hr.removeServer(succ.getIpPortHash());
+        }
     }
 
     public void initializeZK(){
@@ -154,7 +144,7 @@ public class ECS {
                 if(e.getType() == EventType.NodeChildrenChanged) {
                     logger.info(String.format("ZNode children change on %s", e.getPath()));
                     try {
-                        zkMng.getZNodeChildrenCallback("/workers", ECS.serverListWatchCallback(), ECS.getChildrenChangeCallback());
+                        ECS.zkMng.getZNodeChildrenCallback("/workers", ECS.serverListWatchCallback(), ECS.getChildrenChangeCallback());
                     } catch (InterruptedException | IOException | KeeperException ex){
                         logger.error("Unexpected exception", ex);
                     }
@@ -167,7 +157,7 @@ public class ECS {
         return new ChildrenCallback() {
             public void processResult(int rc, String path, Object ctx,
                                       List<String> children) {
-                logger.info("REACHED CALLBACK FOR CHILDREN CHANGE");
+                // logger.info("REACHED CALLBACK FOR CHILDREN CHANGE");
                 ECS.updateKeyRange(path,children);
             }
         };
@@ -175,9 +165,12 @@ public class ECS {
 
     public static synchronized void updateKeyRange(String path,List<String> workerNames){
         System.out.println(path);
-
         System.out.println(Arrays.toString(workerNames.toArray()));
         String critNode;
+        if (workerNames.size() == 0 && ECS.kvNodes.size() == 0){
+            return;
+        }
+
         List<String> kvCache = new ArrayList<String>();
         for (IECSNode i : ECS.kvNodes) {
             kvCache.add(i.getNodeName());
@@ -190,16 +183,37 @@ public class ECS {
 
         // if adding a server
         if (workerNames.size() > ECS.kvNodes.size()){
-            ECS.addECSNode(critNode,Integer.parseInt(critNode.split(":")[1]));
+            ECS.addECSNode(critNode.split(":")[0],Integer.parseInt(critNode.split(":")[1]));
             
         } else {
             // ir removing a server
-            ECS.removeECSNode(critNode,Integer.parseInt(critNode.split(":")[1]));
+            ECS.removeECSNode(critNode.split(":")[0],Integer.parseInt(critNode.split(":")[1]));
         }
+        publishMetadata();
     }
     
-    public static void calculateKeyRanges(){
-
+    public static void publishMetadata(){
+        StringBuilder sb = new StringBuilder();
+        TreeMap<String, ECSNode> hrMap = ECS.hr.getHashRing();
+        // logger.info("HR SIZE publish: " + ECS.hr.getHashRing().size());
+        for (ECSNode i : hrMap.values()) {
+            try{
+                logger.info("IN HASH RING: " + i.getNodeName());
+                sb.append(i.serialize());
+            } catch (Exception e){
+                logger.error("Unable to serialize node", e);
+            }
+            sb.append("\n");
+        }
+        for (ECSNode i : hrMap.values()) {
+            try {
+                // logger.info("/workers/"+i.getNodeName());
+                ECS.zkMng.update("/workers/"+i.getNodeName(), sb.toString().getBytes());
+            } catch (KeeperException | InterruptedException e){
+                System.out.println("ERROR");
+                logger.error("Unexpected exception", e);
+            }
+        }
     }
 
     public String getNodeData(String path){

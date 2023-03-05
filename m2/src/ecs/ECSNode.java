@@ -135,7 +135,7 @@ public class ECSNode implements IECSNode{
 		return nodesMap;
 	}
 
-    public static String serializeECSMap(Map<String, ECSNode> map) throws IllegalArgumentException {
+    public static String serializeECSMap(Map<String, ECSNode> map) throws IllegalArgumentException, Exception {
         if(map == null || map.size() == 0){
             throw new IllegalArgumentException("Cannot serialize an empty map!");
         }

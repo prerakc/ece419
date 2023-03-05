@@ -86,6 +86,7 @@ public class KVStore implements KVCommInterface {
 	public IKVMessage keyrange() throws Exception {
 		KVMessage message = new KVMessage(IKVMessage.StatusType.KEYRANGE, "", "");
 		kvCommunication.sendMessage(message);
+		return kvCommunication.receiveMessage();
 	}
 
 
@@ -169,7 +170,9 @@ public class KVStore implements KVCommInterface {
 
 	public boolean messageSentToCorrectServer(IKVMessage message){
 		// if the server is not responsible or it is removed
-		return (message.getStatus() == KVMessage.StatusType.SERVER_NOT_RESPONSIBLE || message.getStatus() == KVMessage.StatusType.SERVER_REMOVED);
+		return (message.getStatus() == KVMessage.StatusType.SERVER_NOT_RESPONSIBLE);
+
+		// return (message.getStatus() == KVMessage.StatusType.SERVER_NOT_RESPONSIBLE || message.getStatus() == KVMessage.StatusType.SERVER_REMOVED);
 		
 
 	}
