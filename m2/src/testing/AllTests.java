@@ -41,10 +41,9 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite clientSuite = new TestSuite("Basic Storage ServerTest-Suite");
 
-		clientSuite.addTestSuite(ConnectionTest.class);
-		clientSuite.addTestSuite(InteractionTest.class);
-		clientSuite.addTestSuite(NonDistributedTest.class);
-//		clientSuite.addTestSuite(NonDistributedPerformanceTest.class);
+		clientSuite.addTestSuite(NonDistributedKVStoreTest.class);
+		clientSuite.addTestSuite(NonDistributedKVServerTest.class);
+		clientSuite.addTestSuite(NonDistributedKVServerPerformanceTest.class);
 
 		return clientSuite;
 	}

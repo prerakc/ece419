@@ -6,16 +6,16 @@ import org.junit.Test;
 import client.KVStore;
 import junit.framework.TestCase;
 
-public class NonDistributedPerformanceTest extends TestCase{
+public class NonDistributedKVServerPerformanceTest extends TestCase{
 
 	private KVStore kvClient;
 
 	private static String address = "localhost";
-	private static int port = 50072;
+	private static int port = 50071;
 	private static int cacheSize = 0;
 	private static String strategy = "foo";
 	private static String dataDir = "./data/test";
-	private static String dataProps = "non_distributed_performance_test.properties";
+	private static String dataProps = "non_distributed_kvserver_performance_test.properties";
 
 	static {
 		new KVServer(address, port, cacheSize, strategy, dataDir, dataProps).start();

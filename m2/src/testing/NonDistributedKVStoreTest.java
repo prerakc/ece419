@@ -6,18 +6,17 @@ import app_kvServer.KVServer;
 import client.KVStore;
 
 import junit.framework.TestCase;
-import org.junit.AfterClass;
 import org.junit.Test;
 
 
-public class ConnectionTest extends TestCase {
+public class NonDistributedKVStoreTest extends TestCase {
 
 	private static String address = "localhost";
 	private static int port = 50069;
 	private static int cacheSize = 0;
 	private static String strategy = "foo";
 	private static String dataDir = "./data/test";
-	private static String dataProps = "connection_test.properties";
+	private static String dataProps = "non_distributed_kvstore_test.properties";
 
 	static {
 		new KVServer(address, port, cacheSize, strategy, dataDir, dataProps).start();
