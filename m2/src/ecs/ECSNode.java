@@ -28,9 +28,7 @@ public class ECSNode implements IECSNode{
 
 
     public ECSNode(String nodeName, String nodeHost, int nodePort){
-        // this(nodeName, nodeHost, nodePort, new String[]{"",""});
         this(nodeName, nodeHost, nodePort, null);
-    
     }
 
     public ECSNode(String nodeName, String nodeHost, int nodePort, String[] hashRange){
