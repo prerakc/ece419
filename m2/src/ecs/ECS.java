@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
+import java.math.BigInteger;
 import logger.LogSetup;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -17,6 +18,7 @@ import java.util.Collections;
 import java.util.ArrayList;
 import org.apache.zookeeper.AsyncCallback.ChildrenCallback;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.nio.file.WatchEvent;
 import java.util.concurrent.CountDownLatch;
 import org.apache.zookeeper.KeeperException;
@@ -89,7 +91,8 @@ public class ECS {
         //if there is only one node in ring 
         if (ECS.hr.getHashRing().size() == 1){
             System.out.println(newNode.getIpPortHash());
-            ECS.hr.getFirstValue().assignHashRange(newNode.getIpPortHash(), newNode.getIpPortHash());
+            ECS.hr.getFirstValue().assignHashRange((new BigInteger(newNode.getIpPortHash()).add(new BigInteger("1"))).toString(), 
+                newNode.getIpPortHash());
         } else {
             //TODO CORNER CASE OF LESS THAN 3 NODES, UPDATE THE STATUS OF NODES DURRING CHANGE
             ECSNode pred = ECS.hr.getPredecessorNodeFromIpHash(newNode.getIpPortHash());
