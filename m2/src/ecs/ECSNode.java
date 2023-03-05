@@ -86,7 +86,7 @@ public class ECSNode implements IECSNode{
         sb.append(Config.ECS_PROPS_DELIMITER);
         sb.append(this.hashRange[1]);
         sb.append(Config.ECS_PROPS_DELIMITER);
-        sb.append(this.status);
+        sb.append(this.status.ordinal());
         sb.append(Config.ECS_DELIMITER);
 		return sb.toString();
 	}

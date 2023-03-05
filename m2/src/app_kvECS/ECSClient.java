@@ -11,8 +11,10 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import ecs.ECS;
+import ecs.ECSNode;
 import ecs.IECSNode;
 import shared.zookeeper_comms.ZKManagerImpl;
+import storage.HashRing;
 
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.CountDownLatch;
@@ -29,11 +31,7 @@ import org.apache.zookeeper.Watcher.Event.KeeperState;
 
 public class ECSClient implements IECSClient {
     private static Logger logger = Logger.getRootLogger();
-
-    
-
-    
-    private ECS ecs;
+     private ECS ecs;
     
     
     public ECSClient(String address, int port, boolean ecsMaster){
@@ -42,11 +40,29 @@ public class ECSClient implements IECSClient {
 
     public void addKVServer(String name){
         this.ecs.addServer(name);
+        this.ecs.addServerStatus(name);
+    }
+
+    public void addStatusServerWatch(String name){
+        this.ecs.addStatusWatch(name);
+    }
+
+    public void addMetadataServerWatch(String name){
+        this.ecs.addMetadataWatch(name);
     }
 
     public void removeKVServer(String name){
         this.ecs.removeServer(name);
     }
+
+    public void removeServerStatus(String name){
+        this.ecs.removeServerStatus(name);
+    }
+
+    public Map<String, ECSNode> getMetadataFromNode(String path){
+        return ECSNode.deserializeToECSNodeMap(this.ecs.getNodeData(path));
+    }
+
     @Override
     public boolean start() {
         // TODO

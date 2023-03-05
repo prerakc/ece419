@@ -1,6 +1,8 @@
 package app_kvServer;
 
 import logger.LogSetup;
+import shared.messages.IKVMessage.StatusType;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -11,7 +13,7 @@ import ecs.ServerStatus;
 import ecs.ECSNode;
 
 import java.net.*;
-
+import java.lang.Integer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,12 +37,14 @@ public class KVServer extends Thread implements IKVServer {
 
 	private ArrayList<Thread> threads;
 	
-	private HashRing metaData;
+	private static HashRing metaData;
 
 	private ECSNode serverNode;
 	private static ECSClient ecsClient;
 	private String ecsServer;
 	private int ecsPort;
+
+	public static int serverStatus;
 
 	/**
 	 * Start KV Server at given port
@@ -64,15 +68,20 @@ public class KVServer extends Thread implements IKVServer {
 
 		this.threads = new ArrayList<Thread>();
 
-		this.metaData = new HashRing();
+		KVServer.metaData = new HashRing();
 		
 
 		this.serverName = String.format("%s:%d",this.address,port);
 
 		// start up ecs node
 		this.serverNode = new ECSNode(this.serverName,this.address, this.port);
+		this.serverNode.setStatus(StatusType.SERVER_STOPPED);
+
 		KVServer.ecsClient = new ECSClient(ecsServer,ecsPort,false);
 		KVServer.ecsClient.addKVServer(KVServer.serverName);
+
+		KVServer.ecsClient.addStatusServerWatch(KVServer.serverName);
+		KVServer.ecsClient.addMetadataServerWatch(KVServer.serverName);
 	}
 
 	public KVServer(String address, int port, int cacheSize, String strategy,String dataDir, String dataProps) {
@@ -88,9 +97,23 @@ public class KVServer extends Thread implements IKVServer {
 
 		this.threads = new ArrayList<Thread>();
 
-		this.metaData = new HashRing();
+		KVServer.metaData = new HashRing();
 
 		//this.ecsClient = new ECSClient(false);
+	}
+
+	public static void updateStatusZK(String status){
+		// logger.info("++++++++++IN KVSERVER UPDATE STATUS+++++++++++");
+		try{
+			KVServer.serverStatus = Integer.parseInt(status);
+		} catch (NumberFormatException e){
+			KVServer.serverStatus = -1;
+		}
+	}
+
+	public static void updateMetadataZK(String status){
+		logger.info(status);
+		KVServer.metaData = HashRing.getHashRingFromNodeMap(ECSNode.deserializeToECSNodeMap(status));
 	}
 	
 	@Override
@@ -191,6 +214,7 @@ public class KVServer extends Thread implements IKVServer {
 		Runtime.getRuntime().addShutdownHook(new Thread(){
 			public void run(){
 				KVServer.ecsClient.removeKVServer(KVServer.serverName);
+				KVServer.ecsClient.removeServerStatus(KVServer.serverName);
 			}
 		});
 		running = initializeServer();

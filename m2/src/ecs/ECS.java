@@ -8,7 +8,8 @@ import java.util.List;
 import logger.LogSetup;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-
+import app_kvServer.KVServer;
+import shared.messages.IKVMessage.StatusType;
 import shared.zookeeper_comms.ZKManagerImpl;
 import storage.HashRing;
 import java.util.TreeMap;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.ArrayList;
 import org.apache.zookeeper.AsyncCallback.ChildrenCallback;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.WatchEvent;
 import java.util.concurrent.CountDownLatch;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
@@ -57,6 +59,24 @@ public class ECS {
                 System.out.println("ERROR");
                 logger.error("Unexpected exception", e);
             }
+        }
+    }
+
+    public void addStatusWatch(String name){
+        try {
+            ECS.zkMng.getZNodeDataCallback("/server_status/"+name, ECS.serverStatusWatchCallback());
+        } catch (InterruptedException | IOException | KeeperException e){
+            System.out.println("ERROR");
+            logger.error("Unexpected exception", e);
+        }
+    }
+
+    public void addMetadataWatch(String name){
+        try {
+            ECS.zkMng.getZNodeDataCallback("/workers/"+name, ECS.workerDataWatchCallback());
+        } catch (InterruptedException | IOException | KeeperException e){
+            System.out.println("ERROR");
+            logger.error("Unexpected exception", e);
         }
     }
 
@@ -163,9 +183,40 @@ public class ECS {
         };
     }
 
+    private static Watcher serverStatusWatchCallback(){
+        return new Watcher() {
+            public void process(WatchedEvent e){
+                if(e.getType() == EventType.NodeDataChanged){
+                    logger.info(String.format("Server status change on %s", e.getPath()));
+                    try {
+                        KVServer.updateStatusZK(ECS.zkMng.getZNodeDataCallback(e.getPath(), ECS.serverStatusWatchCallback()));
+                    } catch (InterruptedException | IOException | KeeperException ex){
+                        logger.error("Unexpected exception", ex);
+                    }
+                }
+            }
+        };
+    }
+
+    private static Watcher workerDataWatchCallback(){
+        return new Watcher() {
+            public void process(WatchedEvent e){
+                if(e.getType() == EventType.NodeDataChanged){
+                    logger.info(String.format("Server status change on %s", e.getPath()));
+                    try {
+                        KVServer.updateMetadataZK(ECS.zkMng.getZNodeDataCallback(e.getPath(), ECS.workerDataWatchCallback()));
+                    } catch (InterruptedException | IOException | KeeperException ex){
+                        logger.error("Unexpected exception", ex);
+                    }
+                }
+            }
+        };
+    }
+
     public static synchronized void updateKeyRange(String path,List<String> workerNames){
         System.out.println(path);
         System.out.println(Arrays.toString(workerNames.toArray()));
+
         String critNode;
         if (workerNames.size() == 0 && ECS.kvNodes.size() == 0){
             return;
@@ -174,13 +225,33 @@ public class ECS {
         List<String> kvCache = new ArrayList<String>();
         for (IECSNode i : ECS.kvNodes) {
             kvCache.add(i.getNodeName());
+            // set all existing servers to read only before editing ranges
         }
 
-        System.out.println(Arrays.toString(kvCache.toArray()));
+        // System.out.println(Arrays.toString(kvCache.toArray()));
         List<String> differences = new ArrayList<>(workerNames);
         differences.removeAll(kvCache);
-        critNode = differences.get(0);
+        if (differences.size() == 0){
+            critNode = workerNames.size() > kvCache.size() ? workerNames.get(0) : kvCache.get(0);
+        } else {
+            critNode = differences.get(0);
+        }
 
+        // write lock all existing nodes
+        for (String name : kvCache) {
+            try{
+                ECS.zkMng.update("/server_status/"+name, Integer.toString(StatusType.SERVER_WRITE_LOCK.ordinal()).getBytes());
+            } catch (KeeperException | InterruptedException e){
+                logger.error("Unable to update server status",e);
+            }
+        }
+        // freeze node that is to be killed or newly added
+        try{
+            logger.info("++++++STOPPING NEWLY ADDED REMOVED SERVER+++++");
+            ECS.zkMng.update("/server_status/"+critNode, Integer.toString(StatusType.SERVER_STOPPED.ordinal()).getBytes());
+        } catch (KeeperException | InterruptedException e){
+            logger.error("Unable to update server status",e);
+        }
         // if adding a server
         if (workerNames.size() > ECS.kvNodes.size()){
             ECS.addECSNode(critNode.split(":")[0],Integer.parseInt(critNode.split(":")[1]));
@@ -190,6 +261,14 @@ public class ECS {
             ECS.removeECSNode(critNode.split(":")[0],Integer.parseInt(critNode.split(":")[1]));
         }
         publishMetadata();
+        // once all metadata published set all servers to ready
+        for (String name : workerNames) {
+            try{
+                ECS.zkMng.update("/server_status/"+name, Integer.toString(StatusType.SERVER_IDLE.ordinal()).getBytes());
+            } catch (KeeperException | InterruptedException e){
+                logger.error("Unable to update server status",e);
+            }
+        }
     }
     
     public static void publishMetadata(){
@@ -203,7 +282,6 @@ public class ECS {
             } catch (Exception e){
                 logger.error("Unable to serialize node", e);
             }
-            sb.append("\n");
         }
         for (ECSNode i : hrMap.values()) {
             try {
@@ -218,7 +296,7 @@ public class ECS {
 
     public String getNodeData(String path){
         try {
-            return ECS.zkMng.getZNodeData("/server_status",false);
+            return ECS.zkMng.getZNodeData("/workers/"+path,false);
         } catch (InterruptedException | IOException | KeeperException e){
             System.out.println("ERROR");
             logger.error("Unexpected exception", e);
@@ -258,9 +336,25 @@ public class ECS {
         }
     }
 
+    public void addServerStatus(String name){
+        try{
+            ECS.zkMng.create("/server_status/"+name, "".getBytes());
+        } catch (KeeperException | InterruptedException e){
+            logger.error("Unable to create znodes", e);
+        }
+    }
+
+    public void removeServerStatus(String name){
+        try{
+            ECS.zkMng.deleteZNode("/server_status/"+name);
+        } catch (KeeperException | InterruptedException e){
+            logger.error("Unable to create znodes", e);
+        }
+    }
+
     private void createServerNode() {
         try{
-            ECS.zkMng.create("/server_status", "test".getBytes());
+            ECS.zkMng.create("/server_status/", "".getBytes());
         } catch (KeeperException | InterruptedException e){
             logger.error("Unable to create znodes", e);
         }
