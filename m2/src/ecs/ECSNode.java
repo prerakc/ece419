@@ -127,13 +127,27 @@ public class ECSNode implements IECSNode{
         }
 		
 		Map<String, ECSNode> nodesMap = new HashMap<>();
-		for(int i = 1; i < serializedArray.length; ++i) {
+		for(int i = 0; i < serializedArray.length; ++i) {
 			ECSNode node = deserialize(serializedArray[i]);
             nodesMap.put(node.name, node);
 		}
 		
 		return nodesMap;
 	}
+
+    public static String serializeECSMap(Map<String, ECSNode> map) throws IllegalArgumentException {
+        if(map == null || map.size() == 0){
+            throw new IllegalArgumentException("Cannot serialize an empty map!");
+        }
+        StringBuilder sb = new StringBuilder();
+        for(ECSNode node: map.values()){
+            sb.append(node.serialize());
+            sb.append(Config.ECS_DELIMITER);            
+        }
+        sb.setLength(sb.length() - 1); //remove last ECS_DELIMITER
+        return sb.toString();
+
+    }
 
 
     private boolean verifyNodeName(String nodeName){

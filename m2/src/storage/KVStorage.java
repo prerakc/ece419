@@ -125,6 +125,8 @@ public class KVStorage {
     }
 
     public boolean isKeyInRange(String key, String low, String high){
-        return (key.compareTo(low) >= 0) &&  (key.compareTo(high) <= 1);
+		if(low.compareTo(high) < 0) //if hash range does not wrap around
+			return (key.compareTo(low) > 0) &&  (key.compareTo(high) <= 0);
+		return (key.compareTo(low) < 0) ||  (key.compareTo(high) > 0); //hash range does wrap around
     }
 }

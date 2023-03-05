@@ -144,6 +144,20 @@ public class KVClient implements IKVClient {
                 printError("Invalid input! Usage: get <key>");
             }
         }
+        else if(tokens[0].equals("keyrange")){
+            try {
+                    IKVMessage ret = kvStore.keyrange();
+                    printMessage(ret);
+
+                    } catch (IOException ioe) {
+                        printError("Server not available");
+                        logger.warn("Server not available", ioe);
+                        disconnect();
+                    } catch (Exception e) {
+                        printError("Unexpected exception: " + e.getMessage());
+                        logger.error("Unexpected exception", e);
+                    }
+        }
 
         else if(tokens[0].equals("logLevel")) {
             if(tokens.length == 2) {
