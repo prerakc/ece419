@@ -23,7 +23,7 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.data.Stat;
-
+import java.util.Arrays;
 import org.apache.zookeeper.AsyncCallback.DataCallback;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
 
@@ -47,6 +47,7 @@ public class ECS {
     public ECS(String address, int port, boolean ecsMaster){
         ECS.connectString = String.format("%s:%d",address,port);
         ECS.kvNodes = Collections.synchronizedList(new ArrayList<IECSNode>());
+        hr = new HashRing();
         this.initializeZK();
 
         if (ecsMaster){
@@ -60,18 +61,73 @@ public class ECS {
     }
 
     public static void addECSNode(String address, int port){
-        ECSNode newNode = new ECSNode(ECS.connectString, address, port);
+        ECSNode newNode = new ECSNode(String.format("Server %s",address), address, port,null);
         kvNodes.add(newNode);
-        hr.addServer("xxx", newNode);
+
+        hr.addServer(newNode.getIpPortHash(), newNode);
+
+        //if there is only one node in ring 
+        if (hr.getHashRing().size() == 1){
+            System.out.println(newNode.getIpPortHash());
+            hr.getFirstValue().assignHashRange(newNode.getIpPortHash(), newNode.getIpPortHash());
+        } else {
+        //TODO CORNER CASE OF LESS THAN 3 NODES, UPDATE THE STATUS OF NODES DURRING CHANGE
+        ECSNode pred = hr.getPredecessorNodeFromIpHash(newNode.getIpPortHash());
+        ECSNode succ = hr.getSuccessorNodeFromIpHash(newNode.getIpPortHash());
+
+        logger.info("BEFORE CHANGE newNode upper: " + newNode.getNodeHashRange()[1]);
+        logger.info("BEFORE CHANGE newNode lower: " + newNode.getNodeHashRange()[0]);
+
+        logger.info("BEFORE CHANGE succ upper: " + succ.getNodeHashRange()[1]);
+        logger.info("BEFORE CHANGE succ lower: " + succ.getNodeHashRange()[0]);
+
+        logger.info("BEFORE CHANGE pred upper: " + pred.getNodeHashRange()[1]);
+        logger.info("BEFORE CHANGE pred lower: " + pred.getNodeHashRange()[0]);
+
+        newNode.assignHashRange(pred.getNodeHashRange()[1], newNode.getNodeHashRange()[1]);
+        succ.assignHashRange(newNode.getNodeHashRange()[1], succ.getNodeHashRange()[1]);
+
+        logger.info("newNode upper: " + newNode.getNodeHashRange()[1]);
+        logger.info("newNode lower: " + newNode.getNodeHashRange()[0]);
+
+        logger.info("succ upper: " + succ.getNodeHashRange()[1]);
+        logger.info("succ lower: " + succ.getNodeHashRange()[0]);
+
+        logger.info("pred upper: " + pred.getNodeHashRange()[1]);
+        logger.info("pred lower: " + pred.getNodeHashRange()[0]);
+        // remove the old version of nodes 
+        }
     }
 
-    public static void removeECSNode(String name){
-        for (int i=0;i<ECS.kvNodes.size();i++) {
-            if (ECS.kvNodes.get(i).getNodeName() == name){
-                ECS.kvNodes.remove(i);
-            }
-        }
-        hr.removeServer("XXX");
+    public static void removeECSNode(String address, int port){
+        ECSNode removeNode = new ECSNode(String.format("Server %s",address), address, port,null);
+        hr.removeServer(removeNode.getIpPortHash());
+
+        ECSNode pred = hr.getPredecessorNodeFromIpHash(removeNode.getIpPortHash());
+        ECSNode succ = hr.getSuccessorNodeFromIpHash(removeNode.getIpPortHash());
+
+        logger.info("BEFORE CHANGE removeNode upper: " + removeNode.getNodeHashRange()[1]);
+        logger.info("BEFORE CHANGE removeNode lower: " + removeNode.getNodeHashRange()[0]);
+
+        logger.info("BEFORE CHANGE succ upper: " + succ.getNodeHashRange()[1]);
+        logger.info("BEFORE CHANGE succ lower: " + succ.getNodeHashRange()[0]);
+
+        logger.info("BEFORE CHANGE pred upper: " + pred.getNodeHashRange()[1]);
+        logger.info("BEFORE CHANGE pred lower: " + pred.getNodeHashRange()[0]);
+
+        //pred.assignHashRange(pred.getNodeHashRange()[1], newNode.getNodeHashRange()[1]);
+        succ.assignHashRange(pred.getNodeHashRange()[1], succ.getNodeHashRange()[1]);
+
+        logger.info("removeNode upper: " + removeNode.getNodeHashRange()[1]);
+        logger.info("removeNode lower: " + removeNode.getNodeHashRange()[0]);
+
+        logger.info("succ upper: " + succ.getNodeHashRange()[1]);
+        logger.info("succ lower: " + succ.getNodeHashRange()[0]);
+
+        logger.info("pred upper: " + pred.getNodeHashRange()[1]);
+        logger.info("pred lower: " + pred.getNodeHashRange()[0]);
+
+        
     }
 
     public void initializeZK(){
@@ -112,30 +168,33 @@ public class ECS {
             public void processResult(int rc, String path, Object ctx,
                                       List<String> children) {
                 logger.info("REACHED CALLBACK FOR CHILDREN CHANGE");
-                ECS.updateKeyRange(children);
+                ECS.updateKeyRange(path,children);
             }
         };
     }
 
-    public static synchronized void updateKeyRange(List<String> workerNames){
-        
+    public static synchronized void updateKeyRange(String path,List<String> workerNames){
+        System.out.println(path);
+
+        System.out.println(Arrays.toString(workerNames.toArray()));
         String critNode;
         List<String> kvCache = new ArrayList<String>();
         for (IECSNode i : ECS.kvNodes) {
             kvCache.add(i.getNodeName());
         }
 
-        List<String> differences = new ArrayList<>(kvCache);
-        differences.removeAll(workerNames);
+        System.out.println(Arrays.toString(kvCache.toArray()));
+        List<String> differences = new ArrayList<>(workerNames);
+        differences.removeAll(kvCache);
         critNode = differences.get(0);
 
         // if adding a server
         if (workerNames.size() > ECS.kvNodes.size()){
-            ECS.addECSNode(critNode,00);
+            ECS.addECSNode(critNode,Integer.parseInt(critNode.split(":")[1]));
             
         } else {
             // ir removing a server
-            removeECSNode(critNode);
+            ECS.removeECSNode(critNode,Integer.parseInt(critNode.split(":")[1]));
         }
     }
     
