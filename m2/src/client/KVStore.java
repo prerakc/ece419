@@ -111,7 +111,6 @@ public class KVStore implements KVCommInterface {
 			}
 			return recurGet(key);
 		}
->>>>>>> justin
 	}
 
 	public IKVMessage keyrange() throws Exception {
