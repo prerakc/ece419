@@ -30,8 +30,8 @@ public class KVServer extends Thread implements IKVServer {
 	private static String serverName;
 	private static StatusType status;
 	private String address;
-	private String dataDirectory = "./data";
-	private String dataProperties = "database.properties";
+	private String dataDirectory;
+	private String dataProperties;
 
 	private KVStorage storage;
 
@@ -59,20 +59,26 @@ public class KVServer extends Thread implements IKVServer {
 	 //TODO: add support for serverName
 	public KVServer(String address,int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
 		// TODO Auto-generated method stub
+		this(address, port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s_%d.properties", "localhost", port));
+	}
+
+	public KVServer(String address,int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
+		// TODO Auto-generated method stub
 		this.address = address;
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
+
 		KVServer.status = StatusType.SERVER_NOT_AVAILABLE;
 
-		this.serverName = String.format("%s:%d",this.getHostname(),port);
+		this.dataDirectory = dataDir;
+		this.dataProperties = dataProps;
 
 		this.storage = new KVStorage(this.dataDirectory, this.dataProperties);
 
 		this.threads = new ArrayList<Thread>();
 
 		KVServer.metaData = new HashRing();
-		
 
 		this.serverName = String.format("%s:%d",this.address,port);
 
@@ -85,24 +91,6 @@ public class KVServer extends Thread implements IKVServer {
 
 		KVServer.ecsClient.addStatusServerWatch(KVServer.serverName);
 		KVServer.ecsClient.addMetadataServerWatch(KVServer.serverName);
-	}
-
-	public KVServer(String address, int port, int cacheSize, String strategy,String dataDir, String dataProps) {
-		// TODO Auto-generated method stub
-		this.address = address;
-		this.port = port;
-		this.cacheSize = cacheSize;
-		this.strategy = strategy;
-		
-		this.dataDirectory = dataDir;
-		this.dataProperties = dataProps;
-		this.storage = new KVStorage(dataDirectory, dataProperties);
-
-		this.threads = new ArrayList<Thread>();
-
-		KVServer.metaData = new HashRing();
-
-		//this.ecsClient = new ECSClient(false);
 	}
 	
 	public StatusType getStatus(){
