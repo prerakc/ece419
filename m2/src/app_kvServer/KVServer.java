@@ -1,5 +1,6 @@
 package app_kvServer;
 
+import client.KVStore;
 import logger.LogSetup;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -7,16 +8,13 @@ import org.apache.log4j.Logger;
 import app_kvECS.ECSClient;
 import storage.KVStorage;
 import storage.HashRing;
-import ecs.ServerStatus;
 import ecs.ECSNode;
 import shared.messages.IKVMessage.StatusType;
 
 import java.net.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 
 public class KVServer extends Thread implements IKVServer {
@@ -30,8 +28,8 @@ public class KVServer extends Thread implements IKVServer {
 	private static String serverName;
 	private StatusType status;
 
-	private String dataDirectory = "./data";
-	private String dataProperties = "database.properties";
+	private String dataDirectory;
+	private String dataProperties;
 
 	private KVStorage storage;
 
@@ -57,42 +55,34 @@ public class KVServer extends Thread implements IKVServer {
 	 //TODO: add support for serverName
 	public KVServer(int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
 		// TODO Auto-generated method stub
-		this.port = port;
-		this.cacheSize = cacheSize;
-		this.strategy = strategy;
-		this.status = StatusType.SERVER_NOT_AVAILABLE;
-
-		this.storage = new KVStorage(dataDirectory, dataProperties);
-
-		this.threads = new ArrayList<Thread>();
-
-		this.metaData = new HashRing();
-		// start up ecs node
-		this.serverNode = new ECSNode("tempName", this.getHostname(), this.port);
-
-		this.serverName = String.format("%s:%d",this.getHostname(),port);
-		KVServer.ecsClient = new ECSClient(ecsServer,ecsPort,false);
-		KVServer.ecsClient.addKVServer(KVServer.serverName);
-
-		this.status = StatusType.SERVER_IDLE;
-
+		this(port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s_%d.properties", "localhost", port));
 	}
 
-	public KVServer(int port, int cacheSize, String strategy,String dataDir, String dataProps) {
+  	public KVServer(int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
 		// TODO Auto-generated method stub
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
-		
+    	this.status = StatusType.SERVER_NOT_AVAILABLE;
+
+		this.serverName = String.format("%s:%d",this.getHostname(),port);
+
 		this.dataDirectory = dataDir;
 		this.dataProperties = dataProps;
+
 		this.storage = new KVStorage(dataDirectory, dataProperties);
 
 		this.threads = new ArrayList<Thread>();
 
 		this.metaData = new HashRing();
 
-		//this.ecsClient = new ECSClient(false);
+    	// start up ecs node
+		this.serverNode = new ECSNode("tempName", this.getHostname(), this.port);
+    
+    	KVServer.ecsClient = new ECSClient(ecsServer,ecsPort,false);
+		KVServer.ecsClient.addKVServer(KVServer.serverName);
+    
+    	this.status = StatusType.SERVER_IDLE;
 	}
 	
 	public StatusType getStatus(){
@@ -177,6 +167,36 @@ public class KVServer extends Thread implements IKVServer {
 
 		if(!storage.delete(key)) {
 			throw new Exception(String.format("Failed to delete key '%s' from the database", key));
+		}
+	}
+
+	public void moveData() {
+		// assume metadata has been updated before the function is called (i.e. metadata no longer contains this server)
+
+		// this is the last server
+		if (metaData.getHashRing().isEmpty()) {
+			return;
+		}
+
+		try {
+			Map<String, String> db = storage.getDatabase();
+
+			String randomKey = db.entrySet().iterator().next().getKey();
+
+			ECSNode successor = metaData.getServerForKVKey(randomKey);
+
+			KVStore client = new KVStore(successor.getNodeHost(), successor.getNodePort());
+
+			client.connect();
+
+			for (Map.Entry<String, String> kvPair : db.entrySet()) {
+				client.put(kvPair.getKey(), kvPair.getValue());
+			}
+
+			client.disconnect();
+
+			storage.clear();
+		} catch (Exception ignored) { // assuming KVStore connect() and put() don't throw errors
 		}
 	}
 

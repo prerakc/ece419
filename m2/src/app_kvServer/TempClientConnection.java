@@ -122,13 +122,19 @@ public class TempClientConnection implements Runnable {
 				} else {
 					boolean existingKey = server.inStorage(key);
 					try {
-						server.putKV(key, value);
-						if (existingKey) {
-							responseStatus = StatusType.PUT_UPDATE;
-							logger.info(String.format("Updated value associated with key '%s' to '%s'", key, value));
-						} else {
-							responseStatus = StatusType.PUT_SUCCESS;
-							logger.info(String.format("Added key '%s' and value '%s' to the database", key, value));
+						if(!server.isResponsibleForRequest(key)){
+							responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+							responseValue = server.serializeHashRing();
+							logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
+						}else{
+							server.putKV(key, value);
+							if (existingKey) {
+								responseStatus = StatusType.PUT_UPDATE;
+								logger.info(String.format("Updated value associated with key '%s' to '%s'", key, value));
+							} else {
+								responseStatus = StatusType.PUT_SUCCESS;
+								logger.info(String.format("Added key '%s' and value '%s' to the database", key, value));
+							}
 						}
 					} catch (Exception e) {
 						responseStatus = StatusType.PUT_ERROR;

@@ -98,6 +98,8 @@ public class KVStorage {
         return db.containsKey(key);
     }
 
+    public synchronized Map<String, String> getDatabase() { return db; }
+
     public synchronized void clear() {
         db.clear();
         persist();
