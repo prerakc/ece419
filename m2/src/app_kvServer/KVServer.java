@@ -59,12 +59,12 @@ public class KVServer extends Thread implements IKVServer {
 	 *           and "LFU".
 	 */
 	 //TODO: add support for serverName
-	public KVServer(String address,int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
+	public KVServer(String address, int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
 		// TODO Auto-generated method stub
 		this(address, port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s_%d.properties", address, port));
 	}
 
-	public KVServer(String address,int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
+	public KVServer(String address, int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
 		// TODO Auto-generated method stub
 		this.address = address;
 		this.port = port;
@@ -97,12 +97,12 @@ public class KVServer extends Thread implements IKVServer {
 		distributedMode = true;
 	}
 
-	public KVServer(String address,int port, int cacheSize, String strategy) {
+	public KVServer(String address, int port, int cacheSize, String strategy) {
 		// TODO Auto-generated method stub
 		this(address, port, cacheSize, strategy, "./data", String.format("%s_%d.properties", address, port));
 	}
 
-	public KVServer(String address,int port, int cacheSize, String strategy, String dataDir, String dataProps) {
+	public KVServer(String address, int port, int cacheSize, String strategy, String dataDir, String dataProps) {
 		// TODO Auto-generated method stub
 		this.address = address;
 		this.port = port;
