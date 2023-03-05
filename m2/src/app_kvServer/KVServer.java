@@ -266,9 +266,10 @@ public class KVServer extends Thread implements IKVServer {
 	}
 
 	public boolean isResponsibleForRequest(String key){
-		// see if key is between the hash range of the ECSNode
 		String[] hashRange = this.serverNode.getNodeHashRange();
-		return (key.compareTo(hashRange[0]) >= 0) &&  (key.compareTo(hashRange[1]) <= 1);
+		if(hashRange[0].compareTo(hashRange[1]) < 0) //if hash range does not wrap around
+			return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0);
+		return (key.compareTo(hashRange[0]) < 0) ||  (key.compareTo(hashRange[1]) > 0); //hash range does wrap around
 	}
 
 	public String serializeHashRing() throws Exception{
