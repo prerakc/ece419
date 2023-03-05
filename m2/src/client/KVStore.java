@@ -9,7 +9,7 @@ import storage.HashRing;
 import shared.Config;
 import ecs.ECSNode;
 import java.util.Map;
-
+import java.io.IOException;
 import java.net.Socket;
 
 public class KVStore implements KVCommInterface {
@@ -76,11 +76,41 @@ public class KVStore implements KVCommInterface {
 		kvCommunication.sendMessage(message);
 		KVMessage ackMessage = kvCommunication.receiveMessage();
 		boolean sentToCorrectServer = messageSentToCorrectServer(ackMessage);
+		logger.info(sentToCorrectServer);
 		while(!sentToCorrectServer){
 			updateConnection(key, ackMessage);
 			kvCommunication.sendMessage(message);
+			logger.info("LOOKING FOR SERVER");
+			ackMessage = kvCommunication.receiveMessage();
+			sentToCorrectServer = messageSentToCorrectServer(ackMessage);
 		}
-		return kvCommunication.receiveMessage();
+		return ackMessage;
+	}
+
+	public IKVMessage recurGet(String key) throws Exception {
+		try{
+			return get(key);
+		} catch (IOException e){
+			
+			String thisNodeHash = HashUtils.getFixedSizeHashString(String.format("%s:%d",this.address,this.port), Config.HASH_STRING_SIZE);
+
+			logger.info(String.format("%s:%d",this.address,this.port));
+			logger.info(this.metaData.getHashRing().keySet());
+			logger.info(thisNodeHash);
+
+			ECSNode nodeNext = this.metaData.getSuccessorNodeFromIpHash(thisNodeHash);
+			this.metaData.removeServer(thisNodeHash);
+
+			try{
+				disconnect();
+				this.address = nodeNext.getNodeHost();
+				this.port = nodeNext.getNodePort();
+				connect();
+			} catch (Exception ex) {
+				logger.error("CAN NOT CONNECT TO SERVER", ex);
+			}
+			return recurGet(key);
+		}
 	}
 
 	public IKVMessage keyrange() throws Exception {
@@ -170,7 +200,7 @@ public class KVStore implements KVCommInterface {
 
 	public boolean messageSentToCorrectServer(IKVMessage message){
 		// if the server is not responsible or it is removed
-		return (message.getStatus() == KVMessage.StatusType.SERVER_NOT_RESPONSIBLE);
+		return (message.getStatus() != KVMessage.StatusType.SERVER_NOT_RESPONSIBLE);
 
 		// return (message.getStatus() == KVMessage.StatusType.SERVER_NOT_RESPONSIBLE || message.getStatus() == KVMessage.StatusType.SERVER_REMOVED);
 		
