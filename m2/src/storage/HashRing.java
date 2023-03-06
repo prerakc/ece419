@@ -80,24 +80,24 @@ public class HashRing {
         	this.addServer(node.getIpPortHash(), node);
         }
 
-        //update range of servers
-        String prev = null;
-        for (String key : this.map.keySet()) {
-            ECSNode node = this.map.get(key);
-            if(prev != null){
-                node.assignHashRange(prev, key);
-            }
-            prev = key;
-        }
+        // //update range of servers
+        // String prev = null;
+        // for (String key : this.map.keySet()) {
+        //     ECSNode node = this.map.get(key);
+        //     if(prev != null){
+        //         node.assignHashRange(prev, key);
+        //     }
+        //     prev = key;
+        // }
 
-        if(!this.map.isEmpty()){
-            ECSNode firstNode = this.map.get(this.map.firstKey());
-            try{
-                firstNode.assignHashRange(prev, this.map.firstKey());
-            }catch (IllegalArgumentException e) {
-			    logger.error("Assinging Hash Ranges from given nodemap failed!", e);
-		    }
-        }
+        // if(!this.map.isEmpty()){
+        //     ECSNode firstNode = this.map.get(this.map.firstKey());
+        //     try{
+        //         firstNode.assignHashRange(prev, this.map.firstKey());
+        //     }catch (IllegalArgumentException e) {
+		// 	    logger.error("Assinging Hash Ranges from given nodemap failed!", e);
+		//     }
+        // }
 
     } 
 
@@ -173,9 +173,9 @@ public class HashRing {
 		key = HashUtils.getFixedSizeHashString(key, Config.HASH_STRING_SIZE);
 
 		if(hashRange[0].compareTo(hashRange[1]) < 0){//if hash range does not wrap around 
-			return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0);
+			return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0); // lower hash is bigger than key and higher hash is lower
 		}
-		return (key.compareTo(hashRange[0]) < 0) ||  (key.compareTo(hashRange[1]) > 0); //hash range does wrap around
+		return (key.compareTo(hashRange[0]) > 0) ||  (key.compareTo(hashRange[1]) <= 0); //hash range does wrap around
 	}
 
     // public void removeEntriesBetweenrange(String low, String high){
@@ -188,5 +188,7 @@ public class HashRing {
     // public Map getEntriesBetweenRange(String low, String high){
     //     return this.map.subMap(low, true, high, true);
     // }
+
+    //127.0.0.1:9082,127.0.0.1,9082,185917810396686801168395350496348860126,185917810396686801168395350496348860126,14;
 
 }

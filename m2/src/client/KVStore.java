@@ -200,6 +200,7 @@ public class KVStore implements KVCommInterface {
 		}
 		try{
 			connect();
+			logger.info(String.format("connected to address %s at port %s", this.address, this.port));
 		}catch(Exception e){
 			
 		}
