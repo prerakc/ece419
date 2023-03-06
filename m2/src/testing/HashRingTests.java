@@ -30,18 +30,41 @@ public class HashRingTests extends TestCase {
         public void setUp() {
             this.hr = new HashRing();
             // String[] ports = new String[numNodes];
-            String[] sortedHashes = new String[numNodes];
-            for(int i  =0; i< numNodes; i++){
+            this.sortedHashes = new String[this.numNodes];
+            for(int i  =0; i< this.numNodes; i++){
                 String key = ip + ":" + i;
                 ECSNode node = new ECSNode(key, ip, i);
+                this.hr.addServer(node.getIpPortHash(), node);
                 String hash = HashUtils.getHashString(key);
-                sortedHashes[i] = hash;
+                this.sortedHashes[i] = hash;
             }
-            Arrays.sort(sortedHashes);
+            Arrays.sort(this.sortedHashes);
 
 
             // ECSNode node1 = new ECSNode();
         }
+
+        @Test
+        public void testGetNodeFromHash() {   
+            String hash = this.sortedHashes[0];
+            ECSNode fetchedNode = this.hr.getServerForHashValue(hash);
+            assertEquals(hash, fetchedNode.getIpPortHash());
+        }
+
+        @Test
+        public void testGetSuccessor(){
+            ECSNode succ = this.hr.getSuccessorNodeFromIpHash(this.sortedHashes[1]);
+            assertEquals(succ.getIpPortHash(), this.sortedHashes[2]);
+        }
+
+        @Test 
+        public void testGetPredecessor(){
+            ECSNode pred = this.hr.getPredecessorNodeFromIpHash(sortedHashes[1]);
+            assertEquals(pred.getIpPortHash(), this.sortedHashes[0]);
+
+        }
+
+
 
         
 
