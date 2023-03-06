@@ -102,8 +102,6 @@ public class ECSNode implements IECSNode{
             throw new IllegalArgumentException("ECS Payload is malformed: number of arguments should be six!");
         }
 		
-        // System.out.println("++++++++++++++PAYLOARD");
-        // System.out.println(Arrays.toString(arr));
 		String name = arr[0];
 		String host = arr[1];
 		int port = Integer.parseInt(arr[2]);
@@ -113,6 +111,7 @@ public class ECSNode implements IECSNode{
 		int status = Integer.parseInt(arr[5]);
 
 		ECSNode node = new ECSNode(name, host, port, hashRange);
+
 		node.setStatus(StatusType.values()[status]);
 		return node;
 	}

@@ -64,7 +64,7 @@ public class KVServer extends Thread implements IKVServer {
 	 //TODO: add support for serverName
 	public KVServer(String address, int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
 		// TODO Auto-generated method stub
-		this(address, port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s_%d.properties", address, port));
+		this(address, port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s:%d.properties", address, port));
 	}
 
 	public KVServer(String address, int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
@@ -75,7 +75,9 @@ public class KVServer extends Thread implements IKVServer {
 		this.strategy = strategy;
 		this.serverName = String.format("%s:%d",this.address,port);
 		KVServer.serverName = String.format("%s:%d",this.address,port);
-		this.dataProperties = KVServer.serverName + ".properties";
+		// this.dataProperties = KVServer.serverName + ".properties";
+		this.dataProperties = dataProps;
+		this.dataDirectory = dataDir;
 		KVServer.status = StatusType.SERVER_NOT_AVAILABLE;
 
 		// this.serverName = String.format("%s:%d",this.getHostname(),port);
@@ -141,6 +143,7 @@ public class KVServer extends Thread implements IKVServer {
 		HashRing newMeta = HashRing.getHashRingFromNodeMap(ECSNode.deserializeToECSNodeMap(status));
 		HashRing oldMeta = KVServer.metaData;
 		KVServer.metaData = newMeta;
+		logger.info( KVServer.metaData.getHashRing().firstEntry().getValue().getNodeHashRange()[0] + ":" + KVServer.metaData.getHashRing().firstEntry().getValue().getNodeHashRange()[1]);
 
 		// ECSNode thisNode = currentServerIsRemoved(oldMeta, newMeta);
 		ECSNode thisNode = getCurrentServerNode(oldMeta, newMeta);
@@ -175,23 +178,28 @@ public class KVServer extends Thread implements IKVServer {
 		// thisNode = currentServerIsAdded(oldMeta, newMeta);
 		// if(thisNode != null){
 		if(currentServerIsAdded(oldMeta, newMeta)){
-			logger.info("here transferring data to added node");
+			ECSNode targetNode = thisNode;
+			logger.info("here transferring data to added node: " +  targetNode.getNodeName());
 			Map<String, String> toBeMoved = Collections.synchronizedMap(new HashMap<String, String>());
-			ECSNode targetNode = newMeta.getPredecessorNodeFromIpHash(thisNode.getIpPortHash());
-			if(targetNode == null) return;
+			// ECSNode targetNode = newMeta.getPredecessorNodeFromIpHash(thisNode.getIpPortHash());
+			ECSNode srcNode = newMeta.getSuccessorNodeFromIpHash(thisNode.getIpPortHash());
+			if(srcNode == null) return;
 
 			Properties dataProps = new Properties();
-			String currDataPath = String.format("data/%s.properties", KVServer.serverName);
+			String srcDataPath = String.format("data/%s.properties", srcNode.getNodeName());
             try{
-				dataProps.load(new FileInputStream(currDataPath));
+				dataProps.load(new FileInputStream(srcDataPath));
 			}catch (Exception e) {
 				logger.error("Failed to write database to disk", e);
 			}
 
 			Properties newCurrentDataProps = new Properties();
 			for (String key: dataProps.stringPropertyNames()) {
-				if(HashRing.keyInRange(key, targetNode.getNodeHashRange()))
+				logger.info("Checking key key: " + key);
+				if(HashRing.keyInRange(key, targetNode.getNodeHashRange())){
+					logger.info("Transferring key: " + key);
                 	newCurrentDataProps.put(key, dataProps.getProperty(key));
+				}
             }
 
 
@@ -205,12 +213,12 @@ public class KVServer extends Thread implements IKVServer {
 				logger.error("Failed to write database to disk", e);
 			}
 
-			//update the current dataprops
-			try {
-				newCurrentDataProps.store(new FileOutputStream(currDataPath), null);
-			} catch (Exception e) {
-				logger.error("Failed to write database to disk", e);
-			}
+			// //update the current dataprops
+			// try {
+			// 	newCurrentDataProps.store(new FileOutputStream(targetDataPath), null);
+			// } catch (Exception e) {
+			// 	logger.error("Failed to write database to disk", e);
+			// }
 
 		}
 	}
@@ -527,7 +535,7 @@ public class KVServer extends Thread implements IKVServer {
 		  }
 		  logger.info("key.compareTo(hashRange[0]) < 0: " + (key.compareTo(hashRange[0]) < 0));
 		  logger.info("key.compareTo(hashRange[1]) > 0 " + (key.compareTo(hashRange[1]) > 0));
-		  return (key.compareTo(hashRange[0]) < 0) ||  (key.compareTo(hashRange[1]) > 0); //hash range does wrap around
+		  return (key.compareTo(hashRange[0]) > 0) ||  (key.compareTo(hashRange[1]) <= 0); //hash range does wrap around
 		} else {
 			return true;
 		}
