@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import shared.messages.IKVMessage;
 import shared.messages.IKVMessage.StatusType;
+import java.util.*;
 // import shared.Config;
 // import storage.HashUtils;
 
@@ -385,7 +386,96 @@ public class DistributedKVStoreTest extends TestCase {
 
     @Test
 	public void testPerformance() {
+        int[] clientNums = new int[]{1, 5, 20, 50, 100};
+        int[] storageServers = new int[]{1, 5, 10, 50, 100};
+        HashMap<String, String> records = EnronReader.parse("/nfs/ug/homes-1/t/tranjus3/ece419/m2/maildir");
+        
+        int clientNumber = clientNums[0];
+
+		IKVMessage response = null;
+		Exception ex = null;
+
+        KVStore kvClient = new KVStore(address, serverPort1);
+
+        int totalTest = 1000000;
+		int putNumber;
+		int getNumber;
+
+		long startTime;
+		long endTime;
+
+
+        //  80% puts, 20% gets
+        putNumber = (int)(totalTest * 0.8);
+		getNumber = totalTest - putNumber;
+        startTime = System.currentTimeMillis();
+        // ExecutorService es = Executors.newCachedThreadPool();
+        // for(int i=0;i<clientNumber;i++)
+        //     es.execute(new Runnable() { 
+        //         runPerformance(records,putNumber,getNumber,kvClient);
+        //     });
+        // es.shutdown();
+        runPerformance(records,putNumber,getNumber,kvClient);
+        // boolean finished = es.awaitTermination(1, TimeUnit.MINUTES);
+        endTime = System.currentTimeMillis();
+		System.out.println("+++ 80% puts, 20% gets: " + (endTime - startTime) + " ms +++");
+
+        
+        // 50%/50%
+        putNumber = (int)(totalTest * .5);
+		getNumber = totalTest - putNumber;
+
+        startTime = System.currentTimeMillis();
+        // ExecutorService es = Executors.newCachedThreadPool();
+        // for(int i=0;i<clientNumber;i++)
+        //     es.execute(new Runnable() { 
+        //         runPerformance(records,putNumber,getNumber,kvClient);
+        //     });
+        // es.shutdown();
+        runPerformance(records,putNumber,getNumber,kvClient);
+        // boolean finished = es.awaitTermination(1, TimeUnit.MINUTES);
+        endTime = System.currentTimeMillis();
+		System.out.println("+++ 50% puts, 50% gets: " + (endTime - startTime) + " ms +++");
+
+        // 80% gets, 20% puts
+        putNumber = (int)(totalTest * .2);
+		getNumber = totalTest - putNumber;
+
+        startTime = System.currentTimeMillis();
+        // ExecutorService es = Executors.newCachedThreadPool();
+        // for(int i=0;i<clientNumber;i++)
+        //     es.execute(new Runnable() { 
+        //         runPerformance(records,putNumber,getNumber,kvClient);
+        //     });
+        // es.shutdown();
+        runPerformance(records,putNumber,getNumber,kvClient);
+        // boolean finished = es.awaitTermination(1, TimeUnit.MINUTES);
+        endTime = System.currentTimeMillis();
+		System.out.println("+++ 20% puts, 80% gets: " + (endTime - startTime) + " ms +++");
+
         assertTrue(true);
         safePrintln("SUCCESS PERFORMANCE");
     }
+
+    public void runPerformance(HashMap<String, String> dat, int putNumber, int getNumber, KVStore kvClient){
+		Exception ex = null;
+        String key;
+		for(int i=0; i<putNumber;i++){
+			try {
+                 key = dat.keySet().iterator().next();
+				kvClient.put(key, dat.get(key));
+			} catch (Exception e) {
+				ex = e;
+			}
+		}
+
+		for(int i=0; i<getNumber;i++){
+			try {
+                key = dat.keySet().iterator().next();
+				kvClient.get(key);
+			} catch (Exception e) {
+				ex = e;
+			}
+		}
+	}
 }

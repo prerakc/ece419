@@ -12,8 +12,11 @@ public class EnronReader {
         HashMap<String, String> dataMap = new HashMap<>();
 
         for (File user : Objects.requireNonNull(dataDir.listFiles())) {
+            System.out.println(user.getPath());
             for (File folder : Objects.requireNonNull(user.listFiles())) {
+                System.out.println(folder.getPath());
                 for (File email : Objects.requireNonNull(folder.listFiles())) {
+                    System.out.println(email.getPath());
                     if (!email.isFile()) {
                         continue;
                     }
