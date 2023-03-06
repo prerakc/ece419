@@ -28,42 +28,51 @@ public class DistributedKVStoreTest extends TestCase {
             }
         }.start();
         new KVServer(address, serverPort1, cacheSize, strategy, address, ecsPort, dataDir, dataProps1).start();
-        // new KVServer(address, serverPort2, cacheSize, strategy, address, ecsPort, dataDir, dataProps2).start();
+        new KVServer(address, serverPort2, cacheSize, strategy, address, ecsPort, dataDir, dataProps2).start();
     }
 
     @Test
     public void testKeyrange() {        
-        assertTrue(true);
+        // assertTrue(true);
         
-        // Exception ex = null;
+        Exception ex = null;
 
-        // KVStore kvClient = new KVStore(address, serverPort1);
+        KVStore kvClient = new KVStore(address, serverPort1);
 
-        // try {
-        //     kvClient.connect();
-        // } catch (Exception e) {
-        //     ex = e;
-        // }
+        try {
+            kvClient.connect();
+        } catch (Exception e) {
+            ex = e;
+        }
 
-        // assertNull(ex);
+        assertNull(ex);
 
-        // IKVMessage response = null;
+        IKVMessage response = null;
 
-        // try {
-        //     response = kvClient.keyrange();
-        // } catch (Exception e) {
-        //     ex = e;
-        // }
+        try {
+            response = kvClient.keyrange();
+        } catch (Exception e) {
+            ex = e;
+        }
 
-        // assertNull(ex);
+        assertNull(ex);
 
-        // assertSame(response.getStatus(), IKVMessage.StatusType.KEYRANGE_SUCCESS);
+        assertSame(response.getStatus(), IKVMessage.StatusType.KEYRANGE_SUCCESS);
 
-        // System.out.println(response.getValue());
+        // assertSame(response.getValue(), "93328924524456121601951623841295194894\r\n");
 
-        // kvClient.disconnect();
+        assertTrue(response.getValue().equals("\r\n"));
+
+        // safePrintln(String.format("KEYRANGE: %s", response.getValue()));
+
+        kvClient.disconnect();
     }
 
-
+    public void safePrintln(String s) {
+        synchronized (System.out) {
+          System.out.println(s);
+        }
+      }
+      
 
 }
