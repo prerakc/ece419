@@ -1677,3 +1677,85 @@
 2023-03-06 01:16:01,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00c8, timeout of 40000ms exceeded
 2023-03-06 01:16:01,635 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00c4
 2023-03-06 01:16:01,637 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00c8
+2023-03-06 02:09:45,512 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@215] - Accepted socket connection from /127.0.0.1:43996
+2023-03-06 02:09:45,513 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@938] - Client attempting to establish new session at /127.0.0.1:43996
+2023-03-06 02:09:45,515 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@683] - Established session 0x100cd7a599a00cb with negotiated timeout 40000 for client /127.0.0.1:43996
+2023-03-06 02:09:45,518 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@215] - Accepted socket connection from /127.0.0.1:43998
+2023-03-06 02:09:45,522 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@938] - Client attempting to establish new session at /127.0.0.1:43998
+2023-03-06 02:09:45,523 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@683] - Established session 0x100cd7a599a00cc with negotiated timeout 40000 for client /127.0.0.1:43998
+2023-03-06 02:09:45,527 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00cc type:create cxid:0x1 zxid:0x596 txntype:-1 reqpath:n/a Error Path:/workers Error:KeeperErrorCode = NodeExists for /workers
+2023-03-06 02:09:45,532 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00cc type:create cxid:0x2 zxid:0x597 txntype:-1 reqpath:n/a Error Path:/server_status Error:KeeperErrorCode = NodeExists for /server_status
+2023-03-06 02:09:47,031 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x100cd7a599a00cc, likely client has closed socket
+2023-03-06 02:09:47,031 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1040] - Closed socket connection for client /127.0.0.1:43998 which had sessionid 0x100cd7a599a00cc
+2023-03-06 02:09:47,032 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x100cd7a599a00cb, likely client has closed socket
+2023-03-06 02:09:47,034 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1040] - Closed socket connection for client /127.0.0.1:43996 which had sessionid 0x100cd7a599a00cb
+2023-03-06 02:10:03,874 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@215] - Accepted socket connection from /127.0.0.1:47078
+2023-03-06 02:10:03,875 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@938] - Client attempting to establish new session at /127.0.0.1:47078
+2023-03-06 02:10:03,877 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@683] - Established session 0x100cd7a599a00cd with negotiated timeout 40000 for client /127.0.0.1:47078
+2023-03-06 02:10:03,881 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@215] - Accepted socket connection from /127.0.0.1:47090
+2023-03-06 02:10:03,881 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@938] - Client attempting to establish new session at /127.0.0.1:47090
+2023-03-06 02:10:03,882 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@683] - Established session 0x100cd7a599a00ce with negotiated timeout 40000 for client /127.0.0.1:47090
+2023-03-06 02:10:03,885 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00ce type:create cxid:0x1 zxid:0x59a txntype:-1 reqpath:n/a Error Path:/workers Error:KeeperErrorCode = NodeExists for /workers
+2023-03-06 02:10:03,890 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00ce type:create cxid:0x2 zxid:0x59b txntype:-1 reqpath:n/a Error Path:/server_status Error:KeeperErrorCode = NodeExists for /server_status
+2023-03-06 02:10:06,561 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@215] - Accepted socket connection from /127.0.0.1:47098
+2023-03-06 02:10:06,563 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@938] - Client attempting to establish new session at /127.0.0.1:47098
+2023-03-06 02:10:06,565 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@683] - Established session 0x100cd7a599a00cf with negotiated timeout 40000 for client /127.0.0.1:47098
+2023-03-06 02:10:06,568 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@215] - Accepted socket connection from /127.0.0.1:47114
+2023-03-06 02:10:06,569 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@938] - Client attempting to establish new session at /127.0.0.1:47114
+2023-03-06 02:10:06,570 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@683] - Established session 0x100cd7a599a00d0 with negotiated timeout 40000 for client /127.0.0.1:47114
+2023-03-06 02:10:06,573 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00d0 type:create cxid:0x1 zxid:0x59e txntype:-1 reqpath:n/a Error Path:/workers Error:KeeperErrorCode = NodeExists for /workers
+2023-03-06 02:10:06,578 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00d0 type:create cxid:0x2 zxid:0x59f txntype:-1 reqpath:n/a Error Path:/server_status Error:KeeperErrorCode = NodeExists for /server_status
+2023-03-06 02:10:09,098 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@215] - Accepted socket connection from /127.0.0.1:47128
+2023-03-06 02:10:09,100 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@938] - Client attempting to establish new session at /127.0.0.1:47128
+2023-03-06 02:10:09,102 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@683] - Established session 0x100cd7a599a00d1 with negotiated timeout 40000 for client /127.0.0.1:47128
+2023-03-06 02:10:09,105 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@215] - Accepted socket connection from /127.0.0.1:47144
+2023-03-06 02:10:09,105 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@938] - Client attempting to establish new session at /127.0.0.1:47144
+2023-03-06 02:10:09,106 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@683] - Established session 0x100cd7a599a00d2 with negotiated timeout 40000 for client /127.0.0.1:47144
+2023-03-06 02:10:09,109 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00d2 type:create cxid:0x1 zxid:0x5a6 txntype:-1 reqpath:n/a Error Path:/workers Error:KeeperErrorCode = NodeExists for /workers
+2023-03-06 02:10:09,113 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00d2 type:create cxid:0x2 zxid:0x5a7 txntype:-1 reqpath:n/a Error Path:/server_status Error:KeeperErrorCode = NodeExists for /server_status
+2023-03-06 02:10:13,758 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@215] - Accepted socket connection from /127.0.0.1:52196
+2023-03-06 02:10:13,759 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@938] - Client attempting to establish new session at /127.0.0.1:52196
+2023-03-06 02:10:13,761 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@683] - Established session 0x100cd7a599a00d3 with negotiated timeout 40000 for client /127.0.0.1:52196
+2023-03-06 02:10:13,764 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxnFactory@215] - Accepted socket connection from /127.0.0.1:52212
+2023-03-06 02:10:13,766 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:ZooKeeperServer@938] - Client attempting to establish new session at /127.0.0.1:52212
+2023-03-06 02:10:13,767 [myid:] - INFO  [SyncThread:0:ZooKeeperServer@683] - Established session 0x100cd7a599a00d4 with negotiated timeout 40000 for client /127.0.0.1:52212
+2023-03-06 02:10:13,769 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00d4 type:create cxid:0x1 zxid:0x5b1 txntype:-1 reqpath:n/a Error Path:/workers Error:KeeperErrorCode = NodeExists for /workers
+2023-03-06 02:10:13,773 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00d4 type:create cxid:0x2 zxid:0x5b2 txntype:-1 reqpath:n/a Error Path:/server_status Error:KeeperErrorCode = NodeExists for /server_status
+2023-03-06 02:10:25,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00cc, timeout of 40000ms exceeded
+2023-03-06 02:10:25,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00cb, timeout of 40000ms exceeded
+2023-03-06 02:10:25,635 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00cc
+2023-03-06 02:10:25,636 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00cb
+2023-03-06 02:10:54,573 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00ce type:setData cxid:0x1a zxid:0x5c4 txntype:-1 reqpath:n/a Error Path:/workers/127.0.0.1:8084 Error:KeeperErrorCode = NoNode for /workers/127.0.0.1:8084
+2023-03-06 02:10:54,883 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x100cd7a599a00d4, likely client has closed socket
+2023-03-06 02:10:54,884 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1040] - Closed socket connection for client /127.0.0.1:52212 which had sessionid 0x100cd7a599a00d4
+2023-03-06 02:10:54,884 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x100cd7a599a00d3, likely client has closed socket
+2023-03-06 02:10:54,885 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1040] - Closed socket connection for client /127.0.0.1:52196 which had sessionid 0x100cd7a599a00d3
+2023-03-06 02:10:56,678 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@653] - Got user-level KeeperException when processing sessionid:0x100cd7a599a00ce type:setData cxid:0x1f zxid:0x5ca txntype:-1 reqpath:n/a Error Path:/workers/127.0.0.1:8084 Error:KeeperErrorCode = NoNode for /workers/127.0.0.1:8084
+2023-03-06 02:10:56,993 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x100cd7a599a00d2, likely client has closed socket
+2023-03-06 02:10:56,993 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1040] - Closed socket connection for client /127.0.0.1:47144 which had sessionid 0x100cd7a599a00d2
+2023-03-06 02:10:56,994 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x100cd7a599a00d1, likely client has closed socket
+2023-03-06 02:10:56,995 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1040] - Closed socket connection for client /127.0.0.1:47128 which had sessionid 0x100cd7a599a00d1
+2023-03-06 02:10:58,814 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x100cd7a599a00d0, likely client has closed socket
+2023-03-06 02:10:58,814 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1040] - Closed socket connection for client /127.0.0.1:47114 which had sessionid 0x100cd7a599a00d0
+2023-03-06 02:10:58,815 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x100cd7a599a00cf, likely client has closed socket
+2023-03-06 02:10:58,816 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1040] - Closed socket connection for client /127.0.0.1:47098 which had sessionid 0x100cd7a599a00cf
+2023-03-06 02:11:00,645 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x100cd7a599a00ce, likely client has closed socket
+2023-03-06 02:11:00,645 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1040] - Closed socket connection for client /127.0.0.1:47090 which had sessionid 0x100cd7a599a00ce
+2023-03-06 02:11:00,646 [myid:] - WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@376] - Unable to read additional data from client sessionid 0x100cd7a599a00cd, likely client has closed socket
+2023-03-06 02:11:00,647 [myid:] - INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181:NIOServerCnxn@1040] - Closed socket connection for client /127.0.0.1:47078 which had sessionid 0x100cd7a599a00cd
+2023-03-06 02:11:27,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00cf, timeout of 40000ms exceeded
+2023-03-06 02:11:27,635 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00cf
+2023-03-06 02:11:29,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00d1, timeout of 40000ms exceeded
+2023-03-06 02:11:29,635 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00d1
+2023-03-06 02:11:35,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00d3, timeout of 40000ms exceeded
+2023-03-06 02:11:35,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00d4, timeout of 40000ms exceeded
+2023-03-06 02:11:35,635 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00d3
+2023-03-06 02:11:35,637 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00d4
+2023-03-06 02:11:37,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00d2, timeout of 40000ms exceeded
+2023-03-06 02:11:37,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00cd, timeout of 40000ms exceeded
+2023-03-06 02:11:37,636 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00d2
+2023-03-06 02:11:37,636 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00cd
+2023-03-06 02:11:39,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00d0, timeout of 40000ms exceeded
+2023-03-06 02:11:39,635 [myid:] - INFO  [SessionTracker:ZooKeeperServer@354] - Expiring session 0x100cd7a599a00ce, timeout of 40000ms exceeded
+2023-03-06 02:11:39,635 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00d0
+2023-03-06 02:11:39,635 [myid:] - INFO  [ProcessThread(sid:0 cport:2181)::PrepRequestProcessor@487] - Processed session termination for sessionid: 0x100cd7a599a00ce
