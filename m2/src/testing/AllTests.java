@@ -12,8 +12,6 @@ import logger.LogSetup;
 
 public class AllTests {
 
-	private static String dataDir = "./data/test";
-
 	static {
 		try {
 			//TODO SAYING ERROR CONNECTION LOST FOR EACH TEST
@@ -24,8 +22,8 @@ public class AllTests {
 		}
 	}
 	
-	private static void clearTestData(){
-		File dataDirFile = new File(dataDir);
+	private static void helper(String dirPath) {
+		File dataDirFile = new File(dirPath);
 
 		File[] contents = dataDirFile.listFiles();
 
@@ -36,14 +34,23 @@ public class AllTests {
 
 			dataDirFile.delete();
 		}
+
+		return;
+	}
+
+	private static void clearTestData(){
+		helper("./data/test");
+		// helper("./data");
 	}
 	
 	public static Test suite() {
 		TestSuite clientSuite = new TestSuite("Basic Storage ServerTest-Suite");
 
-		clientSuite.addTestSuite(NonDistributedKVStoreTest.class);
-		clientSuite.addTestSuite(NonDistributedKVServerTest.class);
-		clientSuite.addTestSuite(NonDistributedKVServerPerformanceTest.class);
+//		clientSuite.addTestSuite(NonDistributedKVStoreTest.class);
+//		clientSuite.addTestSuite(NonDistributedKVServerTest.class);
+//		clientSuite.addTestSuite(NonDistributedKVServerPerformanceTest.class);
+		clientSuite.addTestSuite(DistributedKVStoreTest.class);
+//		clientSuite.addTestSuite(DistributedKVServerTest.class);
 
 		return clientSuite;
 	}
