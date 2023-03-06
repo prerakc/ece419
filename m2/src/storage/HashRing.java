@@ -169,6 +169,15 @@ public class HashRing {
         return node.getIpPortHash();
     }
 
+    public static boolean keyInRange(String key, String[] hashRange){
+		key = HashUtils.getFixedSizeHashString(key, Config.HASH_STRING_SIZE);
+
+		if(hashRange[0].compareTo(hashRange[1]) < 0){//if hash range does not wrap around 
+			return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0);
+		}
+		return (key.compareTo(hashRange[0]) < 0) ||  (key.compareTo(hashRange[1]) > 0); //hash range does wrap around
+	}
+
     // public void removeEntriesBetweenrange(String low, String high){
     //     Map<String, ECSNode> toBeRemoved = this.getEntriesBetweenRange(low, high);
     //     for(String key: toBeRemoved.keySet()){

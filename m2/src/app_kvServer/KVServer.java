@@ -19,6 +19,7 @@ import java.net.*;
 import java.lang.Integer;
 import java.io.IOException;
 import java.util.*;
+import java.io.*;
 
 
 public class KVServer extends Thread implements IKVServer {
@@ -72,19 +73,18 @@ public class KVServer extends Thread implements IKVServer {
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
-
+		this.serverName = String.format("%s:%d",this.address,port);
+		KVServer.serverName = String.format("%s:%d",this.address,port);
+		this.dataProperties = KVServer.serverName + ".properties";
 		KVServer.status = StatusType.SERVER_NOT_AVAILABLE;
 
-		this.dataDirectory = dataDir;
-		this.dataProperties = dataProps;
+		// this.serverName = String.format("%s:%d",this.getHostname(),port);
 
 		this.storage = new KVStorage(this.dataDirectory, this.dataProperties);
 
 		this.threads = new ArrayList<Thread>();
 
 		KVServer.metaData = new HashRing();
-
-		this.serverName = String.format("%s:%d",this.address,port);
 
 		// start up ecs node
 		this.serverNode = new ECSNode(this.serverName,this.address, this.port);
@@ -138,9 +138,166 @@ public class KVServer extends Thread implements IKVServer {
 
 	public static void updateMetadataZK(String status){
 		logger.info(status);
-		KVServer.metaData = HashRing.getHashRingFromNodeMap(ECSNode.deserializeToECSNodeMap(status));
-		// logger.info("ADDED IN UPDATE "+ECSNode.deserializeToECSNodeMap(status).keySet());
+		HashRing newMeta = HashRing.getHashRingFromNodeMap(ECSNode.deserializeToECSNodeMap(status));
+		HashRing oldMeta = KVServer.metaData;
+		KVServer.metaData = newMeta;
+
+		// ECSNode thisNode = currentServerIsRemoved(oldMeta, newMeta);
+		ECSNode thisNode = getCurrentServerNode(oldMeta, newMeta);
+		String thisNodeHash = thisNode.getIpPortHash();
+		logger.info("*******************Is the node removed******************");
+		// if(thisNode != null){
+		ECSNode removedNode = getRemovedNode(oldMeta, newMeta, thisNodeHash);
+		// if(currentServerIsRemoved(oldMeta, newMeta)){
+		if(removedNode != null){
+			logger.info("I am here transfering removed node data from " + removedNode.getNodeName());
+			Map<String, String> toBeMoved = Collections.synchronizedMap(new HashMap<String, String>());
+			// ECSNode targetNode = oldMeta.getSuccessorNodeFromIpHash(thisNode.getIpPortHash());
+			ECSNode targetNode = thisNode;
+			if(targetNode == null) return;
+
+			Properties dataProps = new Properties();
+
+			Properties targetDataProps = new Properties();
+			String targetDataPath = String.format("data/%s.properties", targetNode.getNodeName());
+			String srcPath = String.format("data/%s.properties", removedNode.getNodeName());
+			try {
+				dataProps.load(new FileInputStream(srcPath));
+				targetDataProps.load(new FileInputStream(targetDataPath));
+				targetDataProps.putAll(dataProps);
+				targetDataProps.store(new FileOutputStream(targetDataPath), null);
+			} catch (Exception e) {
+				logger.error("Failed to write database to disk", e);
+			}			
+		}
+
+		
+		// thisNode = currentServerIsAdded(oldMeta, newMeta);
+		// if(thisNode != null){
+		if(currentServerIsAdded(oldMeta, newMeta)){
+			logger.info("here transferring data to added node");
+			Map<String, String> toBeMoved = Collections.synchronizedMap(new HashMap<String, String>());
+			ECSNode targetNode = newMeta.getPredecessorNodeFromIpHash(thisNode.getIpPortHash());
+			if(targetNode == null) return;
+
+			Properties dataProps = new Properties();
+			String currDataPath = String.format("data/%s.properties", KVServer.serverName);
+            try{
+				dataProps.load(new FileInputStream(currDataPath));
+			}catch (Exception e) {
+				logger.error("Failed to write database to disk", e);
+			}
+
+			Properties newCurrentDataProps = new Properties();
+			for (String key: dataProps.stringPropertyNames()) {
+				if(HashRing.keyInRange(key, targetNode.getNodeHashRange()))
+                	newCurrentDataProps.put(key, dataProps.getProperty(key));
+            }
+
+
+			Properties targetDataProps = new Properties();
+			String targetDataPath = String.format("data/%s.properties", targetNode.getNodeName());
+			try {
+				targetDataProps.load(new FileInputStream(targetDataPath));
+				targetDataProps.putAll(newCurrentDataProps);
+				targetDataProps.store(new FileOutputStream(targetDataPath), null);
+			} catch (Exception e) {
+				logger.error("Failed to write database to disk", e);
+			}
+
+			//update the current dataprops
+			try {
+				newCurrentDataProps.store(new FileOutputStream(currDataPath), null);
+			} catch (Exception e) {
+				logger.error("Failed to write database to disk", e);
+			}
+
+		}
 	}
+
+		
+		// logger.info("ADDED IN UPDATE "+ECSNode.deserializeToECSNodeMap(status).keySet());
+
+	//iterate through new metadata to see if the server's node is missing
+	public static ECSNode getCurrentServerNode(HashRing oldMeta, HashRing newMeta){
+		for ( Map.Entry<String, ECSNode> entry : newMeta.getHashRing().entrySet()) {
+			if(entry.getValue().getNodeName().equals(KVServer.serverName)){
+				return entry.getValue();
+			}
+		}
+
+		for ( Map.Entry<String, ECSNode> entry : oldMeta.getHashRing().entrySet()) {
+			if(entry.getValue().getNodeName().equals(KVServer.serverName)){
+				return entry.getValue();
+			}
+		}
+
+		return null;
+	}
+	public static boolean wasNodeRemoved(HashRing oldMeta, HashRing newMeta, String ipPortHash){
+		logger.info("Checking if server removed");
+		ECSNode responsibleNode = oldMeta.getServerForHashValue(ipPortHash);
+		return (!responsibleNode.getIpPortHash().equals(ipPortHash));
+	}
+
+	public static ECSNode getRemovedNode(HashRing oldMeta, HashRing newMeta, String ipPortHash){
+		logger.info("Checking if server removed");
+		logger.info(ipPortHash);
+		for ( Map.Entry<String, ECSNode> entry : oldMeta.getHashRing().entrySet()) {
+			String entryHash = entry.getValue().getIpPortHash();
+			ECSNode responsibleNode = newMeta.getServerForHashValue(entryHash);
+			logger.info("rehash " + responsibleNode.getIpPortHash());
+			logger.info("entryHash " + entryHash);
+			if(!responsibleNode.getIpPortHash().equals(entryHash))
+				return entry.getValue();
+
+		}
+		return null;
+	}
+
+	public static boolean currentServerIsRemoved(HashRing oldMeta, HashRing newMeta){
+		logger.info("Checking is server removed");
+		for ( Map.Entry<String, ECSNode> entry : newMeta.getHashRing().entrySet()) {
+			if(entry.getValue().getNodeName().equals(KVServer.serverName)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean currentServerIsAdded(HashRing oldMeta, HashRing newMeta){
+		for ( Map.Entry<String, ECSNode> entry : oldMeta.getHashRing().entrySet()) {
+			if(entry.getValue().getNodeName().equals(KVServer.serverName)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+
+	// public static ECSNode currentServerIsRemoved(HashRing oldMeta, HashRing newMeta){
+	// 	logger.info("Checking is server removed");
+	// 	for ( Map.Entry<String, ECSNode> entry : newMeta.getHashRing().entrySet()) {
+	// 		if(entry.getValue().getNodeName().equals(KVServer.serverName)){
+	// 			return entry.getValue();
+	// 		}
+	// 	}
+	// 	return null;
+	// }
+
+	//iterate through old metadata to see if the server's node is missing
+	// public static ECSNode currentServerIsAdded(HashRing oldMeta, HashRing newMeta){
+	// 	for ( Map.Entry<String, ECSNode> entry : newMeta.getHashRing().entrySet()) {
+	// 		if(entry.getValue().getNodeName().equals(KVServer.serverName)){
+	// 			return entry.getValue();
+	// 		}
+	// 	}
+	// 	return null;
+	// }
+
+	// public static void moveData(){
+
+	// }
 
 	@Override
 	public int getPort(){

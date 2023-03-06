@@ -121,7 +121,10 @@ public class ECS {
         ECS.hr.removeServer(removeNode.getIpPortHash());
         if (ECS.hr.getHashRing().size() == 1){
             System.out.println(removeNode.getIpPortHash());
-            ECS.hr.getFirstValue().assignHashRange(removeNode.getIpPortHash(), removeNode.getIpPortHash());
+            // ECS.hr.getFirstValue().assignHashRange(removeNode.getIpPortHash(), ECS.hr.getFirstValue().getNodeHashRange()[1]);
+            ECSNode onlyNode = ECS.hr.getFirstValue();
+            ECS.hr.getFirstValue().assignHashRange((new BigInteger(onlyNode.getIpPortHash()).add(new BigInteger("1"))).toString(), 
+                onlyNode.getIpPortHash());
         } else if (ECS.hr.getHashRing().size() == 0){
             
         } else {
@@ -146,6 +149,7 @@ public class ECS {
         this.startZookeeper();
         createZookeeperManager();
         this.createWorkersNode();
+        this.createServerNode();
         //this.createMetadataNode();
         //this.createServerNode();
     }
@@ -372,7 +376,7 @@ public class ECS {
 
     private void createServerNode() {
         try{
-            ECS.zkMng.create("/server_status/", "".getBytes());
+            ECS.zkMng.create("/server_status", "".getBytes());
         } catch (KeeperException | InterruptedException e){
             logger.error("Unable to create znodes", e);
         }
