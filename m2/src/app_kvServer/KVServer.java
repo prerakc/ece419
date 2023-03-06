@@ -33,8 +33,8 @@ public class KVServer extends Thread implements IKVServer {
 	private static String serverName;
 	private static StatusType status;
 	private String address;
-	private String dataDirectory = "./data";
-	private String dataProperties = "database.properties";
+	private String dataDirectory;
+	private String dataProperties;
 
 	private KVStorage storage;
 
@@ -49,6 +49,8 @@ public class KVServer extends Thread implements IKVServer {
 
 	public static int serverStatus;
 
+	private boolean distributedMode;
+
 	/**
 	 * Start KV Server at given port
 	 * @param port given port for storage server to operate
@@ -60,7 +62,12 @@ public class KVServer extends Thread implements IKVServer {
 	 *           and "LFU".
 	 */
 	 //TODO: add support for serverName
-	public KVServer(String address,int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
+	public KVServer(String address, int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
+		// TODO Auto-generated method stub
+		this(address, port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s_%d.properties", address, port));
+	}
+
+	public KVServer(String address, int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
 		// TODO Auto-generated method stub
 		this.address = address;
 		this.port = port;
@@ -78,7 +85,6 @@ public class KVServer extends Thread implements IKVServer {
 		this.threads = new ArrayList<Thread>();
 
 		KVServer.metaData = new HashRing();
-		
 
 		// start up ecs node
 		this.serverNode = new ECSNode(this.serverName,this.address, this.port);
@@ -89,24 +95,32 @@ public class KVServer extends Thread implements IKVServer {
 
 		KVServer.ecsClient.addStatusServerWatch(KVServer.serverName);
 		KVServer.ecsClient.addMetadataServerWatch(KVServer.serverName);
+
+		distributedMode = true;
 	}
 
-	public KVServer(String address, int port, int cacheSize, String strategy,String dataDir, String dataProps) {
+	public KVServer(String address, int port, int cacheSize, String strategy) {
+		// TODO Auto-generated method stub
+		this(address, port, cacheSize, strategy, "./data", String.format("%s_%d.properties", address, port));
+	}
+
+	public KVServer(String address, int port, int cacheSize, String strategy, String dataDir, String dataProps) {
 		// TODO Auto-generated method stub
 		this.address = address;
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
-		
+
+		this.status = StatusType.SERVER_IDLE;
+
 		this.dataDirectory = dataDir;
 		this.dataProperties = dataProps;
-		this.storage = new KVStorage(dataDirectory, dataProperties);
+
+		this.storage = new KVStorage(this.dataDirectory, this.dataProperties);
 
 		this.threads = new ArrayList<Thread>();
 
-		KVServer.metaData = new HashRing();
-
-		//this.ecsClient = new ECSClient(false);
+		distributedMode = false;
 	}
 	
 	public StatusType getStatus(){
@@ -410,12 +424,15 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public void run(){
 		// TODO Auto-generated method stub
-		Runtime.getRuntime().addShutdownHook(new Thread(){
-			public void run(){
-				KVServer.ecsClient.removeKVServer(KVServer.serverName);
-				KVServer.ecsClient.removeServerStatus(KVServer.serverName);
-			}
-		});
+		if (distributedMode) {
+			Runtime.getRuntime().addShutdownHook(new Thread(){
+				public void run(){
+					KVServer.ecsClient.removeKVServer(KVServer.serverName);
+					KVServer.ecsClient.removeServerStatus(KVServer.serverName);
+				}
+			});
+		}
+
 		running = initializeServer();
 
 		if(serverSocket != null) {
@@ -493,23 +510,27 @@ public class KVServer extends Thread implements IKVServer {
 	}
 
 	public boolean isResponsibleForRequest(String key){
-		logger.info(this.serverNode.getIpPortHash());
-		logger.info(KVServer.metaData.getHashRing().keySet());
-		String[] hashRange = KVServer.metaData.getHashRing().get(this.serverNode.getIpPortHash()).getNodeHashRange();
-		// String[] hashRange = this.serverNode.getNodeHashRange();
-		key = HashUtils.getFixedSizeHashString(key, Config.HASH_STRING_SIZE);
-		logger.info("THE KEY IS: " + key);
-		logger.info("THE RANGE LOWER IS: " + hashRange[0]);
-		logger.info("THE RANGE UPPER IS: " + hashRange[1]);
+		if (distributedMode) {
+		  logger.info(this.serverNode.getIpPortHash());
+		  logger.info(KVServer.metaData.getHashRing().keySet());
+		  String[] hashRange = KVServer.metaData.getHashRing().get(this.serverNode.getIpPortHash()).getNodeHashRange();
+		  // String[] hashRange = this.serverNode.getNodeHashRange();
+		  key = HashUtils.getFixedSizeHashString(key, Config.HASH_STRING_SIZE);
+		  logger.info("THE KEY IS: " + key);
+		  logger.info("THE RANGE LOWER IS: " + hashRange[0]);
+		  logger.info("THE RANGE UPPER IS: " + hashRange[1]);
 
-		if(hashRange[0].compareTo(hashRange[1]) < 0){//if hash range does not wrap around 
+		  if(hashRange[0].compareTo(hashRange[1]) < 0){//if hash range does not wrap around
 			logger.info("key.compareTo(hashRange[0]) > 0: " + (key.compareTo(hashRange[0]) > 0));
 			logger.info("key.compareTo(hashRange[1] " + (key.compareTo(hashRange[1]) <= 0));
 			return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0);
+		  }
+		  logger.info("key.compareTo(hashRange[0]) < 0: " + (key.compareTo(hashRange[0]) < 0));
+		  logger.info("key.compareTo(hashRange[1]) > 0 " + (key.compareTo(hashRange[1]) > 0));
+		  return (key.compareTo(hashRange[0]) < 0) ||  (key.compareTo(hashRange[1]) > 0); //hash range does wrap around
+		} else {
+			return true;
 		}
-		logger.info("key.compareTo(hashRange[0]) < 0: " + (key.compareTo(hashRange[0]) < 0));
-		logger.info("key.compareTo(hashRange[1]) > 0 " + (key.compareTo(hashRange[1]) > 0));
-		return (key.compareTo(hashRange[0]) < 0) ||  (key.compareTo(hashRange[1]) > 0); //hash range does wrap around
 	}
 
 	public String serializeHashRing() throws Exception{
