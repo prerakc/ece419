@@ -76,6 +76,7 @@ public class KVServer extends Thread implements IKVServer {
 		this.serverName = String.format("%s:%d",this.address,port);
 		KVServer.serverName = String.format("%s:%d",this.address,port);
 		this.dataProperties = KVServer.serverName + ".properties";
+		this.dataDirectory = dataDir;
 		KVServer.status = StatusType.SERVER_NOT_AVAILABLE;
 
 		// this.serverName = String.format("%s:%d",this.getHostname(),port);
