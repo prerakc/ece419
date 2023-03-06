@@ -41,16 +41,11 @@ public class ECSNode implements IECSNode{
         this.port = nodePort;
         this.status = StatusType.SERVER_STOPPED;
         
-        this.ipPortHash = HashUtils.getFixedSizeHashString(this.host + ":" + this.port, Config.HASH_STRING_SIZE);
+        this.ipPortHash = HashUtils.getHashString(this.host + ":" + this.port);
 
-        // for (int i = 0; i < 10; i++) {
-        //     System.out.println("EXPERIMENT HASH VALUES");
-        //     System.out.println(HashUtils.getFixedSizeHashString(this.host + ":" + this.port, Config.HASH_STRING_SIZE));
-        // }
         if(hashRange == null){
             this.hashRange = new String[2];
-		    this.hashRange[0] = HashUtils.getFixedSizeHashString("", Config.HASH_STRING_SIZE);
-            // this.hashRange[1] = HashUtils.getFixedSizeHashString(this.ipPortHash, Config.HASH_STRING_SIZE);
+		    this.hashRange[0] = HashUtils.getHashString("");
             this.hashRange[1] = this.ipPortHash;
         }else{
             this.hashRange = hashRange;

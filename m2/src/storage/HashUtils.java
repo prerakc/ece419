@@ -27,13 +27,6 @@ public class HashUtils {
         return mdHash(key).toString();
     }
 
-    public static String getHashString(String key, int stringSize){
-        String hash = mdHash(key).toString();
-        //TODO REMEMBER NOT USING UNFIXED HASHSIZE
-        return hash;
-        // return padStringLeftToSize(hash, Config.HASH_STRING_SIZE);
-    }
-
     
 
 }
