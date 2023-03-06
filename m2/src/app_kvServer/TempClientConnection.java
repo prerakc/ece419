@@ -103,6 +103,7 @@ public class TempClientConnection implements Runnable {
 				}
 				break;
 			case PUT:
+				// logger.error(String.format("BLAH BLAH BLAH 1: %s", server.getStatus().toString()));
 				if(server.getStatus() != StatusType.SERVER_IDLE){
 					if(server.getStatus() == StatusType.SERVER_STOPPED){
 						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
@@ -113,6 +114,7 @@ public class TempClientConnection implements Runnable {
 						responseValue = this.server.serializeMetaData();
 						logger.info("Server cannot be written to. Try request again in a few minutes.");
 					}
+					//
 				}else if(!server.isResponsibleForRequest(key)){
 					responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
 					responseValue = this.server.serializeMetaData();
@@ -159,6 +161,8 @@ public class TempClientConnection implements Runnable {
 				responseStatus = status;
 				break;
 		}
+
+		// logger.error(String.format("HERE: %s\t%s\t%s", responseStatus.toString(), key, responseValue));
 
 		return new KVMessage(responseStatus, key, responseValue);
 	}
