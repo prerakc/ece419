@@ -16,6 +16,7 @@ import shared.messages.IKVMessage.StatusType;
 import storage.HashRing;
 import storage.HashUtils;
 import ecs.ECSNode;
+import java.util.*;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -32,7 +33,7 @@ public class HashRingTests extends TestCase {
             String[] sortedHashes = new String[numNodes];
             for(int i  =0; i< numNodes; i++){
                 String key = ip + ":" + i;
-                ECSNode node = new ECSNode(key, host, i);
+                ECSNode node = new ECSNode(key, ip, i);
                 String hash = HashUtils.getHashString(key);
                 sortedHashes[i] = hash;
             }

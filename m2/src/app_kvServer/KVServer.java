@@ -523,7 +523,7 @@ public class KVServer extends Thread implements IKVServer {
 		  logger.info(KVServer.metaData.getHashRing().keySet());
 		  String[] hashRange = KVServer.metaData.getHashRing().get(this.serverNode.getIpPortHash()).getNodeHashRange();
 		  // String[] hashRange = this.serverNode.getNodeHashRange();
-		  key = HashUtils.getFixedSizeHashString(key, Config.HASH_STRING_SIZE);
+		  key = HashUtils.getHashString(key);
 		  logger.info("THE KEY IS: " + key);
 		  logger.info("THE RANGE LOWER IS: " + hashRange[0]);
 		  logger.info("THE RANGE UPPER IS: " + hashRange[1]);
