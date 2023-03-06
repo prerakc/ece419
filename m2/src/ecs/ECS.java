@@ -30,6 +30,7 @@ import org.apache.zookeeper.data.Stat;
 import java.util.Arrays;
 import org.apache.zookeeper.AsyncCallback.DataCallback;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
+import storage.HashUtils;
 
 public class ECS {
     private static Logger logger = Logger.getRootLogger();
@@ -91,8 +92,11 @@ public class ECS {
         //if there is only one node in ring 
         if (ECS.hr.getHashRing().size() == 1){
             System.out.println(newNode.getIpPortHash());
-            ECS.hr.getFirstValue().assignHashRange((new BigInteger(newNode.getIpPortHash()).add(new BigInteger("1"))).toString(), 
-                newNode.getIpPortHash());
+            // ECS.hr.getFirstValue().assignHashRange((new BigInteger(newNode.getIpPortHash()).add(new BigInteger("1"))).toString(), 
+            //     newNode.getIpPortHash());
+            // ECS.hr.getFirstValue().assignHashRange((new BigInteger(Integer.parseInt(newNode.getIpPortHash(), 16))).add(new BigInteger("1")).toString(16), 
+            //     newNode.getIpPortHash());
+            ECS.hr.getFirstValue().assignHashRange((new BigInteger(newNode.getIpPortHash(), 16).add(BigInteger.ONE)).toString(16), newNode.getIpPortHash());
         } else {
             //TODO CORNER CASE OF LESS THAN 3 NODES, UPDATE THE STATUS OF NODES DURRING CHANGE
             ECSNode pred = ECS.hr.getPredecessorNodeFromIpHash(newNode.getIpPortHash());
@@ -123,8 +127,7 @@ public class ECS {
             System.out.println(removeNode.getIpPortHash());
             // ECS.hr.getFirstValue().assignHashRange(removeNode.getIpPortHash(), ECS.hr.getFirstValue().getNodeHashRange()[1]);
             ECSNode onlyNode = ECS.hr.getFirstValue();
-            ECS.hr.getFirstValue().assignHashRange((new BigInteger(onlyNode.getIpPortHash()).add(new BigInteger("1"))).toString(), 
-                onlyNode.getIpPortHash());
+            ECS.hr.getFirstValue().assignHashRange((new BigInteger(onlyNode.getIpPortHash(), 16).add(BigInteger.ONE).toString(16)), onlyNode.getIpPortHash());
         } else if (ECS.hr.getHashRing().size() == 0){
             
         } else {

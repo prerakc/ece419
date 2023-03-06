@@ -156,6 +156,24 @@ public class HashRing {
 		return (key.compareTo(hashRange[0]) > 0) ||  (key.compareTo(hashRange[1]) <= 0); //hash range does wrap around
 	}
 
+    public static String incrementHexString(String hexString) {
+        // Convert hex string to integer
+        int intValue = Integer.parseInt(hexString, 16);
+        
+        // Increment integer
+        intValue++;
+        
+        // Convert integer back to hex string
+        String incrementedHexString = Integer.toHexString(intValue);
+        
+        // If the resulting string has an odd number of characters, pad it with a leading zero
+        if (incrementedHexString.length() % 2 != 0) {
+            incrementedHexString = "0" + incrementedHexString;
+        }
+        
+        return incrementedHexString;
+    }
+
     // public void removeEntriesBetweenrange(String low, String high){
     //     Map<String, ECSNode> toBeRemoved = this.getEntriesBetweenRange(low, high);
     //     for(String key: toBeRemoved.keySet()){
