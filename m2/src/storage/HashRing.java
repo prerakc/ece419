@@ -39,14 +39,11 @@ public class HashRing {
 
     public ECSNode getServerForHashValue(String hashValue){
         String key = map.ceilingKey(hashValue);
-        if(key == null){
-            return getFirstValue();
-        }
-        return map.get(key);
+        return (key == null ? getFirstValue() : map.get(key));
     }
 
     public ECSNode getServerForKVKey(String kvKey) {
-        String hash = HashUtils.getFixedSizeHashString(kvKey, Config.HASH_STRING_SIZE);
+        String hash = HashUtils.getHashString(kvKey);
         return getServerForHashValue(hash);
     }
 
@@ -63,10 +60,7 @@ public class HashRing {
     public ECSNode getFirstValue(){
         try {
             String key = map.firstKey();
-            if (key == null) {
-                return null;
-            }
-            return map.get(key);
+            return (key == null ? null : map.get(key));
         } catch (NoSuchElementException nse) {
             return null;
         }
@@ -139,14 +133,6 @@ public class HashRing {
         return (predecessorEntry == null ? null : predecessorEntry.getValue());
     }
 
-    public String getPredecessorHashFromHash(String serverHash){
-        ECSNode node = this.getPredecessorNodeFromIpHash(serverHash);
-        if(node == null){
-            return null;
-        }
-        return node.getIpPortHash();
-    }
-
     public ECSNode getSuccessorNodeFromIpHash(String serverHash){
         //handle name is null
 
@@ -161,16 +147,8 @@ public class HashRing {
     }
 
 
-    public String getSuccessorHashFromHash(String serverHash){
-        ECSNode node = this.getSuccessorNodeFromIpHash(serverHash);
-        if(node == null){
-            return null;
-        }
-        return node.getIpPortHash();
-    }
-
     public static boolean keyInRange(String key, String[] hashRange){
-		key = HashUtils.getFixedSizeHashString(key, Config.HASH_STRING_SIZE);
+		key = HashUtils.getHashString(key);
 
 		if(hashRange[0].compareTo(hashRange[1]) < 0){//if hash range does not wrap around 
 			return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0); // lower hash is bigger than key and higher hash is lower
@@ -188,7 +166,5 @@ public class HashRing {
     // public Map getEntriesBetweenRange(String low, String high){
     //     return this.map.subMap(low, true, high, true);
     // }
-
-    //127.0.0.1:9082,127.0.0.1,9082,185917810396686801168395350496348860126,185917810396686801168395350496348860126,14;
 
 }

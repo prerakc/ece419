@@ -23,28 +23,15 @@ public class HashUtils {
         return md_key;
     }
 
-    public static String getFixedSizeHashString(String key, int stringSize){
+    public static String getHashString(String key){
+        return mdHash(key).toString();
+    }
+
+    public static String getHashString(String key, int stringSize){
         String hash = mdHash(key).toString();
-        if (stringSize <= hash.length()){
-            return hash;
-        }
         //TODO REMEMBER NOT USING UNFIXED HASHSIZE
         return hash;
         // return padStringLeftToSize(hash, Config.HASH_STRING_SIZE);
-    }
-
-    public static String padStringLeftToSize(String s, int size){
-        if (s == null || size < 0) 
-            return s;
-        if(size  < s.length())
-            return s.substring(0, size);
-        
-        char[] paddingCharArr = new char[size - s.length()];
-        for(int i=0; i<paddingCharArr.length; i++){
-            paddingCharArr[i] = Config.PAD_CHAR;
-        }
-        String padded = paddingCharArr.toString() + s;
-        return padded;
     }
 
     

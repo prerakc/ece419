@@ -40,6 +40,7 @@ public class KVStore implements KVCommInterface {
 		// TODO Auto-generated method stub
 		clientSocket = new Socket(address, port);
 		kvCommunication = new KVCommunication(clientSocket);
+		logger.info(String.format("connected to address %s at port %s", this.address, this.port));
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class KVStore implements KVCommInterface {
 			return get(key);
 		} catch (IOException e){
 			
-			String thisNodeHash = HashUtils.getFixedSizeHashString(String.format("%s:%d",this.address,this.port), Config.HASH_STRING_SIZE);
+			String thisNodeHash = HashUtils.getHashString(String.format("%s:%d",this.address,this.port));
 
 			logger.info(String.format("%s:%d",this.address,this.port));
 			logger.info(this.metaData.getHashRing().keySet());
@@ -187,7 +188,7 @@ public class KVStore implements KVCommInterface {
 
 	public void updateConnection(String key, KVMessage message){
 		updateMetaData(message.getValue());
-		String hashValue = HashUtils.getFixedSizeHashString(key, Config.HASH_STRING_SIZE);
+		String hashValue = HashUtils.getHashString(key);
 		ECSNode node = metaData.getServerForHashValue(hashValue);
 		
 		// disconnect form old server and connect to correct server
@@ -200,7 +201,6 @@ public class KVStore implements KVCommInterface {
 		}
 		try{
 			connect();
-			logger.info(String.format("connected to address %s at port %s", this.address, this.port));
 		}catch(Exception e){
 			
 		}
