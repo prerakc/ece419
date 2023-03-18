@@ -59,10 +59,25 @@ public class KVStorage {
         }
     }
 
+    private synchronized void loadPersistedData() {
+        Properties dataProps = new Properties();
+        try {
+			dataProps.load(new FileInputStream(this.propertiesPath));
+            for (String key: dataProps.stringPropertyNames()) {
+                db.put(key, dataProps.getProperty(key));
+            }
+		} catch (Exception e) {
+			logger.error("Failed to load data from disk", e);
+		}
+    }
+
     public synchronized String get(String key) {
         String value;
 
         try {
+            if(db.get(key) == null){
+                loadPersistedData();
+            }
             value = db.get(key);
         } catch (Exception e) {
             logger.error("Failed to get key-value pair from database", e);
