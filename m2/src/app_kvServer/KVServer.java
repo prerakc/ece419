@@ -14,6 +14,7 @@ import storage.HashRing;
 import storage.HashUtils;
 import ecs.ECSNode;
 import shared.messages.IKVMessage.StatusType;
+import runnables.ShutdownRunnable;
 
 import java.net.*;
 import java.lang.Integer;
@@ -138,6 +139,77 @@ public class KVServer extends Thread implements IKVServer {
 		}
 	}
 
+	public static Properties getAllKeysInRange(ECSNode node, String[] keyRange){
+		Properties dataProps = new Properties();
+		String dataPath = String.format("data/%s.properties", node.getNodeName());
+		Properties toBeMoved = new Properties();
+		//load data
+		try {
+			dataProps.load(new FileInputStream(dataPath));
+		} catch (Exception e) {
+			logger.error("Failed to write database to disk", e);
+		}
+
+		//add all keys in range
+		for (String key: dataProps.stringPropertyNames()) {
+				logger.info("Checking key key: " + key);
+				if(HashRing.keyInRange(key, keyRange)){
+					logger.info("Transferring key: " + key);
+                	toBeMoved.put(key, dataProps.getProperty(key));
+				}
+        }
+
+		return toBeMoved;
+
+	}
+
+	public static void transferData(ECSNode srcNode, ECSNode dstNode){
+		logger.info("I am here transfering node data from " + srcNode.getNodeName() + "to node " + dstNode.getNodeName());
+		Properties toBeMoved = getAllKeysInRange(srcNode, dstNode.getNodeHashRange());
+
+		try {
+			KVStore client = new KVStore(dstNode.getNodeHost(), dstNode.getNodePort());
+			client.connect();
+			for (String key: toBeMoved.stringPropertyNames()) {
+					client.datatransfer(key, toBeMoved.getProperty(key));
+        		}
+
+			client.disconnect();
+
+			//
+		} catch (Exception e) {
+			logger.error("Failed to transfer data", e);
+		}	
+
+		//delete keys from file 
+		Properties newSrcProperties = new Properties();
+		String srcDataPath = String.format("data/%s.properties", srcNode.getNodeName());
+		try {
+				newSrcProperties.load(new FileInputStream(srcDataPath));
+				for (String key: toBeMoved.stringPropertyNames()) {
+					newSrcProperties.remove(key);
+        		}
+				newSrcProperties.store(new FileOutputStream(srcDataPath), null);
+			} catch (Exception e) {
+				logger.error("Failed to write database to disk", e);
+		}
+
+	}
+
+	public static void transferAllDataToSuccessor(ECSNode node){
+		ECSNode successor = metaData.getSuccessorNodeFromIpHash(node.getIpPortHash());
+		
+		successor = successor == null ? metaData.getFirstValue() : successor; //metadata might be getting updated before the shutdown occurs? 
+		if(successor == null) return; // There are no more nodes in the ring
+		transferData(node, successor);	
+	}
+
+	public static void handleShutdown(ECSNode node){
+		KVServer.ecsClient.removeKVServer(KVServer.serverName);
+		KVServer.ecsClient.removeServerStatus(KVServer.serverName);
+        KVServer.transferAllDataToSuccessor(node);
+	}
+
 	public static void updateMetadataZK(String status){
 		logger.info(status);
 		HashRing newMeta = HashRing.getHashRingFromNodeMap(ECSNode.deserializeToECSNodeMap(status));
@@ -145,81 +217,17 @@ public class KVServer extends Thread implements IKVServer {
 		KVServer.metaData = newMeta;
 		logger.info( KVServer.metaData.getHashRing().firstEntry().getValue().getNodeHashRange()[0] + ":" + KVServer.metaData.getHashRing().firstEntry().getValue().getNodeHashRange()[1]);
 
-		// ECSNode thisNode = currentServerIsRemoved(oldMeta, newMeta);
 		ECSNode thisNode = getCurrentServerNode(oldMeta, newMeta);
 		String thisNodeHash = thisNode.getIpPortHash();
-		logger.info("*******************Is the node removed******************");
-		// if(thisNode != null){
-		ECSNode removedNode = getRemovedNode(oldMeta, newMeta, thisNodeHash);
-		// if(currentServerIsRemoved(oldMeta, newMeta)){
-		if(removedNode != null){
-			logger.info("I am here transfering removed node data from " + removedNode.getNodeName());
-			Map<String, String> toBeMoved = Collections.synchronizedMap(new HashMap<String, String>());
-			// ECSNode targetNode = oldMeta.getSuccessorNodeFromIpHash(thisNode.getIpPortHash());
-			ECSNode targetNode = thisNode;
-			if(targetNode == null) return;
+		// ECSNode removedNode = getRemovedNode(oldMeta, newMeta, thisNodeHash);
+		// if(removedNode != null){
+		// 	transferData(removedNode, thisNode);		
+		// }
 
-			Properties dataProps = new Properties();
-
-			Properties targetDataProps = new Properties();
-			String targetDataPath = String.format("data/%s.properties", targetNode.getNodeName());
-			String srcPath = String.format("data/%s.properties", removedNode.getNodeName());
-			try {
-				dataProps.load(new FileInputStream(srcPath));
-				targetDataProps.load(new FileInputStream(targetDataPath));
-				targetDataProps.putAll(dataProps);
-				targetDataProps.store(new FileOutputStream(targetDataPath), null);
-			} catch (Exception e) {
-				logger.error("Failed to write database to disk", e);
-			}			
-		}
-
-		
-		// thisNode = currentServerIsAdded(oldMeta, newMeta);
-		// if(thisNode != null){
 		if(currentServerIsAdded(oldMeta, newMeta)){
-			ECSNode targetNode = thisNode;
-			logger.info("here transferring data to added node: " +  targetNode.getNodeName());
-			Map<String, String> toBeMoved = Collections.synchronizedMap(new HashMap<String, String>());
-			// ECSNode targetNode = newMeta.getPredecessorNodeFromIpHash(thisNode.getIpPortHash());
+			logger.info(String.format("%s was added and is obtaining keys from successor", thisNode.getNodeName()));
 			ECSNode srcNode = newMeta.getSuccessorNodeFromIpHash(thisNode.getIpPortHash());
-			if(srcNode == null) return;
-
-			Properties dataProps = new Properties();
-			String srcDataPath = String.format("data/%s.properties", srcNode.getNodeName());
-            try{
-				dataProps.load(new FileInputStream(srcDataPath));
-			}catch (Exception e) {
-				logger.error("Failed to write database to disk", e);
-			}
-
-			Properties newCurrentDataProps = new Properties();
-			for (String key: dataProps.stringPropertyNames()) {
-				logger.info("Checking key key: " + key);
-				if(HashRing.keyInRange(key, targetNode.getNodeHashRange())){
-					logger.info("Transferring key: " + key);
-                	newCurrentDataProps.put(key, dataProps.getProperty(key));
-				}
-            }
-
-
-			Properties targetDataProps = new Properties();
-			String targetDataPath = String.format("data/%s.properties", targetNode.getNodeName());
-			try {
-				targetDataProps.load(new FileInputStream(targetDataPath));
-				targetDataProps.putAll(newCurrentDataProps);
-				targetDataProps.store(new FileOutputStream(targetDataPath), null);
-			} catch (Exception e) {
-				logger.error("Failed to write database to disk", e);
-			}
-
-			// //update the current dataprops
-			// try {
-			// 	newCurrentDataProps.store(new FileOutputStream(targetDataPath), null);
-			// } catch (Exception e) {
-			// 	logger.error("Failed to write database to disk", e);
-			// }
-
+			transferData(srcNode, thisNode);
 		}
 	}
 
@@ -282,30 +290,6 @@ public class KVServer extends Thread implements IKVServer {
 		return true;
 	}
 
-
-	// public static ECSNode currentServerIsRemoved(HashRing oldMeta, HashRing newMeta){
-	// 	logger.info("Checking is server removed");
-	// 	for ( Map.Entry<String, ECSNode> entry : newMeta.getHashRing().entrySet()) {
-	// 		if(entry.getValue().getNodeName().equals(KVServer.serverName)){
-	// 			return entry.getValue();
-	// 		}
-	// 	}
-	// 	return null;
-	// }
-
-	//iterate through old metadata to see if the server's node is missing
-	// public static ECSNode currentServerIsAdded(HashRing oldMeta, HashRing newMeta){
-	// 	for ( Map.Entry<String, ECSNode> entry : newMeta.getHashRing().entrySet()) {
-	// 		if(entry.getValue().getNodeName().equals(KVServer.serverName)){
-	// 			return entry.getValue();
-	// 		}
-	// 	}
-	// 	return null;
-	// }
-
-	// public static void moveData(){
-
-	// }
 
 	@Override
 	public int getPort(){
@@ -433,12 +417,8 @@ public class KVServer extends Thread implements IKVServer {
     public void run(){
 		// TODO Auto-generated method stub
 		if (distributedMode) {
-			Runtime.getRuntime().addShutdownHook(new Thread(){
-				public void run(){
-					KVServer.ecsClient.removeKVServer(KVServer.serverName);
-					KVServer.ecsClient.removeServerStatus(KVServer.serverName);
-				}
-			});
+			ShutdownRunnable shutdownRunnable = new ShutdownRunnable(this.serverNode);
+			Runtime.getRuntime().addShutdownHook(new Thread(shutdownRunnable));
 		}
 
 		running = initializeServer();

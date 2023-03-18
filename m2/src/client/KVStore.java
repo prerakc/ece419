@@ -77,6 +77,20 @@ public class KVStore implements KVCommInterface {
 		return ackMessage;
 	}
 
+	public IKVMessage datatransfer(String key, String value) throws Exception {
+		// TODO Auto-generated method stub
+		if(!verifyKey(key)){
+			return new KVMessage(IKVMessage.StatusType.PUT_ERROR, key, value);
+		}
+		if(!verifyValue(value)){
+			return new KVMessage(IKVMessage.StatusType.PUT_ERROR, key, value);
+		}
+		KVMessage message = new KVMessage(IKVMessage.StatusType.DATATRANSFER, key, value);
+		kvCommunication.sendMessage(message);
+		KVMessage ackMessage = kvCommunication.receiveMessage();
+		return ackMessage;
+	}
+
 	@Override
 	public IKVMessage get(String key) throws Exception {
 		// TODO Auto-generated method stub

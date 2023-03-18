@@ -112,7 +112,7 @@ public class HashRing {
             sb.append(Config.ECS_PROPS_DELIMITER);
             sb.append(hashRange[1]);
             sb.append(Config.ECS_PROPS_DELIMITER);
-            sb.append("<" + node.getNodeHost() + ":" + node.getNodeHost() + ">");
+            sb.append("<" + node.getNodeHost() + ":" + node.getNodePort() + ">");
             sb.append(Config.ECS_DELIMITER);
         }
         sb.append("\r\n");

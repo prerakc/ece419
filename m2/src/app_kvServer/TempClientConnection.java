@@ -156,6 +156,16 @@ public class TempClientConnection implements Runnable {
 				responseValue = server.getMetaDataKeyRanges();
 				responseStatus = StatusType.KEYRANGE_SUCCESS;
 				break;
+			case  DATATRANSFER:
+				try{
+					server.putKV(key, value);
+					responseStatus = StatusType.PUT_SUCCESS;
+					logger.info(String.format("Added key '%s' and value '%s' to the database", key, value));
+				}catch (Exception e) {
+					responseStatus = StatusType.PUT_ERROR;
+					logger.error(e.getMessage());
+				}
+				break;
 			default:
 				logger.info("Unexpected message status: " + status);
 				responseStatus = status;

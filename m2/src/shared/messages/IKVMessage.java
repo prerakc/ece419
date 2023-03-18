@@ -12,6 +12,7 @@ public interface IKVMessage {
 		PUT_ERROR, 		/* Put - request not successful */
 		DELETE_SUCCESS, /* Delete - request successful */
 		DELETE_ERROR, 	/* Delete - request successful */
+		DATATRANSFER,
 
 		SERVER_NOT_AVAILABLE,    
         SERVER_IDLE,       
