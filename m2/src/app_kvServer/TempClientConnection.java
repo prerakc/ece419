@@ -161,6 +161,8 @@ public class TempClientConnection implements Runnable {
 					responseStatus = StatusType.KEYRANGE_ERROR;
 					logger.error(e.getMessage());
 				}
+				responseValue = server.getMetaDataKeyRanges().trim();
+				responseStatus = StatusType.KEYRANGE_SUCCESS;
 				break;
 			case  DATATRANSFER:
 				try{
@@ -179,7 +181,7 @@ public class TempClientConnection implements Runnable {
 		}
 
 		// logger.error(String.format("HERE: %s\t%s\t%s", responseStatus.toString(), key, responseValue));
-
+		logger.info("MESSAGE TO SEND: " + responseValue);
 		return new KVMessage(responseStatus, key, responseValue);
 	}
 }
