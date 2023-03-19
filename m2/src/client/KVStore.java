@@ -46,6 +46,7 @@ public class KVStore implements KVCommInterface {
 	@Override
 	public void disconnect() {
 		// TODO Auto-generated method stub
+		logger.info("Client is closing communication!");
 		if (isRunning()) {
 			kvCommunication.closeConnection();
 			kvCommunication = null;

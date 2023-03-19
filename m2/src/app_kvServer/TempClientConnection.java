@@ -53,7 +53,7 @@ public class TempClientConnection implements Runnable {
 			/* connection either terminated by the client or lost due to
 			 * network problems*/
 			} catch (IOException ioe) {
-				logger.error("Error! Connection lost!");
+				logger.error("Error! Connection lost!", ioe);
 				isOpen = false;
 			}
 		}
@@ -93,7 +93,7 @@ public class TempClientConnection implements Runnable {
 						responseValue = this.server.serializeMetaData();
 						logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
 					}else{
-						responseValue = server.getKV(key);
+						responseValue = server.getKV(key).trim();
 						responseStatus = StatusType.GET_SUCCESS;
 						// logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
 					}

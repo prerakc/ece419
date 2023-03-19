@@ -24,7 +24,6 @@ public class KVCommunication {
 
     public KVCommunication(Socket socket) throws IOException {
         this.socket = socket;
-        socket.setSoTimeout(10000);
         logger.info("Socket timeout: " + socket.getSoTimeout());
         output = socket.getOutputStream();
         input = socket.getInputStream();
