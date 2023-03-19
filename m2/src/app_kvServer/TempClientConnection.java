@@ -153,8 +153,14 @@ public class TempClientConnection implements Runnable {
 				}
 				break;
 			case KEYRANGE:
-				responseValue = server.getMetaDataKeyRanges();
-				responseStatus = StatusType.KEYRANGE_SUCCESS;
+				try{
+					responseValue = server.getMetaDataKeyRanges();
+					responseStatus = StatusType.KEYRANGE_SUCCESS;
+					logger.info("Sending keyrange according to metadata");
+				}catch(Exception e){
+					responseStatus = StatusType.KEYRANGE_ERROR;
+					logger.error(e.getMessage());
+				}
 				break;
 			case  DATATRANSFER:
 				try{

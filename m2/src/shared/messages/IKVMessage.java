@@ -18,7 +18,8 @@ public interface IKVMessage {
         SERVER_IDLE,       
         SERVER_IN_USE,
 		KEYRANGE,
-		KEYRANGE_SUCCESS,    
+		KEYRANGE_SUCCESS,   
+		KEYRANGE_ERROR, 
 
 		SERVER_STOPPED, 		/* Server not active; No clients requests are processed */
 		SERVER_WRITE_LOCK,

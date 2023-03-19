@@ -164,8 +164,13 @@ public class KVServer extends Thread implements IKVServer {
 	}
 
 	public static void transferData(ECSNode srcNode, ECSNode dstNode){
+		transferData(srcNode, dstNode, null);
+	}
+
+	public static void transferData(ECSNode srcNode, ECSNode dstNode, String[] keyRange){
 		logger.info("I am here transfering node data from " + srcNode.getNodeName() + "to node " + dstNode.getNodeName());
-		Properties toBeMoved = getAllKeysInRange(srcNode, dstNode.getNodeHashRange());
+		keyRange = keyRange == null ? dstNode.getNodeHashRange() : keyRange;
+		Properties toBeMoved = getAllKeysInRange(srcNode, keyRange);
 
 		try {
 			KVStore client = new KVStore(dstNode.getNodeHost(), dstNode.getNodePort());
@@ -199,15 +204,16 @@ public class KVServer extends Thread implements IKVServer {
 	public static void transferAllDataToSuccessor(ECSNode node){
 		ECSNode successor = metaData.getSuccessorNodeFromIpHash(node.getIpPortHash());
 		
-		successor = successor == null ? metaData.getFirstValue() : successor; //metadata might be getting updated before the shutdown occurs? 
+		// successor = successor == null ? metaData.getFirstValue() : successor; //metadata might be getting updated before the shutdown occurs? 
 		if(successor == null) return; // There are no more nodes in the ring
-		transferData(node, successor);	
+
+		transferData(node, successor, node.getNodeHashRange());	
 	}
 
 	public static void handleShutdown(ECSNode node){
+		KVServer.transferAllDataToSuccessor(node);
 		KVServer.ecsClient.removeKVServer(KVServer.serverName);
 		KVServer.ecsClient.removeServerStatus(KVServer.serverName);
-        KVServer.transferAllDataToSuccessor(node);
 	}
 
 	public static void updateMetadataZK(String status){
@@ -219,15 +225,12 @@ public class KVServer extends Thread implements IKVServer {
 
 		ECSNode thisNode = getCurrentServerNode(oldMeta, newMeta);
 		String thisNodeHash = thisNode.getIpPortHash();
-		// ECSNode removedNode = getRemovedNode(oldMeta, newMeta, thisNodeHash);
-		// if(removedNode != null){
-		// 	transferData(removedNode, thisNode);		
-		// }
 
 		if(currentServerIsAdded(oldMeta, newMeta)){
 			logger.info(String.format("%s was added and is obtaining keys from successor", thisNode.getNodeName()));
 			ECSNode srcNode = newMeta.getSuccessorNodeFromIpHash(thisNode.getIpPortHash());
-			transferData(srcNode, thisNode);
+			if(srcNode != null)
+				transferData(srcNode, thisNode);
 		}
 	}
 
@@ -501,7 +504,9 @@ public class KVServer extends Thread implements IKVServer {
 		if (distributedMode) {
 		  logger.info(this.serverNode.getIpPortHash());
 		  logger.info(KVServer.metaData.getHashRing().keySet());
-		  String[] hashRange = KVServer.metaData.getHashRing().get(this.serverNode.getIpPortHash()).getNodeHashRange();
+		  // sometimes returns a nullpointer exception, probably get returns null
+		  ECSNode node = KVServer.metaData.getHashRing().get(this.serverNode.getIpPortHash());
+		  String[] hashRange = node.getNodeHashRange();
 		  // String[] hashRange = this.serverNode.getNodeHashRange();
 		  key = HashUtils.getHashString(key);
 		  logger.info("THE KEY IS: " + key);
@@ -516,6 +521,17 @@ public class KVServer extends Thread implements IKVServer {
 		  logger.info("key.compareTo(hashRange[0]) < 0: " + (key.compareTo(hashRange[0]) < 0));
 		  logger.info("key.compareTo(hashRange[1]) > 0 " + (key.compareTo(hashRange[1]) > 0));
 		  return (key.compareTo(hashRange[0]) > 0) ||  (key.compareTo(hashRange[1]) <= 0); //hash range does wrap around
+		} else {
+			return true;
+		}
+	}
+
+	public boolean isResponsibleForGet(String key){
+		if (distributedMode) {
+		  	String keyHash = HashUtils.getHashString(key);
+			ECSNode coordinator = KVServer.metaData.getServerForHashValue(keyHash);
+			return (coordinator == this.serverNode || KVServer.metaData.isReplicaOfNode(coordinator, this.serverNode));
+
 		} else {
 			return true;
 		}

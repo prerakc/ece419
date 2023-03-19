@@ -117,6 +117,7 @@ public class KVStore implements KVCommInterface {
 			return get(key);
 		} catch (IOException e){
 			
+			logger.error("IOException happened during get", e);
 			String thisNodeHash = HashUtils.getHashString(String.format("%s:%d",this.address,this.port));
 
 			logger.info(String.format("%s:%d",this.address,this.port));

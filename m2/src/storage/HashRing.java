@@ -146,6 +146,21 @@ public class HashRing {
         return (successorEntry == null ? null : successorEntry.getValue());
     }
 
+    //check that node is one of the two next successors of coordinator
+    public boolean isReplicaOfNode(ECSNode coordinator, ECSNode node){ 
+        if(coordinator == null || node == null){
+            logger.info("Arguments of isReplicaOfNode cannot be null!");
+            return false;
+        }
+
+        ECSNode successor = getSuccessorNodeFromIpHash(coordinator.getIpPortHash());
+        if(successor == null) return false;
+        if(successor == node) return true;
+
+        successor = getSuccessorNodeFromIpHash(coordinator.getIpPortHash());
+        return successor == node;
+    }
+
 
     public static boolean keyInRange(String key, String[] hashRange){
 		key = HashUtils.getHashString(key);
@@ -158,13 +173,14 @@ public class HashRing {
 
     public static String incrementHexString(String hexString) {
         // Convert hex string to integer
-        int intValue = Integer.parseInt(hexString, 16);
+        // int intValue = Integer.parseInt(hexString, 16);
+        BigInteger bi = new BigInteger(hexString, 16);
         
         // Increment integer
-        intValue++;
+        bi = bi.add(BigInteger.ONE);
         
         // Convert integer back to hex string
-        String incrementedHexString = Integer.toHexString(intValue);
+        String incrementedHexString = bi.toString(16);
         
         // If the resulting string has an odd number of characters, pad it with a leading zero
         if (incrementedHexString.length() % 2 != 0) {

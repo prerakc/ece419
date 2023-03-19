@@ -48,23 +48,23 @@ public class HashUtils {
     return sb.toString();
 }
 
-// public static String incrementHexString(String hexString) {
-//         // Convert hex string to integer
-//         long intValue = Long.parseLong(hexString, 16);
+public static String incrementHexString(String hexString) {
+        // Convert hex string to integer
+        long intValue = Long.parseLong(hexString, 16);
         
-//         // Increment integer
-//         intValue++;
+        // Increment integer
+        intValue++;
         
-//         // Convert integer back to hex string
-//         String incrementedHexString = Long.toHexString(intValue);
+        // Convert integer back to hex string
+        String incrementedHexString = Long.toHexString(intValue);
         
-//         // If the resulting string has an odd number of characters, pad it with a leading zero
-//         if (incrementedHexString.length() % 2 != 0) {
-//             incrementedHexString = "0" + incrementedHexString;
-//         }
+        // If the resulting string has an odd number of characters, pad it with a leading zero
+        if (incrementedHexString.length() % 2 != 0) {
+            incrementedHexString = "0" + incrementedHexString;
+        }
         
-//         return incrementedHexString;
-//     }
+        return incrementedHexString;
+    }
 
     
 
