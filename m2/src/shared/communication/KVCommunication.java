@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Arrays;
+
 
 public class KVCommunication {
     private Logger logger = Logger.getRootLogger();
@@ -22,7 +24,7 @@ public class KVCommunication {
 
     public KVCommunication(Socket socket) throws IOException {
         this.socket = socket;
-
+        logger.info("Socket timeout: " + socket.getSoTimeout());
         output = socket.getOutputStream();
         input = socket.getInputStream();
 
@@ -31,6 +33,7 @@ public class KVCommunication {
 
     public void closeConnection() {
         try {
+            logger.info("Closing connection");
             open = false;
             input.close();
             output.close();
@@ -100,7 +103,11 @@ public class KVCommunication {
         }
 
         msgBytes = tmp;
-
+        logger.info(String.format("Recieved message with raw bytes %s", msgBytes.toString()));
+        if(Arrays.equals(msgBytes, new byte[] {10, 31, 10}) ){
+            logger.info("Got message indicating buffer out of sync!");
+            return receiveMessage();
+        }
         KVMessage message = new KVMessage(msgBytes);
 
         logger.info(String.format("Received a message of type '%s' with key '%s' and value '%s'", message.getStatus().toString(), message.getKey(), message.getValue()));

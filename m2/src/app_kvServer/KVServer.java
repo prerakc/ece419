@@ -1,16 +1,27 @@
 package app_kvServer;
 
+import client.KVStore;
 import logger.LogSetup;
+import shared.Config;
+import shared.messages.IKVMessage.StatusType;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+
+import app_kvECS.ECSClient;
 import storage.KVStorage;
+import storage.HashRing;
+import storage.HashUtils;
+import ecs.ECSNode;
+import shared.messages.IKVMessage.StatusType;
+import runnables.ShutdownRunnable;
 
 import java.net.*;
-
+import java.lang.Integer;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.io.*;
+
 
 public class KVServer extends Thread implements IKVServer {
 	private static Logger logger = Logger.getRootLogger();
@@ -20,15 +31,26 @@ public class KVServer extends Thread implements IKVServer {
 	private int cacheSize;
 	private String strategy;
 	private boolean running;
-
-	private String dataDirectory = "./data";
-	private String dataProperties = "database.properties";
+	private static String serverName;
+	private static StatusType status;
+	private String address;
+	private String dataDirectory;
+	private String dataProperties;
 
 	private KVStorage storage;
 
 	private ArrayList<Thread> threads;
+	
+	private static HashRing metaData;
 
+	private ECSNode serverNode;
+	private static ECSClient ecsClient;
+	private String ecsServer;
+	private int ecsPort;
 
+	public static int serverStatus;
+
+	private boolean distributedMode;
 
 	/**
 	 * Start KV Server at given port
@@ -40,30 +62,238 @@ public class KVServer extends Thread implements IKVServer {
 	 *           currently not contained in the cache. Options are "FIFO", "LRU",
 	 *           and "LFU".
 	 */
-	public KVServer(int port, int cacheSize, String strategy) {
+	 //TODO: add support for serverName
+	public KVServer(String address, int port, int cacheSize, String strategy, String ecsServer, int ecsPort) {
 		// TODO Auto-generated method stub
-		this.port = port;
-		this.cacheSize = cacheSize;
-		this.strategy = strategy;
-
-		this.storage = new KVStorage(dataDirectory, dataProperties);
-
-		this.threads = new ArrayList<Thread>();
+		this(address, port, cacheSize, strategy, ecsServer, ecsPort, "./data", String.format("%s:%d.properties", address, port));
 	}
 
-	public KVServer(int port, int cacheSize, String strategy,String dataDir, String dataProps) {
+	public KVServer(String address, int port, int cacheSize, String strategy, String ecsServer, int ecsPort, String dataDir, String dataProps) {
 		// TODO Auto-generated method stub
+		this.address = address;
 		this.port = port;
 		this.cacheSize = cacheSize;
 		this.strategy = strategy;
-		
+		this.serverName = String.format("%s:%d",this.address,port);
+		KVServer.serverName = String.format("%s:%d",this.address,port);
+		// this.dataProperties = KVServer.serverName + ".properties";
+		this.dataProperties = dataProps;
+		this.dataDirectory = dataDir;
+		KVServer.status = StatusType.SERVER_NOT_AVAILABLE;
+
+		// this.serverName = String.format("%s:%d",this.getHostname(),port);
+
+		this.storage = new KVStorage(this.dataDirectory, this.dataProperties);
+
+		this.threads = new ArrayList<Thread>();
+
+		KVServer.metaData = new HashRing();
+
+		// start up ecs node
+		this.serverNode = new ECSNode(this.serverName,this.address, this.port);
+		this.serverNode.setStatus(StatusType.SERVER_STOPPED);
+
+		KVServer.ecsClient = new ECSClient(ecsServer,ecsPort,false);
+		KVServer.ecsClient.addKVServer(KVServer.serverName);
+
+		KVServer.ecsClient.addStatusServerWatch(KVServer.serverName);
+		KVServer.ecsClient.addMetadataServerWatch(KVServer.serverName);
+
+		distributedMode = true;
+	}
+
+	public KVServer(String address, int port, int cacheSize, String strategy) {
+		// TODO Auto-generated method stub
+		this(address, port, cacheSize, strategy, "./data", String.format("%s_%d.properties", address, port));
+	}
+
+	public KVServer(String address, int port, int cacheSize, String strategy, String dataDir, String dataProps) {
+		// TODO Auto-generated method stub
+		this.address = address;
+		this.port = port;
+		this.cacheSize = cacheSize;
+		this.strategy = strategy;
+
+		this.status = StatusType.SERVER_IDLE;
+
 		this.dataDirectory = dataDir;
 		this.dataProperties = dataProps;
-		this.storage = new KVStorage(dataDirectory, dataProperties);
+
+		this.storage = new KVStorage(this.dataDirectory, this.dataProperties);
 
 		this.threads = new ArrayList<Thread>();
+
+		distributedMode = false;
 	}
 	
+	public StatusType getStatus(){
+		return KVServer.status;
+	}
+
+	public static void updateStatusZK(String status){
+		// logger.info("++++++++++IN KVSERVER UPDATE STATUS+++++++++++");
+		try{
+			KVServer.status = StatusType.values()[Integer.parseInt(status)];
+		} catch (NumberFormatException e){
+			// KVServer.server = StatusType.valueOf(status);
+		}
+	}
+
+	public static Properties getAllKeysInRange(ECSNode node, String[] keyRange){
+		Properties dataProps = new Properties();
+		String dataPath = String.format("data/%s.properties", node.getNodeName());
+		Properties toBeMoved = new Properties();
+		//load data
+		try {
+			dataProps.load(new FileInputStream(dataPath));
+		} catch (Exception e) {
+			logger.error("Failed to write database to disk", e);
+		}
+
+		//add all keys in range
+		for (String key: dataProps.stringPropertyNames()) {
+				logger.info("Checking key key: " + key);
+				if(HashRing.keyInRange(key, keyRange)){
+					logger.info("Transferring key: " + key);
+                	toBeMoved.put(key, dataProps.getProperty(key));
+				}
+        }
+
+		return toBeMoved;
+
+	}
+
+	public static void transferData(ECSNode srcNode, ECSNode dstNode){
+		transferData(srcNode, dstNode, null);
+	}
+
+	public static void transferData(ECSNode srcNode, ECSNode dstNode, String[] keyRange){
+		logger.info("I am here transfering node data from " + srcNode.getNodeName() + "to node " + dstNode.getNodeName());
+		keyRange = keyRange == null ? dstNode.getNodeHashRange() : keyRange;
+		Properties toBeMoved = getAllKeysInRange(srcNode, keyRange);
+
+		try {
+			KVStore client = new KVStore(dstNode.getNodeHost(), dstNode.getNodePort());
+			client.connect();
+			for (String key: toBeMoved.stringPropertyNames()) {
+					client.datatransfer(key, toBeMoved.getProperty(key));
+        		}
+
+			client.disconnect();
+
+			//
+		} catch (Exception e) {
+			logger.error("Failed to transfer data", e);
+		}	
+
+		//delete keys from file 
+		Properties newSrcProperties = new Properties();
+		String srcDataPath = String.format("data/%s.properties", srcNode.getNodeName());
+		try {
+				newSrcProperties.load(new FileInputStream(srcDataPath));
+				for (String key: toBeMoved.stringPropertyNames()) {
+					newSrcProperties.remove(key);
+        		}
+				newSrcProperties.store(new FileOutputStream(srcDataPath), null);
+			} catch (Exception e) {
+				logger.error("Failed to write database to disk", e);
+		}
+
+	}
+
+	public static void transferAllDataToSuccessor(ECSNode node){
+		ECSNode successor = metaData.getSuccessorNodeFromIpHash(node.getIpPortHash());
+		
+		// successor = successor == null ? metaData.getFirstValue() : successor; //metadata might be getting updated before the shutdown occurs? 
+		if(successor == null) return; // There are no more nodes in the ring
+
+		transferData(node, successor, node.getNodeHashRange());	
+	}
+
+	public static void handleShutdown(ECSNode node){
+		KVServer.transferAllDataToSuccessor(node);
+		KVServer.ecsClient.removeKVServer(KVServer.serverName);
+		KVServer.ecsClient.removeServerStatus(KVServer.serverName);
+	}
+
+	public static void updateMetadataZK(String status){
+		logger.info(status);
+		HashRing newMeta = HashRing.getHashRingFromNodeMap(ECSNode.deserializeToECSNodeMap(status));
+		HashRing oldMeta = KVServer.metaData;
+		KVServer.metaData = newMeta;
+		logger.info( KVServer.metaData.getHashRing().firstEntry().getValue().getNodeHashRange()[0] + ":" + KVServer.metaData.getHashRing().firstEntry().getValue().getNodeHashRange()[1]);
+
+		ECSNode thisNode = getCurrentServerNode(oldMeta, newMeta);
+		String thisNodeHash = thisNode.getIpPortHash();
+
+		if(currentServerIsAdded(oldMeta, newMeta)){
+			logger.info(String.format("%s was added and is obtaining keys from successor", thisNode.getNodeName()));
+			ECSNode srcNode = newMeta.getSuccessorNodeFromIpHash(thisNode.getIpPortHash());
+			if(srcNode != null)
+				transferData(srcNode, thisNode);
+		}
+	}
+
+		
+		// logger.info("ADDED IN UPDATE "+ECSNode.deserializeToECSNodeMap(status).keySet());
+
+	//iterate through new metadata to see if the server's node is missing
+	public static ECSNode getCurrentServerNode(HashRing oldMeta, HashRing newMeta){
+		for ( Map.Entry<String, ECSNode> entry : newMeta.getHashRing().entrySet()) {
+			if(entry.getValue().getNodeName().equals(KVServer.serverName)){
+				return entry.getValue();
+			}
+		}
+
+		for ( Map.Entry<String, ECSNode> entry : oldMeta.getHashRing().entrySet()) {
+			if(entry.getValue().getNodeName().equals(KVServer.serverName)){
+				return entry.getValue();
+			}
+		}
+
+		return null;
+	}
+	public static boolean wasNodeRemoved(HashRing oldMeta, HashRing newMeta, String ipPortHash){
+		logger.info("Checking if server removed");
+		ECSNode responsibleNode = oldMeta.getServerForHashValue(ipPortHash);
+		return (!responsibleNode.getIpPortHash().equals(ipPortHash));
+	}
+
+	public static ECSNode getRemovedNode(HashRing oldMeta, HashRing newMeta, String ipPortHash){
+		logger.info("Checking if server removed");
+		logger.info(ipPortHash);
+		for ( Map.Entry<String, ECSNode> entry : oldMeta.getHashRing().entrySet()) {
+			String entryHash = entry.getValue().getIpPortHash();
+			ECSNode responsibleNode = newMeta.getServerForHashValue(entryHash);
+			logger.info("rehash " + responsibleNode.getIpPortHash());
+			logger.info("entryHash " + entryHash);
+			if(!responsibleNode.getIpPortHash().equals(entryHash))
+				return entry.getValue();
+
+		}
+		return null;
+	}
+
+	public static boolean currentServerIsRemoved(HashRing oldMeta, HashRing newMeta){
+		logger.info("Checking is server removed");
+		for ( Map.Entry<String, ECSNode> entry : newMeta.getHashRing().entrySet()) {
+			if(entry.getValue().getNodeName().equals(KVServer.serverName)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean currentServerIsAdded(HashRing oldMeta, HashRing newMeta){
+		for ( Map.Entry<String, ECSNode> entry : oldMeta.getHashRing().entrySet()) {
+			if(entry.getValue().getNodeName().equals(KVServer.serverName)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+
 	@Override
 	public int getPort(){
 		// TODO Auto-generated method stub
@@ -145,6 +375,36 @@ public class KVServer extends Thread implements IKVServer {
 		}
 	}
 
+	public void moveData() {
+		// assume metadata has been updated before the function is called (i.e. metadata no longer contains this server)
+
+		// this is the last server
+		if (metaData.getHashRing().isEmpty()) {
+			return;
+		}
+
+		try {
+			Map<String, String> db = storage.getDatabase();
+
+			String randomKey = db.entrySet().iterator().next().getKey();
+
+			ECSNode successor = metaData.getServerForKVKey(randomKey);
+
+			KVStore client = new KVStore(successor.getNodeHost(), successor.getNodePort());
+
+			client.connect();
+
+			for (Map.Entry<String, String> kvPair : db.entrySet()) {
+				client.put(kvPair.getKey(), kvPair.getValue());
+			}
+
+			client.disconnect();
+
+			storage.clear();
+		} catch (Exception ignored) { // assuming KVStore connect() and put() don't throw errors
+		}
+	}
+
 	@Override
     public void clearCache(){
 		// TODO Auto-generated method stub
@@ -159,6 +419,11 @@ public class KVServer extends Thread implements IKVServer {
 	@Override
     public void run(){
 		// TODO Auto-generated method stub
+		if (distributedMode) {
+			ShutdownRunnable shutdownRunnable = new ShutdownRunnable(this.serverNode);
+			Runtime.getRuntime().addShutdownHook(new Thread(shutdownRunnable));
+		}
+
 		running = initializeServer();
 
 		if(serverSocket != null) {
@@ -184,6 +449,7 @@ public class KVServer extends Thread implements IKVServer {
 			}
 		}
 		logger.info("Server stopped.");
+		
 	}
 
 	private boolean isRunning() {
@@ -234,17 +500,75 @@ public class KVServer extends Thread implements IKVServer {
 		}
 	}
 
+	public boolean isResponsibleForRequest(String key){
+		if (distributedMode) {
+		  logger.info(this.serverNode.getIpPortHash());
+		  logger.info(KVServer.metaData.getHashRing().keySet());
+		  // sometimes returns a nullpointer exception, probably get returns null
+		  ECSNode node = KVServer.metaData.getHashRing().get(this.serverNode.getIpPortHash());
+		  String[] hashRange = node.getNodeHashRange();
+		  // String[] hashRange = this.serverNode.getNodeHashRange();
+		  key = HashUtils.getHashString(key);
+		  logger.info("THE KEY IS: " + key);
+		  logger.info("THE RANGE LOWER IS: " + hashRange[0]);
+		  logger.info("THE RANGE UPPER IS: " + hashRange[1]);
+
+		  if(hashRange[0].compareTo(hashRange[1]) < 0){//if hash range does not wrap around
+			logger.info("key.compareTo(hashRange[0]) > 0: " + (key.compareTo(hashRange[0]) > 0));
+			logger.info("key.compareTo(hashRange[1] " + (key.compareTo(hashRange[1]) <= 0));
+			return (key.compareTo(hashRange[0]) > 0) &&  (key.compareTo(hashRange[1]) <= 0);
+		  }
+		  logger.info("key.compareTo(hashRange[0]) < 0: " + (key.compareTo(hashRange[0]) < 0));
+		  logger.info("key.compareTo(hashRange[1]) > 0 " + (key.compareTo(hashRange[1]) > 0));
+		  return (key.compareTo(hashRange[0]) > 0) ||  (key.compareTo(hashRange[1]) <= 0); //hash range does wrap around
+		} else {
+			return true;
+		}
+	}
+
+	public boolean isResponsibleForGet(String key){
+		if (distributedMode) {
+		  	String keyHash = HashUtils.getHashString(key);
+			ECSNode coordinator = KVServer.metaData.getServerForHashValue(keyHash);
+			return (coordinator == this.serverNode || KVServer.metaData.isReplicaOfNode(coordinator, this.serverNode));
+
+		} else {
+			return true;
+		}
+	}
+
+	public String serializeHashRing() throws Exception{
+		return this.serverNode.serialize();
+	}
+
+	public String getMetaDataKeyRanges(){
+		return this.metaData.getSerializedHashRanges();
+	}
+
+	public String serializeMetaData(){
+		try{
+			return ECSNode.serializeECSMap(this.metaData.getHashRing());
+		} catch (Exception e){
+			logger.error("Error serializing meta data", e);
+		}
+		return null;
+	}
+	
+
 	public static void main(String[] args) {
 		try {
-			new LogSetup("logs/server.log", Level.ALL);
-			if(args.length != 3) {
+			new LogSetup("logs/server.log", Level.INFO);
+			if(args.length != 6) {
 				System.out.println("Error! Invalid number of arguments!");
-				System.out.println("Usage: Server <port> <cachesize> <cachetype>!");
+				System.out.println("Usage: Server <address> <port> <cachesize> <cachetype> <ECS_server> <ECS_port>!");
 			} else {
-				int port = Integer.parseInt(args[0]);
-				int cacheSize = Integer.parseInt(args[1]);
-				String strategy = args[2];
-				new KVServer(port, cacheSize, strategy).start();
+				String addr = args[0];
+				int port = Integer.parseInt(args[1]);
+				int cacheSize = Integer.parseInt(args[2]);
+				String strategy = args[3];
+				String ecsServer = args[4];
+				int ecsPort = Integer.parseInt(args[5]);
+				new KVServer(addr,port, cacheSize, strategy, ecsServer,ecsPort).start();
 			}
 		} catch (IOException e) {
 			System.out.println("Error! Unable to initialize logger!");
@@ -252,7 +576,7 @@ public class KVServer extends Thread implements IKVServer {
 			System.exit(1);
 		} catch (NumberFormatException nfe) {
 			System.out.println("Error! Invalid argument <port>! Not a number!");
-			System.out.println("Usage: Server <port> <cachesize> <cachetype>!");
+			System.out.println("Usage: Server <address> <port> <cachesize> <cachetype> <ECS_server> <ECS_port>!");
 			System.exit(1);
 		}
 	}

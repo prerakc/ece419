@@ -5,40 +5,54 @@ import java.io.File;
 
 import org.apache.log4j.Level;
 
-import app_kvServer.KVServer;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import logger.LogSetup;
-import testing.TestingVars;
 
 
 public class AllTests {
-	private static String dataDir = "./data/test";
-	private static String dbName = "test.properties";
 
 	static {
 		try {
 			//TODO SAYING ERROR CONNECTION LOST FOR EACH TEST
 			clearTestData();
 			new LogSetup("logs/testing/test.log", Level.ERROR);
-			new KVServer(TestingVars.port, 10, "FIFO",dataDir,dbName).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	private static void helper(String dirPath) {
+		File dataDirFile = new File(dirPath);
+
+		File[] contents = dataDirFile.listFiles();
+
+		if (contents != null) {
+			for (File dataPropsFile : dataDirFile.listFiles()) {
+				dataPropsFile.delete();
+			}
+
+			dataDirFile.delete();
+		}
+
+		return;
+	}
+
 	private static void clearTestData(){
-		File myObj = new File(dataDir +"/"+ dbName); 
-		myObj.delete();
+		helper("./data/test");
+		// helper("./data");
 	}
 	
 	public static Test suite() {
 		TestSuite clientSuite = new TestSuite("Basic Storage ServerTest-Suite");
-		clientSuite.addTestSuite(ConnectionTest.class);
-		clientSuite.addTestSuite(InteractionTest.class); 
-		clientSuite.addTestSuite(AdditionalTest.class);
+
+//		clientSuite.addTestSuite(NonDistributedKVStoreTest.class);
+//		clientSuite.addTestSuite(NonDistributedKVServerTest.class);
+//		clientSuite.addTestSuite(NonDistributedKVServerPerformanceTest.class);
+		clientSuite.addTestSuite(DistributedKVStoreTest.class);
+		clientSuite.addTestSuite(HashRingTests.class);
+//		clientSuite.addTestSuite(DistributedKVServerTest.class);
 
 		return clientSuite;
 	}
-	
 }

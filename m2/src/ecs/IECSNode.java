@@ -2,6 +2,13 @@ package ecs;
 
 public interface IECSNode {
 
+    public enum ServerStatus {
+	    SERVER_OFFLINE,    // Server node is Offline
+        SERVER_IDLE,       // Server node is Idle
+        SERVER_IN_USE      // Server node is started 
+    }
+
+
     /**
      * @return  the name of the node (ie "Server 8.8.8.8")
      */

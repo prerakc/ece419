@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import shared.communication.KVCommunication;
 import shared.messages.IKVMessage.StatusType;
 import shared.messages.KVMessage;
+import ecs.ECSNode;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -52,7 +53,7 @@ public class TempClientConnection implements Runnable {
 			/* connection either terminated by the client or lost due to
 			 * network problems*/
 			} catch (IOException ioe) {
-				logger.error("Error! Connection lost!");
+				logger.error("Error! Connection lost!", ioe);
 				isOpen = false;
 			}
 		}
@@ -65,22 +66,61 @@ public class TempClientConnection implements Runnable {
 		String key = message.getKey();
 		String value = message.getValue();
 
-		StatusType responseStatus;
+		StatusType responseStatus = StatusType.SERVER_NOT_AVAILABLE;
 		String responseValue = value;
 
 		switch (status) {
 			case GET:
 				try {
-					responseValue = server.getKV(key);
-					responseStatus = StatusType.GET_SUCCESS;
-					logger.info(String.format("Retrieved value '%s' for key '%s' from the database", responseValue, key));
+					logger.info(server.getStatus());
+					logger.info(StatusType.SERVER_IDLE);
+					logger.info(server.getStatus() != StatusType.SERVER_IDLE && server.getStatus() != StatusType.SERVER_WRITE_LOCK);
+					
+					if(server.getStatus() != StatusType.SERVER_IDLE && server.getStatus() != StatusType.SERVER_WRITE_LOCK){
+						if(server.getStatus() == StatusType.SERVER_STOPPED){
+							responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+							responseValue = this.server.serializeMetaData();
+							logger.info(String.format("Server is not available. Sending back metadata"));
+						} else {
+							// should never be hit
+							responseStatus = StatusType.SERVER_STOPPED;
+							responseValue = this.server.serializeMetaData();
+						}
+					}
+					else if(!server.isResponsibleForRequest(key)){
+						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+						// responseValue = server.serializeHashRing();
+						responseValue = this.server.serializeMetaData();
+						logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
+					}else{
+						responseValue = server.getKV(key).trim();
+						responseStatus = StatusType.GET_SUCCESS;
+						// logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
+					}
 				} catch (Exception e) {
 					responseStatus = StatusType.GET_ERROR;
 					logger.error(e.getMessage());
 				}
 				break;
 			case PUT:
-				if (value.equals("null") || value.isEmpty()) {
+				// logger.error(String.format("BLAH BLAH BLAH 1: %s", server.getStatus().toString()));
+				if(server.getStatus() != StatusType.SERVER_IDLE){
+					if(server.getStatus() == StatusType.SERVER_STOPPED){
+						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+						responseValue = this.server.serializeMetaData();
+						logger.info(String.format("Server is not available. Sending back metadata"));
+					}else if(server.getStatus() == StatusType.SERVER_WRITE_LOCK){
+						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+						responseValue = this.server.serializeMetaData();
+						logger.info("Server cannot be written to. Try request again in a few minutes.");
+					}
+					//
+				}else if(!server.isResponsibleForRequest(key)){
+					responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+					responseValue = this.server.serializeMetaData();
+					logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
+				}
+				else if (value.equals("null") || value.isEmpty()) {
 					try {
 						server.deleteKV(key);
 						responseStatus = StatusType.DELETE_SUCCESS;
@@ -92,18 +132,46 @@ public class TempClientConnection implements Runnable {
 				} else {
 					boolean existingKey = server.inStorage(key);
 					try {
-						server.putKV(key, value);
-						if (existingKey) {
-							responseStatus = StatusType.PUT_UPDATE;
-							logger.info(String.format("Updated value associated with key '%s' to '%s'", key, value));
-						} else {
-							responseStatus = StatusType.PUT_SUCCESS;
-							logger.info(String.format("Added key '%s' and value '%s' to the database", key, value));
+						if(!server.isResponsibleForRequest(key)){
+							responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+							responseValue = server.serializeHashRing();
+							logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
+						}else{
+							server.putKV(key, value);
+							if (existingKey) {
+								responseStatus = StatusType.PUT_UPDATE;
+								logger.info(String.format("Updated value associated with key '%s' to '%s'", key, value));
+							} else {
+								responseStatus = StatusType.PUT_SUCCESS;
+								logger.info(String.format("Added key '%s' and value '%s' to the database", key, value));
+							}
 						}
 					} catch (Exception e) {
 						responseStatus = StatusType.PUT_ERROR;
 						logger.error(e.getMessage());
 					}
+				}
+				break;
+			case KEYRANGE:
+				try{
+					responseValue = server.getMetaDataKeyRanges();
+					responseStatus = StatusType.KEYRANGE_SUCCESS;
+					logger.info("Sending keyrange according to metadata");
+				}catch(Exception e){
+					responseStatus = StatusType.KEYRANGE_ERROR;
+					logger.error(e.getMessage());
+				}
+				responseValue = server.getMetaDataKeyRanges().trim();
+				responseStatus = StatusType.KEYRANGE_SUCCESS;
+				break;
+			case  DATATRANSFER:
+				try{
+					server.putKV(key, value);
+					responseStatus = StatusType.PUT_SUCCESS;
+					logger.info(String.format("Added key '%s' and value '%s' to the database", key, value));
+				}catch (Exception e) {
+					responseStatus = StatusType.PUT_ERROR;
+					logger.error(e.getMessage());
 				}
 				break;
 			default:
@@ -112,6 +180,8 @@ public class TempClientConnection implements Runnable {
 				break;
 		}
 
+		// logger.error(String.format("HERE: %s\t%s\t%s", responseStatus.toString(), key, responseValue));
+		logger.info("MESSAGE TO SEND: " + responseValue);
 		return new KVMessage(responseStatus, key, responseValue);
 	}
 }

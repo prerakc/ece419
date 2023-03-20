@@ -3,6 +3,7 @@ package shared.messages;
 import org.apache.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class KVMessage implements IKVMessage {
     private Logger logger = Logger.getRootLogger();
@@ -35,10 +36,11 @@ public class KVMessage implements IKVMessage {
     }
 
     public KVMessage (byte[] serialized) {
+        logger.info("Raw bytes: " + Arrays.toString(serialized));
         String messageString = new String(serialized, StandardCharsets.UTF_8);
 
         String[] fields = messageString.split(String.valueOf(DELIMITER), 4);
-
+        logger.info("Message: " + messageString);
         this.status = StatusType.valueOf(fields[0].toUpperCase());
         this.key = fields[1];
         this.value = fields[2];
