@@ -132,18 +132,17 @@ public class ECS {
         } else {
             ECSNode pred = ECS.hr.getPredecessorNodeFromIpHash(removeNode.getIpPortHash());
             ECSNode succ = ECS.hr.getSuccessorNodeFromIpHash(removeNode.getIpPortHash());
-
             succ.assignHashRange(pred.getNodeHashRange()[1], succ.getNodeHashRange()[1]);
 
 
             // remove the old version of nodes
-            ECS.hr.addServer(removeNode.getIpPortHash(), removeNode);
+            //ECS.hr.addServer(removeNode.getIpPortHash(), removeNode);
                 
             ECS.hr.removeServer(pred.getIpPortHash());
             ECS.hr.addServer(pred.getIpPortHash(), pred);
-
-            ECS.hr.addServer(succ.getIpPortHash(), succ);
+            
             ECS.hr.removeServer(succ.getIpPortHash());
+            ECS.hr.addServer(succ.getIpPortHash(), succ);
         }
     }
 
@@ -311,10 +310,10 @@ public class ECS {
             try {
                 // logger.info("/workers/"+i.getNodeName());
                 ECS.zkMng.update("/workers/"+i.getNodeName(), sb.toString().getBytes());
-            } catch (KeeperException | InterruptedException e){
+            } catch (InterruptedException e){
                 System.out.println("ERROR");
                 logger.error("Unexpected exception", e);
-            }
+            }  catch (KeeperException e){}
         }
     }
 
