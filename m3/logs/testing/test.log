@@ -1,0 +1,1369 @@
+2023-03-03 16:30:08,093 ERROR [main] root: Failed to create data directory
+2023-03-03 16:30:08,094 ERROR [main] root: Storage initialization failed
+java.io.IOException: No such file or directory
+	at java.base/java.io.UnixFileSystem.createFileExclusively(Native Method)
+	at java.base/java.io.File.createNewFile(File.java:1035)
+	at storage.KVStorage.<init>(KVStorage.java:33)
+	at app_kvServer.KVServer.<init>(KVServer.java:74)
+	at testing.AllTests.<clinit>(AllTests.java:24)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:413)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:30:08,145 ERROR [Thread-2] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,147 ERROR [Thread-2] root: Error! Connection lost!
+2023-03-03 16:30:08,147 ERROR [Thread-3] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,150 ERROR [Thread-3] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,151 ERROR [Thread-3] root: Error! Connection lost!
+2023-03-03 16:30:08,152 ERROR [Thread-4] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,158 ERROR [Thread-4] root: 
+2023-03-03 16:30:08,158 ERROR [Thread-4] root: Error! Connection lost!
+2023-03-03 16:30:08,159 ERROR [Thread-5] root: Error! Connection lost!
+2023-03-03 16:30:08,160 ERROR [Thread-6] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,161 ERROR [Thread-6] root: 
+2023-03-03 16:30:08,163 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGet(InteractionTest.java:110)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:30:08,168 ERROR [Thread-6] root: Error! Connection lost!
+2023-03-03 16:30:08,169 ERROR [Thread-7] root: 
+2023-03-03 16:30:08,170 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGetUnsetValue(InteractionTest.java:125)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:30:08,171 ERROR [Thread-7] root: Error! Connection lost!
+2023-03-03 16:30:08,171 ERROR [Thread-8] root: Error! Connection lost!
+2023-03-03 16:30:08,172 ERROR [Thread-9] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,173 ERROR [Thread-9] root: 
+2023-03-03 16:30:08,173 ERROR [Thread-9] root: Error! Connection lost!
+2023-03-03 16:30:08,173 ERROR [Thread-10] root: Error! Connection lost!
+2023-03-03 16:30:08,175 ERROR [Thread-12] root: Error! Connection lost!
+2023-03-03 16:30:08,174 ERROR [Thread-11] root: Error! Connection lost!
+2023-03-03 16:30:08,176 ERROR [Thread-14] root: 
+2023-03-03 16:30:08,176 ERROR [Thread-13] root: Error! Connection lost!
+2023-03-03 16:30:08,178 ERROR [Thread-14] root: 
+2023-03-03 16:30:08,181 ERROR [Thread-14] root: Error! Connection lost!
+2023-03-03 16:30:08,181 ERROR [Thread-15] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,184 ERROR [Thread-16] root: 
+2023-03-03 16:30:08,185 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.AdditionalTest.testGetMultiClient(AdditionalTest.java:206)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:30:08,186 ERROR [Thread-15] root: Error! Connection lost!
+2023-03-03 16:30:08,192 ERROR [Thread-27] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,193 ERROR [Thread-28] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,194 ERROR [Thread-29] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,195 ERROR [Thread-30] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,196 ERROR [Thread-31] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,197 ERROR [Thread-32] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,198 ERROR [Thread-33] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,200 ERROR [Thread-34] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,201 ERROR [Thread-35] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,202 ERROR [Thread-36] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,203 ERROR [Thread-27] root: Error! Connection lost!
+2023-03-03 16:30:08,203 ERROR [Thread-26] root: Error! Connection lost!
+2023-03-03 16:30:08,203 ERROR [Thread-36] root: Error! Connection lost!
+2023-03-03 16:30:08,203 ERROR [Thread-35] root: Error! Connection lost!
+2023-03-03 16:30:08,203 ERROR [Thread-33] root: Error! Connection lost!
+2023-03-03 16:30:08,203 ERROR [Thread-28] root: Error! Connection lost!
+2023-03-03 16:30:08,203 ERROR [Thread-34] root: Error! Connection lost!
+2023-03-03 16:30:08,203 ERROR [Thread-32] root: Error! Connection lost!
+2023-03-03 16:30:08,203 ERROR [Thread-31] root: Error! Connection lost!
+2023-03-03 16:30:08,203 ERROR [Thread-30] root: Error! Connection lost!
+2023-03-03 16:30:08,203 ERROR [Thread-29] root: Error! Connection lost!
+2023-03-03 16:30:08,205 ERROR [Thread-38] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,222 ERROR [Thread-39] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,224 ERROR [Thread-40] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,224 ERROR [Thread-41] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,226 ERROR [Thread-42] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,227 ERROR [Thread-43] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,228 ERROR [Thread-44] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,230 ERROR [Thread-45] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,231 ERROR [Thread-46] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,231 ERROR [Thread-47] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,232 ERROR [Thread-38] root: Error! Connection lost!
+2023-03-03 16:30:08,232 ERROR [Thread-42] root: Error! Connection lost!
+2023-03-03 16:30:08,232 ERROR [Thread-41] root: Error! Connection lost!
+2023-03-03 16:30:08,232 ERROR [Thread-40] root: Error! Connection lost!
+2023-03-03 16:30:08,232 ERROR [Thread-39] root: Error! Connection lost!
+2023-03-03 16:30:08,232 ERROR [Thread-37] root: Error! Connection lost!
+2023-03-03 16:30:08,232 ERROR [Thread-46] root: Error! Connection lost!
+2023-03-03 16:30:08,232 ERROR [Thread-45] root: Error! Connection lost!
+2023-03-03 16:30:08,232 ERROR [Thread-47] root: Error! Connection lost!
+2023-03-03 16:30:08,232 ERROR [Thread-43] root: Error! Connection lost!
+2023-03-03 16:30:08,232 ERROR [Thread-44] root: Error! Connection lost!
+2023-03-03 16:30:08,233 ERROR [Thread-49] root: Failed to write database to disk
+java.io.FileNotFoundException: ./data/test/test.properties (No such file or directory)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:126)
+	at storage.KVStorage.persist(KVStorage.java:55)
+	at storage.KVStorage.put(KVStorage.java:77)
+	at app_kvServer.KVServer.putKV(KVServer.java:146)
+	at app_kvServer.TempClientConnection.handleMessage(TempClientConnection.java:108)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+2023-03-03 16:30:08,235 ERROR [Thread-49] root: 
+2023-03-03 16:30:08,236 ERROR [Thread-48] root: Error! Connection lost!
+2023-03-03 16:30:40,443 ERROR [Thread-3] root: Error! Connection lost!
+2023-03-03 16:30:40,443 ERROR [Thread-2] root: Error! Connection lost!
+2023-03-03 16:30:40,449 ERROR [Thread-4] root: Error! Connection lost!
+2023-03-03 16:30:40,455 ERROR [Thread-5] root: 
+2023-03-03 16:30:40,456 ERROR [Thread-5] root: Error! Connection lost!
+2023-03-03 16:30:40,459 ERROR [Thread-6] root: 
+2023-03-03 16:30:40,460 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGet(InteractionTest.java:110)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:30:40,466 ERROR [Thread-6] root: Error! Connection lost!
+2023-03-03 16:30:40,467 ERROR [Thread-7] root: 
+2023-03-03 16:30:40,467 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGetUnsetValue(InteractionTest.java:125)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:30:40,468 ERROR [Thread-7] root: Error! Connection lost!
+2023-03-03 16:30:40,469 ERROR [Thread-8] root: 
+2023-03-03 16:30:40,470 ERROR [Thread-8] root: 
+2023-03-03 16:30:40,471 ERROR [Thread-8] root: Error! Connection lost!
+2023-03-03 16:30:40,474 ERROR [Thread-10] root: 
+2023-03-03 16:30:40,474 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.AdditionalTest.testGetMultiClient(AdditionalTest.java:206)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:30:40,476 ERROR [Thread-9] root: Error! Connection lost!
+2023-03-03 16:30:40,505 ERROR [Thread-24] root: Error! Connection lost!
+2023-03-03 16:30:40,506 ERROR [Thread-20] root: Error! Connection lost!
+2023-03-03 16:30:40,505 ERROR [Thread-25] root: Error! Connection lost!
+2023-03-03 16:30:40,505 ERROR [Thread-29] root: Error! Connection lost!
+2023-03-03 16:30:40,505 ERROR [Thread-26] root: Error! Connection lost!
+2023-03-03 16:30:40,505 ERROR [Thread-27] root: Error! Connection lost!
+2023-03-03 16:30:40,505 ERROR [Thread-23] root: Error! Connection lost!
+2023-03-03 16:30:40,505 ERROR [Thread-28] root: Error! Connection lost!
+2023-03-03 16:30:40,505 ERROR [Thread-30] root: Error! Connection lost!
+2023-03-03 16:30:40,505 ERROR [Thread-22] root: Error! Connection lost!
+2023-03-03 16:30:40,505 ERROR [Thread-21] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-32] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-31] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-37] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-41] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-36] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-39] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-40] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-38] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-33] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-35] root: Error! Connection lost!
+2023-03-03 16:30:40,538 ERROR [Thread-34] root: Error! Connection lost!
+2023-03-03 16:30:40,542 ERROR [Thread-43] root: 
+2023-03-03 16:30:40,542 ERROR [Thread-42] root: Error! Connection lost!
+2023-03-03 16:30:40,547 ERROR [Thread-53] root: Error! Connection lost!
+2023-03-03 16:30:40,548 ERROR [Thread-54] root: Error! Connection lost!
+2023-03-03 16:30:40,551 ERROR [Thread-55] root: 
+2023-03-03 16:30:40,551 ERROR [Thread-55] root: Error! Connection lost!
+2023-03-03 16:30:40,552 ERROR [Thread-56] root: Error! Connection lost!
+2023-03-03 16:30:40,553 ERROR [Thread-57] root: Error! Connection lost!
+2023-03-03 16:30:40,554 ERROR [Thread-58] root: Error! Connection lost!
+2023-03-03 16:31:05,393 ERROR [Thread-2] root: Error! Connection lost!
+2023-03-03 16:31:05,398 ERROR [Thread-3] root: Error! Connection lost!
+2023-03-03 16:31:05,403 ERROR [Thread-4] root: 
+2023-03-03 16:31:05,403 ERROR [Thread-4] root: Error! Connection lost!
+2023-03-03 16:31:05,407 ERROR [Thread-5] root: 
+2023-03-03 16:31:05,407 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGet(InteractionTest.java:110)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:31:05,413 ERROR [Thread-5] root: Error! Connection lost!
+2023-03-03 16:31:05,414 ERROR [Thread-6] root: 
+2023-03-03 16:31:05,414 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGetUnsetValue(InteractionTest.java:125)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:31:05,415 ERROR [Thread-6] root: Error! Connection lost!
+2023-03-03 16:31:05,415 ERROR [Thread-7] root: Error! Connection lost!
+2023-03-03 16:31:05,417 ERROR [Thread-9] root: Error! Connection lost!
+2023-03-03 16:31:05,416 ERROR [Thread-8] root: Error! Connection lost!
+2023-03-03 16:31:05,419 ERROR [Thread-10] root: 
+2023-03-03 16:31:05,420 ERROR [Thread-10] root: Error! Connection lost!
+2023-03-03 16:31:05,421 ERROR [Thread-11] root: Error! Connection lost!
+2023-03-03 16:31:05,422 ERROR [Thread-12] root: Error! Connection lost!
+2023-03-03 16:31:05,423 ERROR [Thread-13] root: Error! Connection lost!
+2023-03-03 16:31:05,424 ERROR [Thread-14] root: 
+2023-03-03 16:31:05,427 ERROR [Thread-14] root: 
+2023-03-03 16:31:05,428 ERROR [Thread-14] root: Error! Connection lost!
+2023-03-03 16:31:05,430 ERROR [Thread-16] root: 
+2023-03-03 16:31:05,431 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.AdditionalTest.testGetMultiClient(AdditionalTest.java:206)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:31:05,432 ERROR [Thread-15] root: Error! Connection lost!
+2023-03-03 16:31:05,466 ERROR [Thread-33] root: Error! Connection lost!
+2023-03-03 16:31:05,467 ERROR [Thread-26] root: Error! Connection lost!
+2023-03-03 16:31:05,466 ERROR [Thread-35] root: Error! Connection lost!
+2023-03-03 16:31:05,466 ERROR [Thread-34] root: Error! Connection lost!
+2023-03-03 16:31:05,466 ERROR [Thread-29] root: Error! Connection lost!
+2023-03-03 16:31:05,466 ERROR [Thread-31] root: Error! Connection lost!
+2023-03-03 16:31:05,466 ERROR [Thread-36] root: Error! Connection lost!
+2023-03-03 16:31:05,466 ERROR [Thread-32] root: Error! Connection lost!
+2023-03-03 16:31:05,466 ERROR [Thread-30] root: Error! Connection lost!
+2023-03-03 16:31:05,466 ERROR [Thread-27] root: Error! Connection lost!
+2023-03-03 16:31:05,466 ERROR [Thread-28] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-38] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-37] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-44] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-47] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-42] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-46] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-45] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-39] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-43] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-40] root: Error! Connection lost!
+2023-03-03 16:31:05,492 ERROR [Thread-41] root: Error! Connection lost!
+2023-03-03 16:31:05,496 ERROR [Thread-49] root: 
+2023-03-03 16:31:05,500 ERROR [Thread-48] root: Error! Connection lost!
+2023-03-03 16:32:13,329 ERROR [Thread-2] root: Error! Connection lost!
+2023-03-03 16:32:13,336 ERROR [Thread-3] root: 
+2023-03-03 16:32:13,337 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGet(InteractionTest.java:110)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:32:13,344 ERROR [Thread-3] root: Error! Connection lost!
+2023-03-03 16:32:13,346 ERROR [Thread-4] root: 
+2023-03-03 16:32:13,348 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGetUnsetValue(InteractionTest.java:125)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:32:13,350 ERROR [Thread-4] root: Error! Connection lost!
+2023-03-03 16:32:13,360 ERROR [Thread-5] root: Error! Connection lost!
+2023-03-03 16:32:13,363 ERROR [Thread-6] root: 
+2023-03-03 16:32:13,363 ERROR [Thread-6] root: Error! Connection lost!
+2023-03-03 16:32:13,364 ERROR [Thread-7] root: Error! Connection lost!
+2023-03-03 16:32:13,365 ERROR [Thread-8] root: Error! Connection lost!
+2023-03-03 16:32:13,365 ERROR [Thread-9] root: Error! Connection lost!
+2023-03-03 16:32:13,367 ERROR [Thread-10] root: 
+2023-03-03 16:32:13,367 ERROR [Thread-10] root: Error! Connection lost!
+2023-03-03 16:32:13,368 ERROR [Thread-11] root: Error! Connection lost!
+2023-03-03 16:32:13,368 ERROR [Thread-12] root: Error! Connection lost!
+2023-03-03 16:32:13,370 ERROR [Thread-14] root: 
+2023-03-03 16:32:13,369 ERROR [Thread-13] root: Error! Connection lost!
+2023-03-03 16:32:13,373 ERROR [Thread-14] root: 
+2023-03-03 16:32:13,378 ERROR [Thread-14] root: Error! Connection lost!
+2023-03-03 16:32:13,383 ERROR [Thread-16] root: 
+2023-03-03 16:32:13,383 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.AdditionalTest.testGetMultiClient(AdditionalTest.java:206)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:32:13,386 ERROR [Thread-15] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-27] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-36] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-32] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-35] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-26] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-34] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-31] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-30] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-33] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-29] root: Error! Connection lost!
+2023-03-03 16:32:13,433 ERROR [Thread-28] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-38] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-47] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-40] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-42] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-46] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-44] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-37] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-39] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-41] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-43] root: Error! Connection lost!
+2023-03-03 16:32:13,481 ERROR [Thread-45] root: Error! Connection lost!
+2023-03-03 16:32:13,488 ERROR [Thread-49] root: 
+2023-03-03 16:32:13,495 ERROR [Thread-48] root: Error! Connection lost!
+2023-03-03 16:33:02,782 ERROR [Thread-2] root: Error! Connection lost!
+2023-03-03 16:33:02,791 ERROR [Thread-3] root: Error! Connection lost!
+2023-03-03 16:33:02,796 ERROR [Thread-4] root: Error! Connection lost!
+2023-03-03 16:33:02,801 ERROR [Thread-5] root: 
+2023-03-03 16:33:02,802 ERROR [Thread-5] root: Error! Connection lost!
+2023-03-03 16:33:02,805 ERROR [Thread-6] root: 
+2023-03-03 16:33:02,805 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGet(InteractionTest.java:110)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:33:02,812 ERROR [Thread-6] root: Error! Connection lost!
+2023-03-03 16:33:02,812 ERROR [Thread-7] root: 
+2023-03-03 16:33:02,813 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at storage.HashRing.setMapFromNodeMap(HashRing.java:74)
+	at storage.HashRing.getHashRingFromNodeMap(HashRing.java:104)
+	at client.KVStore.updateMetaData(KVStore.java:134)
+	at client.KVStore.updateConnection(KVStore.java:141)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGetUnsetValue(InteractionTest.java:125)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:33:02,815 ERROR [Thread-7] root: Error! Connection lost!
+2023-03-03 16:41:02,574 ERROR [Thread-2] root: Error! Connection lost!
+2023-03-03 16:41:02,578 ERROR [Thread-3] root: Error! Connection lost!
+2023-03-03 16:41:02,583 ERROR [Thread-4] root: 
+2023-03-03 16:41:02,583 ERROR [Thread-4] root: Error! Connection lost!
+2023-03-03 16:41:02,586 ERROR [Thread-5] root: 
+2023-03-03 16:41:02,586 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at client.KVStore.updateMetaData(KVStore.java:135)
+	at client.KVStore.updateConnection(KVStore.java:143)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGet(InteractionTest.java:110)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:41:02,592 ERROR [Thread-5] root: Error! Connection lost!
+2023-03-03 16:41:02,593 ERROR [Thread-6] root: 
+2023-03-03 16:41:02,593 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at client.KVStore.updateMetaData(KVStore.java:135)
+	at client.KVStore.updateConnection(KVStore.java:143)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGetUnsetValue(InteractionTest.java:125)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:41:02,595 ERROR [Thread-6] root: Error! Connection lost!
+2023-03-03 16:41:02,595 ERROR [Thread-7] root: Error! Connection lost!
+2023-03-03 16:42:00,047 ERROR [Thread-2] root: Error! Connection lost!
+2023-03-03 16:42:00,051 ERROR [Thread-3] root: Error! Connection lost!
+2023-03-03 16:42:00,054 ERROR [Thread-4] root: 
+2023-03-03 16:42:00,054 ERROR [Thread-4] root: Error! Connection lost!
+2023-03-03 16:42:00,057 ERROR [Thread-5] root: 
+2023-03-03 16:42:00,057 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at client.KVStore.updateMetaData(KVStore.java:135)
+	at client.KVStore.updateConnection(KVStore.java:143)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGet(InteractionTest.java:110)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:42:00,063 ERROR [Thread-5] root: Error! Connection lost!
+2023-03-03 16:42:00,064 ERROR [Thread-6] root: 
+2023-03-03 16:42:00,065 ERROR [main] root: Unable to deserialize metadata payload! 
+
+java.lang.NullPointerException
+	at client.KVStore.updateMetaData(KVStore.java:135)
+	at client.KVStore.updateConnection(KVStore.java:143)
+	at client.KVStore.get(KVStore.java:80)
+	at testing.InteractionTest.testGetUnsetValue(InteractionTest.java:125)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:168)
+	at junit.framework.TestCase.runBare(TestCase.java:134)
+	at junit.framework.TestResult$1.protect(TestResult.java:110)
+	at junit.framework.TestResult.runProtected(TestResult.java:128)
+	at junit.framework.TestResult.run(TestResult.java:113)
+	at junit.framework.TestCase.run(TestCase.java:124)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at junit.framework.TestSuite.runTest(TestSuite.java:243)
+	at junit.framework.TestSuite.run(TestSuite.java:238)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTestRunner.run(JUnitTestRunner.java:535)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeInVM(JUnitTask.java:1618)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:1040)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.executeOrQueue(JUnitTask.java:2163)
+	at org.apache.tools.ant.taskdefs.optional.junit.JUnitTask.execute(JUnitTask.java:854)
+	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+	at jdk.internal.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:99)
+	at org.apache.tools.ant.Task.perform(Task.java:350)
+	at org.apache.tools.ant.Target.execute(Target.java:449)
+	at org.apache.tools.ant.Target.performTasks(Target.java:470)
+	at org.apache.tools.ant.Project.executeSortedTargets(Project.java:1401)
+	at org.apache.tools.ant.Project.executeTarget(Project.java:1374)
+	at org.apache.tools.ant.helper.DefaultExecutor.executeTargets(DefaultExecutor.java:41)
+	at org.apache.tools.ant.Project.executeTargets(Project.java:1264)
+	at org.apache.tools.ant.Main.runBuild(Main.java:827)
+	at org.apache.tools.ant.Main.startAnt(Main.java:223)
+	at org.apache.tools.ant.launch.Launcher.run(Launcher.java:284)
+	at org.apache.tools.ant.launch.Launcher.main(Launcher.java:101)
+2023-03-03 16:42:00,067 ERROR [Thread-6] root: Error! Connection lost!
+2023-03-03 16:42:00,067 ERROR [Thread-7] root: Error! Connection lost!
+2023-03-03 23:37:20,861 ERROR [Thread-2] root: Error! Connection lost!
+2023-03-03 23:37:20,890 ERROR [Thread-3] root: Error! Connection lost!
+2023-03-03 23:37:20,904 ERROR [Thread-4] root: Error! Connection lost!
+2023-03-03 23:37:20,921 ERROR [Thread-5] root: 
+2023-03-03 23:37:20,922 ERROR [Thread-5] root: Error! Connection lost!
+2023-03-03 23:37:20,935 ERROR [Thread-6] root: 
+2023-03-03 23:37:20,936 ERROR [Thread-6] root: Error! Connection lost!
+2023-03-03 23:37:20,938 ERROR [Thread-7] root: 
+2023-03-03 23:37:20,942 ERROR [Thread-7] root: Error! Connection lost!
