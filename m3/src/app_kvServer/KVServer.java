@@ -223,6 +223,15 @@ public class KVServer extends Thread implements IKVServer {
 		transferData(node, successor, nodeHashRange);	
 	}
 
+	public static void handleReplicaDataOnShutdown(ECSNode node){
+		ECSNode successor = metaData.getSuccessorNodeFromIpHash(node.getIpPortHash());
+		ECSNode pred = metaData.getPredecessorNodeFromIpHash(node.getIpPortHash());
+
+		if(pred == null || successor == null) return;
+
+		
+	}
+
 	public static void handleShutdown(ECSNode node){
 		// logger.info("The hash range of the server being shut down: " + Arrays.toString(KVServer.metaData.getServerForHashValue(serverName).getNodeHashRange()));
 		KVServer.transferAllDataToSuccessor(node);
