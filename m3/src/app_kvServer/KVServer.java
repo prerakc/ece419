@@ -257,24 +257,42 @@ public class KVServer extends Thread implements IKVServer {
 				transferData(successorNode, thisNode, false);
 
 			ECSNode predNode = newMeta.getPredecessorNodeFromIpHash(thisNode.getIpPortHash());
-			if(predNode != null){
+			int numNodes = newMeta.getHashRing().size();
+			if(numNodes <= 1) return; // numNodes shoudl never be 0 but whatev
+			else if(numNodes == 2){
 				transferData(predNode, thisNode, predNode.getNodeHashRange(), false);
-			}
-
-			Set<ECSNode> nearbyNodes = new HashSet<ECSNode>();
-			nearbyNodes.addAll(Arrays.asList( new ECSNode[] {predNode, successorNode, thisNode} ));
-
-			if(successorNode != null){
+			}else if(numNodes == 3){
+				transferData(predNode, thisNode, predNode.getNodeHashRange(), false);
+				transferData(successorNode, thisNode, successorNode.getNodeHashRange(), false);
+			}else{
 				ECSNode secondSuccessorNode = newMeta.getSuccessorNodeFromIpHash(successorNode.getIpPortHash());
-				if(secondSuccessorNode != null && predNode != null && !nearbyNodes.contains(secondSuccessorNode))
-					transferData(secondSuccessorNode, thisNode, predNode.getNodeHashRange(),true);
-			}
-			
-			if(predNode != null){
+				transferData(secondSuccessorNode, thisNode, predNode.getNodeHashRange(),true);
+
 				ECSNode secondPredNode = newMeta.getPredecessorNodeFromIpHash(predNode.getIpPortHash());
-				if(secondPredNode != null && successorNode != null && !nearbyNodes.contains(secondPredNode))
-					transferData(successorNode, thisNode, secondPredNode.getNodeHashRange(), true);
+				transferData(successorNode, thisNode, secondPredNode.getNodeHashRange(), true);
+
+				//have to remove all the keys in thisNode's hashrange from third successor
+				ECSNode thirdSuccessorNode = newMeta.getSuccessorNodeFromIpHash(secondSuccessorNode.getIpPortHash());
+				transferData(thirdSuccessorNode, thisNode, thisNode.getNodeHashRange(),true);
 			}
+			// if(predNode != null){
+			// 	transferData(predNode, thisNode, predNode.getNodeHashRange(), false);
+			// }
+
+			// Set<ECSNode> nearbyNodes = new HashSet<ECSNode>();
+			// nearbyNodes.addAll(Arrays.asList( new ECSNode[] {predNode, successorNode, thisNode} ));
+
+			// if(successorNode != null){
+			// 	ECSNode secondSuccessorNode = newMeta.getSuccessorNodeFromIpHash(successorNode.getIpPortHash());
+			// 	if(secondSuccessorNode != null && predNode != null && !nearbyNodes.contains(secondSuccessorNode))
+			// 		transferData(secondSuccessorNode, thisNode, predNode.getNodeHashRange(),true);
+			// }
+			
+			// if(predNode != null){
+			// 	ECSNode secondPredNode = newMeta.getPredecessorNodeFromIpHash(predNode.getIpPortHash());
+			// 	if(secondPredNode != null && successorNode != null && !nearbyNodes.contains(secondPredNode))
+			// 		transferData(successorNode, thisNode, secondPredNode.getNodeHashRange(), true);
+			// }
 		}
 	}
 
