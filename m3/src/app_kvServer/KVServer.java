@@ -186,7 +186,7 @@ public class KVServer extends Thread implements IKVServer {
 			client.connect();
 			for (String key: toBeMoved.stringPropertyNames()) {
 					client.datatransfer(key, toBeMoved.getProperty(key));
-        		}
+        	}
 
 			client.disconnect();
 
@@ -406,7 +406,50 @@ public class KVServer extends Thread implements IKVServer {
 		if (!storage.put(key, value)) {
 			throw new Exception(String.format("Failed to put key '%s' and value '%s' into the database", key, value));
 		}
+	}
 
+	public void putKVReplica(String key, String value) throws Exception{
+		this.putKV(key,value);
+		ECSNode thisNode = KVServer.metaData.getServerForHashValue(this.serverNode.getIpPortHash());
+		String thisNodeHash = thisNode.getIpPortHash();
+
+		logger.info(String.format("%s was added and is obtaining keys from successor", thisNode.getNodeName()));
+		// get first succesor node
+		ECSNode successorNodeFirst = KVServer.metaData.getSuccessorNodeFromIpHash(thisNode.getIpPortHash());
+		if(successorNodeFirst != null){
+			// get second if first is found
+			ECSNode successorNodeSecond = KVServer.metaData.getSuccessorNodeFromIpHash(successorNodeFirst.getIpPortHash());
+			if(successorNodeSecond != null)
+				putReplica(successorNodeSecond,key,value);
+			putReplica(successorNodeFirst,key,value);
+		}
+	}
+
+	private void putReplica(ECSNode dstNode, String key, String value){
+		try {
+			KVStore client = new KVStore(dstNode.getNodeHost(), dstNode.getNodePort());
+			client.connect();
+			client.datatransfer(key, value);
+			client.disconnect();
+		} catch (Exception e) {
+			logger.error("Failed to replicate data", e);
+		}
+	}
+
+	// private void putReplica(ECSNOde dstNode, String key){
+	// 	try {
+	// 		KVStore client = new KVStore(dstNode.getNodeHost(), dstNode.getNodePort());
+	// 		client.connect();
+	// 		client.datatransfer(key);
+	// 		client.disconnect();
+	// 	} catch (Exception e) {
+	// 		logger.error("Failed to replicate data", e);
+	// 	}
+	// }
+
+
+	private void deleteKVReplica(String key, String value) throws Exception{
+		
 	}
 
 	public void deleteKV(String key) throws Exception{

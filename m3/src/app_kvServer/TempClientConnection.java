@@ -137,7 +137,8 @@ public class TempClientConnection implements Runnable {
 							responseValue = server.serializeHashRing();
 							logger.info(String.format("Server cannot service for key '%s'. Sending back metadata", key));
 						}else{
-							server.putKV(key, value);
+							// server.putKV(key, value);
+							server.putKVReplica(key, value);
 							if (existingKey) {
 								responseStatus = StatusType.PUT_UPDATE;
 								logger.info(String.format("Updated value associated with key '%s' to '%s'", key, value));

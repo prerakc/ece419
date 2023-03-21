@@ -140,7 +140,7 @@ public class HashRing {
         //handle map is null
         if(this.map.size() < 2)
             return null;
-
+        
         ECSNode node = this.map.get(serverHash);
         Entry<String, ECSNode> successorEntry = this.map.higherEntry(serverHash);
         successorEntry = (successorEntry == null ? this.map.firstEntry() : successorEntry);
