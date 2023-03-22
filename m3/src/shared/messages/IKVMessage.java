@@ -13,6 +13,7 @@ public interface IKVMessage {
 		DELETE_SUCCESS, /* Delete - request successful */
 		DELETE_ERROR, 	/* Delete - request successful */
 		DATATRANSFER,
+		
 
 		SERVER_NOT_AVAILABLE,    
         SERVER_IDLE,       
@@ -23,7 +24,8 @@ public interface IKVMessage {
 
 		SERVER_STOPPED, 		/* Server not active; No clients requests are processed */
 		SERVER_WRITE_LOCK,
-		SERVER_NOT_RESPONSIBLE 		/* Server is not responsible for the provided Key */
+		SERVER_NOT_RESPONSIBLE, 		/* Server is not responsible for the provided Key */
+		FORCE_DELETE
 	}
 
 	/**

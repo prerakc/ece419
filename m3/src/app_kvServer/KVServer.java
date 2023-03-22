@@ -454,20 +454,36 @@ public class KVServer extends Thread implements IKVServer {
 		}
 	}
 
-	// private void putReplica(ECSNOde dstNode, String key){
-	// 	try {
-	// 		KVStore client = new KVStore(dstNode.getNodeHost(), dstNode.getNodePort());
-	// 		client.connect();
-	// 		client.datatransfer(key);
-	// 		client.disconnect();
-	// 	} catch (Exception e) {
-	// 		logger.error("Failed to replicate data", e);
-	// 	}
-	// }
+	private void deleteReplica(ECSNode dstNode, String key){
+		try {
+			KVStore client = new KVStore(dstNode.getNodeHost(), dstNode.getNodePort());
+			client.connect();
+			client.forceDelete(key,"");
+			client.disconnect();
+		} catch (Exception e) {
+			logger.error("Failed to replicate data", e);
+		}
+	}
 
+	public void deleteKVReplica(String key) throws Exception{
+		this.deleteKV(key);
+		ECSNode thisNode = KVServer.metaData.getServerForHashValue(this.serverNode.getIpPortHash());
+		String thisNodeHash = thisNode.getIpPortHash();
 
-	private void deleteKVReplica(String key, String value) throws Exception{
-		
+		logger.info(String.format("%s was removed and is obtaining keys from successor", thisNode.getNodeName()));
+		// get first succesor node
+		ECSNode successorNodeFirst = KVServer.metaData.getSuccessorNodeFromIpHash(thisNode.getIpPortHash());
+		logger.info("FIRST SUCC: " + successorNodeFirst.getIpPortHash());
+		if(successorNodeFirst != null){
+			// get second if first is found
+			ECSNode successorNodeSecond = KVServer.metaData.getSuccessorNodeFromIpHash(successorNodeFirst.getIpPortHash());
+			if(successorNodeSecond != null)
+				deleteReplica(successorNodeSecond,key);
+			
+			logger.info("SEC SUCC: " + successorNodeSecond.getIpPortHash());
+			
+			deleteReplica(successorNodeFirst,key);
+		}
 	}
 
 	public void deleteKV(String key) throws Exception{

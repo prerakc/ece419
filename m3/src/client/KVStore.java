@@ -78,6 +78,13 @@ public class KVStore implements KVCommInterface {
 		return ackMessage;
 	}
 
+	public IKVMessage forceDelete(String key, String value) throws Exception {
+		KVMessage message = new KVMessage(IKVMessage.StatusType.FORCE_DELETE, key, value);
+		kvCommunication.sendMessage(message);
+		KVMessage ackMessage = kvCommunication.receiveMessage();
+		return ackMessage;
+	}
+
 	public IKVMessage datatransfer(String key, String value) throws Exception {
 		// TODO Auto-generated method stub
 		if(!verifyKey(key)){

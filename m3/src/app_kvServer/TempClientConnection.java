@@ -122,7 +122,8 @@ public class TempClientConnection implements Runnable {
 				}
 				else if (value.equals("null") || value.isEmpty()) {
 					try {
-						server.deleteKV(key);
+						// server.deleteKV(key);
+						server.deleteKVReplica(key);
 						responseStatus = StatusType.DELETE_SUCCESS;
 						logger.info(String.format("Deleted key '%s' from the database", key));
 					} catch (Exception e) {
@@ -175,6 +176,29 @@ public class TempClientConnection implements Runnable {
 					logger.error(e.getMessage());
 				}
 				break;
+			case FORCE_DELETE:
+				if(server.getStatus() != StatusType.SERVER_IDLE){
+					if(server.getStatus() == StatusType.SERVER_STOPPED){
+						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+						responseValue = this.server.serializeMetaData();
+						logger.info(String.format("Server is not available. Sending back metadata"));
+					}else if(server.getStatus() == StatusType.SERVER_WRITE_LOCK){
+						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
+						responseValue = this.server.serializeMetaData();
+						logger.info("Server cannot be written to. Try request again in a few minutes.");
+					}
+					//
+				} else {
+					try {
+						// server.deleteKV(key);
+						server.deleteKVReplica(key);
+						responseStatus = StatusType.DELETE_SUCCESS;
+						logger.info(String.format("Deleted key '%s' from the database", key));
+					} catch (Exception e) {
+						responseStatus = StatusType.DELETE_ERROR;
+						logger.error(e.getMessage());
+					}
+				}
 			default:
 				logger.info("Unexpected message status: " + status);
 				responseStatus = status;
