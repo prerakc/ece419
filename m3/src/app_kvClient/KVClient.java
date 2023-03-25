@@ -158,7 +158,20 @@ public class KVClient implements IKVClient {
                         logger.error("Unexpected exception", e);
                     }
         }
+        else if(tokens[0].equals("keyrange_read")){
+            try {
+                    IKVMessage ret = kvStore.keyrange_read();
+                    printMessage(ret);
 
+                    } catch (IOException ioe) {
+                        printError("Server not available");
+                        logger.warn("Server not available", ioe);
+                        disconnect();
+                    } catch (Exception e) {
+                        printError("Unexpected exception: " + e.getMessage());
+                        logger.error("Unexpected exception", e);
+                    }
+        }
         else if(tokens[0].equals("logLevel")) {
             if(tokens.length == 2) {
                 String level = setLevel(tokens[1]);

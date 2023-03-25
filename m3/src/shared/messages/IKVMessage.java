@@ -20,7 +20,10 @@ public interface IKVMessage {
         SERVER_IN_USE,
 		KEYRANGE,
 		KEYRANGE_SUCCESS,   
-		KEYRANGE_ERROR, 
+		KEYRANGE_ERROR,
+		KEYRANGE_READ,
+		KEYRANGE_READ_SUCCESS,
+		KEYRANGE_READ_ERROR, 
 
 		SERVER_STOPPED, 		/* Server not active; No clients requests are processed */
 		SERVER_WRITE_LOCK,

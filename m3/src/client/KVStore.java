@@ -153,6 +153,12 @@ public class KVStore implements KVCommInterface {
 		return kvCommunication.receiveMessage();
 	}
 
+	public IKVMessage keyrange_read() throws Exception {
+		KVMessage message = new KVMessage(IKVMessage.StatusType.KEYRANGE_READ, "", "");
+		kvCommunication.sendMessage(message);
+		return kvCommunication.receiveMessage();
+	}
+
 
 	public boolean isRunning() {
 		return (kvCommunication != null) && kvCommunication.isOpen();

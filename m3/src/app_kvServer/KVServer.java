@@ -689,6 +689,10 @@ public class KVServer extends Thread implements IKVServer {
 		return this.metaData.getSerializedHashRanges();
 	}
 
+	public String getMetaDataKeyRangesWithRep(){
+		return this.metaData.getSerializedHashRangesWithRep();
+	}
+
 	public String serializeMetaData(){
 		try{
 			return ECSNode.serializeECSMap(this.metaData.getHashRing());

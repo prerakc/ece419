@@ -120,6 +120,31 @@ public class HashRing {
         return sb.toString();
     }
 
+    public String getSerializedHashRangesWithRep(){
+        StringBuilder sb = new StringBuilder();
+        int numServers = map.size();
+        
+        for (String key : map.keySet()) {
+            ECSNode node = map.get(key);
+            String[] hashRange = node.getNodeHashRange().clone();
+            if(numServers < 4){
+                hashRange[0] = HashRing.incrementHexString(hashRange[1]);
+            }else{
+                ECSNode succ = getSuccessorNodeFromIpHash(node.getIpPortHash());
+                ECSNode secondSucc = getSuccessorNodeFromIpHash(succ.getIpPortHash());
+                hashRange[1] = secondSucc.getNodeHashRange()[1];
+            }
+            sb.append(hashRange[0]);
+            sb.append(Config.ECS_PROPS_DELIMITER);
+            sb.append(hashRange[1]);
+            sb.append(Config.ECS_PROPS_DELIMITER);
+            sb.append("<" + node.getNodeHost() + ":" + node.getNodePort() + ">");
+            sb.append(Config.ECS_DELIMITER);
+        }
+        sb.append("\r\n");
+        return sb.toString();
+    }
+
 
     public ECSNode getPredecessorNodeFromIpHash(String serverHash){
         //handle name is null
