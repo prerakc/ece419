@@ -8,6 +8,9 @@ import storage.HashUtils;
 import storage.HashRing;
 import shared.Config;
 import ecs.ECSNode;
+
+import java.util.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.io.IOException;
 import java.net.Socket;
@@ -99,12 +102,42 @@ public class KVStore implements KVCommInterface {
 		return ackMessage;
 	}
 
+	private void randomConnection() {
+		ArrayList<ECSNode> servers = new ArrayList<ECSNode>();
+
+		String thisNodeHash = HashUtils.getHashString(String.format("%s:%d",this.address,this.port));
+
+		ECSNode primary = this.metaData.getServerForHashValue(thisNodeHash);
+		ECSNode replica1 = (primary == null) ? null : this.metaData.getSuccessorNodeFromIpHash(thisNodeHash);
+		ECSNode replica2 = (replica1 == null) ? null : this.metaData.getSuccessorNodeFromIpHash(replica1.getIpPortHash());
+
+        if (primary != null) servers.add(primary);
+		if (replica1 != null) servers.add(replica1);
+		if (replica2 != null) servers.add(replica2);
+
+		if (servers.size() == 0) return;
+
+		Collections.shuffle(servers);
+
+		ECSNode randomServer = servers.get(0);
+
+		try{
+			disconnect();
+			this.address = randomServer.getNodeHost();
+			this.port = randomServer.getNodePort();
+			connect();
+		} catch (Exception ex) {
+			logger.error("CAN NOT CONNECT TO SERVER", ex);
+		}
+	}
+
 	@Override
 	public IKVMessage get(String key) throws Exception {
 		// TODO Auto-generated method stub
 		if(!verifyKey(key)){
 			return new KVMessage(IKVMessage.StatusType.GET_ERROR, key, "");
 		}
+		randomConnection();
 		KVMessage message = new KVMessage(IKVMessage.StatusType.GET, key, "");
 		kvCommunication.sendMessage(message);
 		KVMessage ackMessage = kvCommunication.receiveMessage();
@@ -112,6 +145,7 @@ public class KVStore implements KVCommInterface {
 		logger.info(sentToCorrectServer);
 		while(!sentToCorrectServer){
 			updateConnection(key, ackMessage);
+			randomConnection();
 			kvCommunication.sendMessage(message);
 			logger.info("LOOKING FOR SERVER");
 			ackMessage = kvCommunication.receiveMessage();
