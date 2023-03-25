@@ -195,6 +195,12 @@ public class KVServer extends Thread implements IKVServer {
 			logger.error("Failed to transfer data", e);
 		}	
 
+		// try {
+		// 	Thread.sleep(5000);
+		// } catch (InterruptedException e) {
+		// 	Thread.currentThread().interrupt();
+		// }
+		  
 		if(!deleteData) return;
 		//delete keys from file 
 		Properties newSrcProperties = new Properties();
@@ -214,26 +220,35 @@ public class KVServer extends Thread implements IKVServer {
 	public static void transferAllDataToSuccessor(ECSNode node){
 		ECSNode successor = metaData.getSuccessorNodeFromIpHash(node.getIpPortHash());
 		String[] nodeHashRange = KVServer.metaData.getServerForHashValue(serverName).getNodeHashRange();
+		String[] loopedHashRange = new String[] {HashRing.incrementHexString(nodeHashRange[1]), nodeHashRange[1]};
 		
 		
 		// successor = successor == null ? metaData.getFirstValue() : successor; //metadata might be getting updated before the shutdown occurs? 
 		if(successor == null) return; // There are no more nodes in the ring
 
-		// transferData(node, successor, node.getNodeHashRange());
-		transferData(node, successor, nodeHashRange);	
+		// transferData(node, successor, nodeHashRange);
+		transferData(node, successor, loopedHashRange);
 	}
 
 	public static void handleReplicaDataOnShutdown(ECSNode node){
-		ECSNode successor = metaData.getSuccessorNodeFromIpHash(node.getIpPortHash());
-		ECSNode pred = metaData.getPredecessorNodeFromIpHash(node.getIpPortHash());
+		ECSNode updatedNode = KVServer.metaData.getServerForHashValue(KVServer.serverName);
+		HashRing metaData = KVServer.metaData;
+		int numNodesAfterRemoval = metaData.getHashRing().size() - 1;
+		if(numNodesAfterRemoval < 3) return;
 
-		if(pred == null || successor == null) return;
+		ECSNode successorNode = metaData.getSuccessorNodeFromIpHash(node.getIpPortHash());
+		ECSNode predNode = metaData.getPredecessorNodeFromIpHash(node.getIpPortHash());
+		ECSNode secondSuccessorNode = metaData.getSuccessorNodeFromIpHash(successorNode.getIpPortHash());
+		ECSNode secondPredNode =  metaData.getPredecessorNodeFromIpHash(predNode.getIpPortHash());
+		ECSNode thirdSuccessorNode = metaData.getSuccessorNodeFromIpHash(secondSuccessorNode.getIpPortHash());
 
-		
+		transferData(predNode, secondSuccessorNode, predNode.getNodeHashRange(),false);
+		transferData(updatedNode, thirdSuccessorNode, updatedNode.getNodeHashRange(), false);
 	}
 
 	public static void handleShutdown(ECSNode node){
 		// logger.info("The hash range of the server being shut down: " + Arrays.toString(KVServer.metaData.getServerForHashValue(serverName).getNodeHashRange()));
+		handleReplicaDataOnShutdown(node);
 		KVServer.transferAllDataToSuccessor(node);
 		KVServer.ecsClient.removeKVServer(KVServer.serverName);
 		KVServer.ecsClient.removeServerStatus(KVServer.serverName);
@@ -654,7 +669,12 @@ public class KVServer extends Thread implements IKVServer {
 		if (distributedMode) {
 		  	String keyHash = HashUtils.getHashString(key);
 			ECSNode coordinator = KVServer.metaData.getServerForHashValue(keyHash);
-			return (coordinator == this.serverNode || KVServer.metaData.isReplicaOfNode(coordinator, this.serverNode));
+
+			boolean isPrimary = coordinator.getIpPortHash().equals(this.serverNode.getIpPortHash());
+
+			boolean isReplica = KVServer.metaData.isReplicaOfNode(coordinator, this.serverNode);
+
+			return (isPrimary || isReplica);
 
 		} else {
 			return true;

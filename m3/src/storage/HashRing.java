@@ -157,12 +157,12 @@ public class HashRing {
         ECSNode firstSuccessor = getSuccessorNodeFromIpHash(coordinator.getIpPortHash());
 
         if(firstSuccessor == null) return false;
-        if(firstSuccessor == node) return true;
+        if(firstSuccessor.getIpPortHash().equals(node.getIpPortHash())) return true;
 
         ECSNode secondSuccessor = getSuccessorNodeFromIpHash(firstSuccessor.getIpPortHash());
 
         if(secondSuccessor == null) return false;
-        if(secondSuccessor == node) return true;
+        if(secondSuccessor.getIpPortHash().equals(node.getIpPortHash())) return true;
 
        return false;
     }

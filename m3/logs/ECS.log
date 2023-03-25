@@ -2604,3 +2604,674 @@ org.apache.zookeeper.KeeperException$NoNodeException: KeeperErrorCode = NoNode f
 	at ecs.ECS$2.processResult(ECS.java:189)
 	at org.apache.zookeeper.ClientCnxn$EventThread.processEvent(ClientCnxn.java:590)
 	at org.apache.zookeeper.ClientCnxn$EventThread.run(ClientCnxn.java:506)
+2023-03-25 15:01:20,018 ERROR [main] root: Unable to start Zookeeper
+java.io.IOException: Cannot run program "/nfs/ug/homes-2/c/chaud496/ece419/m3/zookeeper-3.4.11/bin/zkServer.sh": error=2, No such file or directory
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1128)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1071)
+	at ecs.ECS.startZookeeper(ECS.java:393)
+	at ecs.ECS.initializeZK(ECS.java:151)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.base/java.lang.ProcessImpl.forkAndExec(Native Method)
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:340)
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:271)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1107)
+	... 6 more
+2023-03-25 15:01:20,046 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-03-25 15:01:20,046 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug212.eecg.toronto.edu
+2023-03-25 15:01:20,046 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-03-25 15:01:20,054 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-03-25 15:01:20,061 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-03-25 15:01:20,068 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-03-25 15:01:20,076 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-03-25 15:01:20,084 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-03-25 15:01:20,091 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-03-25 15:01:20,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-03-25 15:01:20,105 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-03-25 15:01:20,113 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-03-25 15:01:20,120 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-03-25 15:01:20,128 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-03-25 15:01:20,135 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m3
+2023-03-25 15:01:20,145 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@5fdef03a
+2023-03-25 15:01:20,188 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:20,204 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:21,308 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:21,310 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:22,411 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:22,412 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:23,514 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:23,515 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:24,616 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:24,617 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:25,720 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:25,721 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:26,824 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:26,825 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:27,927 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:27,928 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:29,030 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:29,031 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:30,138 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:30,139 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:31,240 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:31,241 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:32,342 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:32,344 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:33,445 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:33,446 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:34,547 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:34,548 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:35,650 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:35,650 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:36,751 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:36,752 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:37,853 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:37,854 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:38,955 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:38,956 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:40,065 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:40,066 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:41,172 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:41,173 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:42,276 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:42,277 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:43,378 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:43,379 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:44,480 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:44,481 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:45,582 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:45,583 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:46,684 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:46,685 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:47,787 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:47,788 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:48,889 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:48,889 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:49,990 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:49,991 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:51,128 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:51,129 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:52,230 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:52,230 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:53,331 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:53,332 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:01:54,433 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:01:54,433 WARN  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:777)
+	at org.apache.zookeeper.ClientCnxnSocketNIO.doTransport(ClientCnxnSocketNIO.java:361)
+	at org.apache.zookeeper.ClientCnxn$SendThread.run(ClientCnxn.java:1144)
+2023-03-25 15:04:08,850 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-03-25 15:04:08,850 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug212.eecg.toronto.edu
+2023-03-25 15:04:08,850 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-03-25 15:04:08,851 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-03-25 15:04:08,852 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-03-25 15:04:08,853 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-03-25 15:04:08,854 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-03-25 15:04:08,855 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-03-25 15:04:08,855 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-03-25 15:04:08,855 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-03-25 15:04:08,856 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-03-25 15:04:08,857 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-03-25 15:04:08,858 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-03-25 15:04:08,859 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-03-25 15:04:08,860 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m3
+2023-03-25 15:04:08,861 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-03-25 15:04:08,870 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:04:08,874 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-03-25 15:04:08,886 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x100480b17c00000, negotiated timeout = 40000
+2023-03-25 15:04:08,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-03-25 15:04:08,889 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:04:08,889 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-03-25 15:04:08,891 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x100480b17c00001, negotiated timeout = 40000
+2023-03-25 15:04:46,948 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:04:46,949 INFO  [main-EventThread] root: 1
+2023-03-25 15:04:46,949 INFO  [main-EventThread] root: 0
+2023-03-25 15:04:46,956 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:04:46,956 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:04:57,870 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:04:57,871 INFO  [main-EventThread] root: 2
+2023-03-25 15:04:57,871 INFO  [main-EventThread] root: 1
+2023-03-25 15:04:57,874 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:04:57,874 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 15:04:57,874 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:05:07,881 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:05:07,882 INFO  [main-EventThread] root: 3
+2023-03-25 15:05:07,882 INFO  [main-EventThread] root: 2
+2023-03-25 15:05:07,886 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:05:07,886 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 15:05:07,886 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-03-25 15:05:07,886 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:13:20,811 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:13:20,812 INFO  [main-EventThread] root: 2
+2023-03-25 15:13:20,812 INFO  [main-EventThread] root: 3
+2023-03-25 15:13:20,818 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:13:20,818 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 15:13:20,818 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:13:25,051 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:13:25,052 INFO  [main-EventThread] root: 1
+2023-03-25 15:13:25,052 INFO  [main-EventThread] root: 2
+2023-03-25 15:13:25,054 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:13:25,054 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:14:04,109 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:14:04,110 INFO  [main-EventThread] root: 0
+2023-03-25 15:14:04,110 INFO  [main-EventThread] root: 1
+2023-03-25 15:14:04,111 INFO  [main-EventThread] root: PMETADAT HR: []
+2023-03-25 15:18:39,739 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-03-25 15:18:39,739 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug212.eecg.toronto.edu
+2023-03-25 15:18:39,739 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-03-25 15:18:39,740 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-03-25 15:18:39,741 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-03-25 15:18:39,741 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-03-25 15:18:39,742 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-03-25 15:18:39,743 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-03-25 15:18:39,744 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-03-25 15:18:39,745 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-03-25 15:18:39,746 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-03-25 15:18:39,747 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-03-25 15:18:39,748 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-03-25 15:18:39,749 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-03-25 15:18:39,750 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m3
+2023-03-25 15:18:39,752 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-03-25 15:18:39,760 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:18:39,764 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-03-25 15:18:39,769 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x100480b17c00009, negotiated timeout = 40000
+2023-03-25 15:18:39,770 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-03-25 15:18:39,771 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:18:39,771 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-03-25 15:18:39,773 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x100480b17c0000a, negotiated timeout = 40000
+2023-03-25 15:18:39,779 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /workers
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createWorkersNode(ECS.java:332)
+	at ecs.ECS.initializeZK(ECS.java:152)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-03-25 15:18:39,781 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /server_status
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createServerNode(ECS.java:380)
+	at ecs.ECS.initializeZK(ECS.java:153)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-03-25 15:18:43,832 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:18:43,833 INFO  [main-EventThread] root: 1
+2023-03-25 15:18:43,833 INFO  [main-EventThread] root: 0
+2023-03-25 15:18:43,840 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:18:43,840 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:18:46,366 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:18:46,367 INFO  [main-EventThread] root: 2
+2023-03-25 15:18:46,367 INFO  [main-EventThread] root: 1
+2023-03-25 15:18:46,369 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:18:46,369 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 15:18:46,369 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:18:51,825 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:18:51,826 INFO  [main-EventThread] root: 3
+2023-03-25 15:18:51,826 INFO  [main-EventThread] root: 2
+2023-03-25 15:18:51,829 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:18:51,829 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 15:18:51,829 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-03-25 15:18:51,829 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:27:19,782 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:27:19,783 INFO  [main-EventThread] root: 2
+2023-03-25 15:27:19,783 INFO  [main-EventThread] root: 3
+2023-03-25 15:27:19,786 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:27:19,787 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 15:27:19,787 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:27:21,112 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:27:21,113 INFO  [main-EventThread] root: 1
+2023-03-25 15:27:21,113 INFO  [main-EventThread] root: 2
+2023-03-25 15:27:21,115 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:27:21,115 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:27:22,485 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:27:22,486 INFO  [main-EventThread] root: 0
+2023-03-25 15:27:22,487 INFO  [main-EventThread] root: 1
+2023-03-25 15:27:22,488 INFO  [main-EventThread] root: PMETADAT HR: []
+2023-03-25 15:29:30,856 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-03-25 15:29:30,856 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug212.eecg.toronto.edu
+2023-03-25 15:29:30,856 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-03-25 15:29:30,857 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-03-25 15:29:30,857 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-03-25 15:29:30,858 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-03-25 15:29:30,859 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-03-25 15:29:30,859 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-03-25 15:29:30,859 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-03-25 15:29:30,860 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-03-25 15:29:30,860 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-03-25 15:29:30,861 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-03-25 15:29:30,862 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-03-25 15:29:30,862 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-03-25 15:29:30,863 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m3
+2023-03-25 15:29:30,864 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-03-25 15:29:30,873 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:29:30,878 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-03-25 15:29:30,881 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x100480b17c00011, negotiated timeout = 40000
+2023-03-25 15:29:30,883 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-03-25 15:29:30,883 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 15:29:30,883 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-03-25 15:29:30,886 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x100480b17c00012, negotiated timeout = 40000
+2023-03-25 15:29:30,891 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /workers
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createWorkersNode(ECS.java:332)
+	at ecs.ECS.initializeZK(ECS.java:152)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-03-25 15:29:30,893 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /server_status
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createServerNode(ECS.java:380)
+	at ecs.ECS.initializeZK(ECS.java:153)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-03-25 15:29:33,956 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:29:33,956 INFO  [main-EventThread] root: 1
+2023-03-25 15:29:33,956 INFO  [main-EventThread] root: 0
+2023-03-25 15:29:33,963 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:29:33,963 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:29:35,929 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:29:35,930 INFO  [main-EventThread] root: 2
+2023-03-25 15:29:35,930 INFO  [main-EventThread] root: 1
+2023-03-25 15:29:35,933 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:29:35,933 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 15:29:35,933 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:29:44,771 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:29:44,772 INFO  [main-EventThread] root: 3
+2023-03-25 15:29:44,772 INFO  [main-EventThread] root: 2
+2023-03-25 15:29:44,774 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:29:44,774 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 15:29:44,774 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-03-25 15:29:44,774 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:59:14,238 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:59:14,239 INFO  [main-EventThread] root: 2
+2023-03-25 15:59:14,239 INFO  [main-EventThread] root: 3
+2023-03-25 15:59:14,242 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:59:14,242 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 15:59:14,242 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:59:16,347 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:59:16,348 INFO  [main-EventThread] root: 1
+2023-03-25 15:59:16,348 INFO  [main-EventThread] root: 2
+2023-03-25 15:59:16,349 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 15:59:16,350 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 15:59:18,886 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 15:59:18,887 INFO  [main-EventThread] root: 0
+2023-03-25 15:59:18,887 INFO  [main-EventThread] root: 1
+2023-03-25 15:59:18,888 INFO  [main-EventThread] root: PMETADAT HR: []
+2023-03-25 16:30:17,048 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-03-25 16:30:17,048 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug212.eecg.toronto.edu
+2023-03-25 16:30:17,048 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-03-25 16:30:17,049 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-03-25 16:30:17,049 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-03-25 16:30:17,050 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-03-25 16:30:17,050 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-03-25 16:30:17,051 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-03-25 16:30:17,051 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-03-25 16:30:17,051 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-03-25 16:30:17,051 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-03-25 16:30:17,052 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-03-25 16:30:17,053 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-03-25 16:30:17,053 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-03-25 16:30:17,054 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m3
+2023-03-25 16:30:17,054 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-03-25 16:30:17,064 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 16:30:17,068 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-03-25 16:30:17,071 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x100480b17c00019, negotiated timeout = 40000
+2023-03-25 16:30:17,072 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-03-25 16:30:17,073 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 16:30:17,073 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-03-25 16:30:17,075 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x100480b17c0001a, negotiated timeout = 40000
+2023-03-25 16:30:17,081 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /workers
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createWorkersNode(ECS.java:332)
+	at ecs.ECS.initializeZK(ECS.java:152)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-03-25 16:30:17,083 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /server_status
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createServerNode(ECS.java:380)
+	at ecs.ECS.initializeZK(ECS.java:153)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-03-25 16:30:22,904 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:30:22,904 INFO  [main-EventThread] root: 1
+2023-03-25 16:30:22,904 INFO  [main-EventThread] root: 0
+2023-03-25 16:30:22,910 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:30:22,911 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:30:27,938 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:30:27,939 INFO  [main-EventThread] root: 2
+2023-03-25 16:30:27,939 INFO  [main-EventThread] root: 1
+2023-03-25 16:30:27,943 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:30:27,943 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:30:27,943 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:30:34,375 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:30:34,377 INFO  [main-EventThread] root: 3
+2023-03-25 16:30:34,377 INFO  [main-EventThread] root: 2
+2023-03-25 16:30:34,380 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:30:34,380 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:30:34,380 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-03-25 16:30:34,380 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:31:08,246 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:31:08,247 INFO  [main-EventThread] root: 2
+2023-03-25 16:31:08,247 INFO  [main-EventThread] root: 3
+2023-03-25 16:31:08,251 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:31:08,251 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:31:08,251 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:37:31,229 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:37:31,230 INFO  [main-EventThread] root: 1
+2023-03-25 16:37:31,231 INFO  [main-EventThread] root: 2
+2023-03-25 16:37:31,233 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:37:31,233 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:37:33,513 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:37:33,514 INFO  [main-EventThread] root: 0
+2023-03-25 16:37:33,514 INFO  [main-EventThread] root: 1
+2023-03-25 16:37:33,515 INFO  [main-EventThread] root: PMETADAT HR: []
+2023-03-25 16:38:59,048 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-03-25 16:38:59,048 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug212.eecg.toronto.edu
+2023-03-25 16:38:59,048 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-03-25 16:38:59,049 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-03-25 16:38:59,050 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-03-25 16:38:59,050 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-03-25 16:38:59,051 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-03-25 16:38:59,051 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-03-25 16:38:59,052 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-03-25 16:38:59,052 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-03-25 16:38:59,052 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-03-25 16:38:59,053 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-03-25 16:38:59,053 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-03-25 16:38:59,054 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-03-25 16:38:59,054 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m3
+2023-03-25 16:38:59,055 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-03-25 16:38:59,064 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 16:38:59,068 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-03-25 16:38:59,072 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x100480b17c00021, negotiated timeout = 40000
+2023-03-25 16:38:59,074 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-03-25 16:38:59,074 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-03-25 16:38:59,075 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-03-25 16:38:59,076 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x100480b17c00022, negotiated timeout = 40000
+2023-03-25 16:38:59,082 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /workers
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createWorkersNode(ECS.java:332)
+	at ecs.ECS.initializeZK(ECS.java:152)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-03-25 16:38:59,084 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /server_status
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createServerNode(ECS.java:380)
+	at ecs.ECS.initializeZK(ECS.java:153)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-03-25 16:39:04,055 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:39:04,056 INFO  [main-EventThread] root: 1
+2023-03-25 16:39:04,056 INFO  [main-EventThread] root: 0
+2023-03-25 16:39:04,062 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:39:04,062 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:39:08,046 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:39:08,047 INFO  [main-EventThread] root: 2
+2023-03-25 16:39:08,047 INFO  [main-EventThread] root: 1
+2023-03-25 16:39:08,050 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:39:08,050 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:39:08,050 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:39:12,727 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:39:12,728 INFO  [main-EventThread] root: 3
+2023-03-25 16:39:12,728 INFO  [main-EventThread] root: 2
+2023-03-25 16:39:12,738 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:39:12,738 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:39:12,738 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-03-25 16:39:12,738 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:39:20,531 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:39:20,532 INFO  [main-EventThread] root: 2
+2023-03-25 16:39:20,532 INFO  [main-EventThread] root: 3
+2023-03-25 16:39:20,535 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:39:20,535 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:39:20,535 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:39:27,385 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:39:27,386 INFO  [main-EventThread] root: 1
+2023-03-25 16:39:27,386 INFO  [main-EventThread] root: 2
+2023-03-25 16:39:27,387 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:39:27,387 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:39:31,334 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:39:31,335 INFO  [main-EventThread] root: 0
+2023-03-25 16:39:31,335 INFO  [main-EventThread] root: 1
+2023-03-25 16:39:31,336 INFO  [main-EventThread] root: PMETADAT HR: []
+2023-03-25 16:40:07,990 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:40:07,991 INFO  [main-EventThread] root: 1
+2023-03-25 16:40:07,991 INFO  [main-EventThread] root: 0
+2023-03-25 16:40:07,992 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:40:07,993 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:40:10,503 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:40:10,504 INFO  [main-EventThread] root: 2
+2023-03-25 16:40:10,504 INFO  [main-EventThread] root: 1
+2023-03-25 16:40:10,507 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:40:10,507 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:40:10,507 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:40:12,778 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:40:12,778 INFO  [main-EventThread] root: 3
+2023-03-25 16:40:12,778 INFO  [main-EventThread] root: 2
+2023-03-25 16:40:12,781 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:40:12,781 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:40:12,781 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-03-25 16:40:12,781 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:40:31,206 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:40:31,207 INFO  [main-EventThread] root: 4
+2023-03-25 16:40:31,207 INFO  [main-EventThread] root: 3
+2023-03-25 16:40:31,210 INFO  [main-EventThread] root: PMETADAT HR: [0725393394f806b42f6213da4dabc3db, 6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:40:31,210 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8085
+2023-03-25 16:40:31,210 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:40:31,210 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-03-25 16:40:31,210 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:41:41,275 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:41:41,276 INFO  [main-EventThread] root: 3
+2023-03-25 16:41:41,276 INFO  [main-EventThread] root: 4
+2023-03-25 16:41:41,279 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:41:41,279 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:41:41,279 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-03-25 16:41:41,279 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:41:53,676 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:41:53,677 INFO  [main-EventThread] root: 2
+2023-03-25 16:41:53,677 INFO  [main-EventThread] root: 3
+2023-03-25 16:41:53,679 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:41:53,679 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-03-25 16:41:53,679 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:41:55,580 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:41:55,581 INFO  [main-EventThread] root: 1
+2023-03-25 16:41:55,581 INFO  [main-EventThread] root: 2
+2023-03-25 16:41:55,584 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-03-25 16:41:55,584 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-03-25 16:41:57,897 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-03-25 16:41:57,898 INFO  [main-EventThread] root: 0
+2023-03-25 16:41:57,898 INFO  [main-EventThread] root: 1
+2023-03-25 16:41:57,898 INFO  [main-EventThread] root: PMETADAT HR: []
