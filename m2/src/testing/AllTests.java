@@ -46,12 +46,11 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite clientSuite = new TestSuite("Basic Storage ServerTest-Suite");
 
-//		clientSuite.addTestSuite(NonDistributedKVStoreTest.class);
-//		clientSuite.addTestSuite(NonDistributedKVServerTest.class);
-//		clientSuite.addTestSuite(NonDistributedKVServerPerformanceTest.class);
-		clientSuite.addTestSuite(DistributedKVStoreTest.class);
+		// clientSuite.addTestSuite(NonDistributedKVStoreTest.class);
+		// clientSuite.addTestSuite(NonDistributedKVServerTest.class);
+		// clientSuite.addTestSuite(NonDistributedKVServerPerformanceTest.class);
+		clientSuite.addTestSuite(DistributedTest.class);
 		clientSuite.addTestSuite(HashRingTests.class);
-//		clientSuite.addTestSuite(DistributedKVServerTest.class);
 
 		return clientSuite;
 	}
