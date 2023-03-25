@@ -87,7 +87,7 @@ public class TempClientConnection implements Runnable {
 							responseValue = this.server.serializeMetaData();
 						}
 					}
-					else if(!server.isResponsibleForRequest(key)){
+					else if(!server.isResponsibleForGet(key)){
 						responseStatus = StatusType.SERVER_NOT_RESPONSIBLE;
 						// responseValue = server.serializeHashRing();
 						responseValue = this.server.serializeMetaData();
