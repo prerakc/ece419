@@ -21,6 +21,8 @@ import java.lang.Integer;
 import java.io.IOException;
 import java.util.*;
 import java.io.*;
+import java.util.concurrent.locks.*;
+import java.util.concurrent.CountDownLatch;
 
 
 public class KVServer extends Thread implements IKVServer {
@@ -218,6 +220,10 @@ public class KVServer extends Thread implements IKVServer {
 	}
 
 	public static void transferAllDataToSuccessor(ECSNode node){
+		ECSNode shutdownNode = KVServer.metaData.getServerForHashValue(serverName);
+		if(shutdownNode == null){
+			logger.warn("The server that is shutting down is not in its own meta data!");
+		}
 		ECSNode successor = metaData.getSuccessorNodeFromIpHash(node.getIpPortHash());
 		String[] nodeHashRange = KVServer.metaData.getServerForHashValue(serverName).getNodeHashRange();
 		String[] loopedHashRange = new String[] {HashRing.incrementHexString(nodeHashRange[1]), nodeHashRange[1]};
@@ -248,8 +254,13 @@ public class KVServer extends Thread implements IKVServer {
 
 	public static void handleShutdown(ECSNode node){
 		// logger.info("The hash range of the server being shut down: " + Arrays.toString(KVServer.metaData.getServerForHashValue(serverName).getNodeHashRange()));
-		handleReplicaDataOnShutdown(node);
-		KVServer.transferAllDataToSuccessor(node);
+		KVServer.status = StatusType.SERVER_STOPPED;
+		try{
+			handleReplicaDataOnShutdown(node);
+			KVServer.transferAllDataToSuccessor(node);
+		}catch(NullPointerException e){
+			logger.error("Ran into null pointer exception. Skipping data transfer on shutdown", e);
+		}
 		KVServer.ecsClient.removeKVServer(KVServer.serverName);
 		KVServer.ecsClient.removeServerStatus(KVServer.serverName);
 		// KVServer.transferAllDataToSuccessor(node);
@@ -257,10 +268,12 @@ public class KVServer extends Thread implements IKVServer {
 
 	public static void updateMetadataZK(String status){
 		logger.info(status);
+		// KVServer.metaDataLock.lock();
 		HashRing newMeta = HashRing.getHashRingFromNodeMap(ECSNode.deserializeToECSNodeMap(status));
 		HashRing oldMeta = KVServer.metaData;
 		KVServer.metaData = newMeta;
 		logger.info( KVServer.metaData.getHashRing().firstEntry().getValue().getNodeHashRange()[0] + ":" + KVServer.metaData.getHashRing().firstEntry().getValue().getNodeHashRange()[1]);
+		// KVServer.metaDataLock.unlock();
 
 		ECSNode thisNode = getCurrentServerNode(oldMeta, newMeta);
 		String thisNodeHash = thisNode.getIpPortHash();
@@ -273,7 +286,10 @@ public class KVServer extends Thread implements IKVServer {
 
 			ECSNode predNode = newMeta.getPredecessorNodeFromIpHash(thisNode.getIpPortHash());
 			int numNodes = newMeta.getHashRing().size();
-			if(numNodes <= 1) return; // numNodes shoudl never be 0 but whatev
+			if(numNodes <= 1){ 
+				// KVServer.metaDataLock.unlock();
+				return; // numNodes shoudl never be 0 but whatev
+			}
 			else if(numNodes == 2){
 				transferData(predNode, thisNode, predNode.getNodeHashRange(), false);
 			}else if(numNodes == 3){
@@ -290,24 +306,7 @@ public class KVServer extends Thread implements IKVServer {
 				ECSNode thirdSuccessorNode = newMeta.getSuccessorNodeFromIpHash(secondSuccessorNode.getIpPortHash());
 				transferData(thirdSuccessorNode, thisNode, thisNode.getNodeHashRange(),true);
 			}
-			// if(predNode != null){
-			// 	transferData(predNode, thisNode, predNode.getNodeHashRange(), false);
-			// }
-
-			// Set<ECSNode> nearbyNodes = new HashSet<ECSNode>();
-			// nearbyNodes.addAll(Arrays.asList( new ECSNode[] {predNode, successorNode, thisNode} ));
-
-			// if(successorNode != null){
-			// 	ECSNode secondSuccessorNode = newMeta.getSuccessorNodeFromIpHash(successorNode.getIpPortHash());
-			// 	if(secondSuccessorNode != null && predNode != null && !nearbyNodes.contains(secondSuccessorNode))
-			// 		transferData(secondSuccessorNode, thisNode, predNode.getNodeHashRange(),true);
-			// }
-			
-			// if(predNode != null){
-			// 	ECSNode secondPredNode = newMeta.getPredecessorNodeFromIpHash(predNode.getIpPortHash());
-			// 	if(secondPredNode != null && successorNode != null && !nearbyNodes.contains(secondPredNode))
-			// 		transferData(successorNode, thisNode, secondPredNode.getNodeHashRange(), true);
-			// }
+			// KVServer.metaDataLock.unlock();
 		}
 	}
 
