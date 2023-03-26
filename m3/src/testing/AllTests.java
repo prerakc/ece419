@@ -38,8 +38,8 @@ public class AllTests {
 		return;
 	}
 
-	private static void clearTestData(){
-		helper("./data/test");
+	public static void clearTestData(){
+		helper("./data/");
 		// helper("./data");
 	}
 	
@@ -49,10 +49,11 @@ public class AllTests {
 //		clientSuite.addTestSuite(NonDistributedKVStoreTest.class);
 //		clientSuite.addTestSuite(NonDistributedKVServerTest.class);
 //		clientSuite.addTestSuite(NonDistributedKVServerPerformanceTest.class);
-		clientSuite.addTestSuite(DistributedKVStoreTest.class);
-		clientSuite.addTestSuite(HashRingTests.class);
-//		clientSuite.addTestSuite(DistributedKVServerTest.class);
-
+		// clientSuite.addTestSuite(DistributedKVStoreTest.class);
+		// clientSuite.addTestSuite(HashRingTests.class);
+		clientSuite.addTestSuite(DistributedKVServerPerformanceTest.class);
+		// clientSuite.addTestSuite(DistributedKVMultiClient.class);
+		// clientSuite.addTestSuite(DistributedKVServerTest.class);
 		return clientSuite;
 	}
 }

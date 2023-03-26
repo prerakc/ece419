@@ -36,7 +36,7 @@ public class KVServer extends Thread implements IKVServer {
 	private static String serverName;
 	private static StatusType status;
 	private String address;
-	private String dataDirectory;
+	private static String dataDirectory;
 	private String dataProperties;
 
 	private KVStorage storage;
@@ -80,12 +80,12 @@ public class KVServer extends Thread implements IKVServer {
 		KVServer.serverName = String.format("%s:%d",this.address,port);
 		// this.dataProperties = KVServer.serverName + ".properties";
 		this.dataProperties = dataProps;
-		this.dataDirectory = dataDir;
+		KVServer.dataDirectory = dataDir;
 		KVServer.status = StatusType.SERVER_NOT_AVAILABLE;
 
 		// this.serverName = String.format("%s:%d",this.getHostname(),port);
 
-		this.storage = new KVStorage(this.dataDirectory, this.dataProperties);
+		this.storage = new KVStorage(KVServer.dataDirectory, this.dataProperties);
 
 		this.threads = new ArrayList<Thread>();
 
@@ -118,10 +118,10 @@ public class KVServer extends Thread implements IKVServer {
 
 		this.status = StatusType.SERVER_IDLE;
 
-		this.dataDirectory = dataDir;
+		KVServer.dataDirectory = dataDir;
 		this.dataProperties = dataProps;
 
-		this.storage = new KVStorage(this.dataDirectory, this.dataProperties);
+		this.storage = new KVStorage(KVServer.dataDirectory, this.dataProperties);
 
 		this.threads = new ArrayList<Thread>();
 
@@ -143,7 +143,7 @@ public class KVServer extends Thread implements IKVServer {
 
 	public static Properties getAllKeysInRange(ECSNode node, String[] keyRange){
 		Properties dataProps = new Properties();
-		String dataPath = String.format("data/%s.properties", node.getNodeName());
+		String dataPath = String.format("%s/%s.properties", KVServer.dataDirectory,node.getNodeName());
 		Properties toBeMoved = new Properties();
 		//load data
 		try {

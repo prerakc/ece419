@@ -40,7 +40,6 @@ public class HashRingTests extends TestCase {
             }
             Arrays.sort(this.sortedHashes);
 
-
             // ECSNode node1 = new ECSNode();
         }
 

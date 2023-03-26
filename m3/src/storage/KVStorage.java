@@ -36,8 +36,9 @@ public class KVStorage {
             }
 
             Properties dataProps = new Properties();
-
-            dataProps.load(new FileInputStream(propertiesPath));
+            FileInputStream fs = new FileInputStream(propertiesPath);
+            dataProps.load(fs);
+            fs.close();
 
             for (String key: dataProps.stringPropertyNames()) {
                 db.put(key, dataProps.getProperty(key));
@@ -51,18 +52,23 @@ public class KVStorage {
         Properties dataProps = new Properties();
 
         dataProps.putAll(db);
-
+        
         try {
-            dataProps.store(new FileOutputStream(this.propertiesPath), null);
+            FileOutputStream fs = new FileOutputStream(this.propertiesPath);
+            dataProps.store(fs, null);
+            fs.close();
         } catch (Exception e) {
             logger.error("Failed to write database to disk", e);
         }
+        
     }
 
     private synchronized void loadPersistedData() {
         Properties dataProps = new Properties();
         try {
-			dataProps.load(new FileInputStream(this.propertiesPath));
+            FileInputStream fs = new FileInputStream(this.propertiesPath);
+			dataProps.load(fs);
+            fs.close();
             for (String key: dataProps.stringPropertyNames()) {
                 db.put(key, dataProps.getProperty(key));
             }
