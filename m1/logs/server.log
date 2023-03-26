@@ -1,0 +1,212 @@
+2023-01-22 22:53:29,392 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 22:53:29,397 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 22:54:32,548 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59263
+2023-01-22 23:06:29,790 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:06:29,795 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:06:43,582 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59296
+2023-01-22 23:20:51,022 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:20:51,028 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:21:06,064 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59387
+2023-01-22 23:21:39,792 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59392
+2023-01-22 23:22:37,007 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59405
+2023-01-22 23:25:39,428 ERROR [Thread-3] root: Error! Connection lost!
+2023-01-22 23:25:46,359 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:25:46,364 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:25:53,352 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59441
+2023-01-22 23:26:29,944 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:26:29,949 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:26:39,656 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59444
+2023-01-22 23:26:43,016 INFO  [Thread-1] root: 131072
+2023-01-22 23:27:47,592 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:27:47,597 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:27:57,264 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59458
+2023-01-22 23:28:00,944 INFO  [Thread-1] root: 131072
+2023-01-22 23:30:28,104 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:30:28,109 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:30:39,064 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59467
+2023-01-22 23:30:43,984 INFO  [Thread-1] root: READ -1
+2023-01-22 23:30:43,992 INFO  [Thread-1] root: 131072
+2023-01-22 23:32:46,550 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:32:46,555 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:32:52,944 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59477
+2023-01-22 23:32:54,377 INFO  [Thread-1] root: READ -1
+2023-01-22 23:32:54,378 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-22 23:45:57,017 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:45:57,022 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:46:01,072 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59514
+2023-01-22 23:46:05,090 INFO  [Thread-1] root: READ 80
+2023-01-22 23:46:05,090 INFO  [Thread-1] root: 14
+2023-01-22 23:47:41,601 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:47:41,606 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:47:48,682 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59524
+2023-01-22 23:47:51,794 INFO  [Thread-1] root: READ 80
+2023-01-22 23:47:51,794 INFO  [Thread-1] root: 17
+2023-01-22 23:47:57,385 INFO  [Thread-1] root: READ -1
+2023-01-22 23:47:57,385 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-22 23:48:02,506 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59528
+2023-01-22 23:48:13,289 INFO  [Thread-2] root: READ 71
+2023-01-22 23:48:13,289 INFO  [Thread-2] root: 11
+2023-01-22 23:49:17,241 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:49:17,246 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:49:26,026 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59533
+2023-01-22 23:49:59,929 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:49:59,934 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:50:06,210 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59544
+2023-01-22 23:51:20,904 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:51:20,910 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:51:37,683 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59549
+2023-01-22 23:51:39,666 INFO  [Thread-1] root: READ 71
+2023-01-22 23:51:39,666 INFO  [Thread-1] root: 11
+2023-01-22 23:51:45,491 INFO  [Thread-1] root: READ 71
+2023-01-22 23:51:45,491 INFO  [Thread-1] root: 11
+2023-01-22 23:53:58,098 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:53:58,104 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:54:05,939 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59567
+2023-01-22 23:54:09,642 INFO  [Thread-1] root: READ 80
+2023-01-22 23:54:09,643 INFO  [Thread-1] root: 17
+2023-01-22 23:54:18,210 INFO  [Thread-1] root: READ 80
+2023-01-22 23:54:18,211 INFO  [Thread-1] root: 17
+2023-01-22 23:54:20,650 INFO  [Thread-1] root: READ 71
+2023-01-22 23:54:20,650 INFO  [Thread-1] root: 11
+2023-01-22 23:55:04,922 INFO  [Thread-0] root: Initialize server ...
+2023-01-22 23:55:04,927 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-22 23:56:02,312 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59589
+2023-01-22 23:56:04,266 INFO  [Thread-1] root: READ 80
+2023-01-22 23:56:04,267 INFO  [Thread-1] root: 17
+2023-01-22 23:56:13,002 INFO  [Thread-1] root: READ -1
+2023-01-22 23:56:13,002 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 01:06:58,745 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:06:58,750 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:07:32,824 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59890
+2023-01-23 01:07:51,114 INFO  [Thread-1] root: READ -1
+2023-01-23 01:07:51,114 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 01:09:46,091 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:09:46,097 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:09:54,419 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59899
+2023-01-23 01:09:57,434 INFO  [Thread-1] root: READ -1
+2023-01-23 01:09:57,434 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 01:12:32,162 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:12:32,167 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:12:40,411 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59907
+2023-01-23 01:14:50,593 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:14:50,598 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:14:54,604 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59909
+2023-01-23 01:14:59,482 INFO  [Thread-1] root: READ -1
+2023-01-23 01:14:59,483 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 01:19:52,276 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:19:52,282 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:20:02,996 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59924
+2023-01-23 01:20:05,868 INFO  [Thread-1] root: READ -1
+2023-01-23 01:20:05,868 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 01:20:16,796 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59927
+2023-01-23 01:20:58,739 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 01:20:58,744 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 01:21:02,746 INFO  [Thread-0] root: Connected to kubernetes.docker.internal on port 59928
+2023-01-23 01:21:09,436 INFO  [Thread-1] root: READ 80
+2023-01-23 01:21:09,436 INFO  [Thread-1] root: 9
+2023-01-23 09:39:24,102 INFO  [Thread-0] root: Initialize server ...
+2023-01-23 09:39:24,124 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-23 09:39:52,248 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50108
+2023-01-23 09:40:08,945 INFO  [Thread-1] root: READ 71
+2023-01-23 09:40:08,946 INFO  [Thread-1] root: 11
+2023-01-23 09:40:19,809 INFO  [Thread-1] root: READ 80
+2023-01-23 09:40:19,810 INFO  [Thread-1] root: 11
+2023-01-23 09:40:29,361 INFO  [Thread-1] root: READ 80
+2023-01-23 09:40:29,361 INFO  [Thread-1] root: 17
+2023-01-23 09:40:38,769 INFO  [Thread-1] root: READ 71
+2023-01-23 09:40:38,770 INFO  [Thread-1] root: 12
+2023-01-23 09:41:26,563 INFO  [Thread-1] root: READ 80
+2023-01-23 09:41:26,564 INFO  [Thread-1] root: 12
+2023-01-23 09:42:31,840 INFO  [Thread-1] root: READ 71
+2023-01-23 09:42:31,841 INFO  [Thread-1] root: 12
+2023-01-23 09:42:41,487 INFO  [Thread-1] root: READ 80
+2023-01-23 09:42:41,487 INFO  [Thread-1] root: 22
+2023-01-23 09:42:48,147 INFO  [Thread-1] root: READ 80
+2023-01-23 09:42:48,148 INFO  [Thread-1] root: 35
+2023-01-23 09:43:02,733 INFO  [Thread-1] root: READ 71
+2023-01-23 09:43:02,734 INFO  [Thread-1] root: 13
+2023-01-23 09:44:22,574 INFO  [Thread-1] root: READ -1
+2023-01-23 09:44:22,576 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-23 09:44:46,360 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50109
+2023-01-23 09:44:49,105 INFO  [Thread-2] root: READ 71
+2023-01-23 09:44:49,106 INFO  [Thread-2] root: 13
+2023-01-23 09:45:15,786 ERROR [Thread-2] root: Error! Connection lost!
+2023-01-26 13:00:19,161 INFO  [Thread-0] root: Initialize server ...
+2023-01-26 13:00:19,176 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-26 13:00:29,289 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50389
+2023-01-26 13:00:34,887 INFO  [Thread-1] root: READ 71
+2023-01-26 13:00:34,887 INFO  [Thread-1] root: 11
+2023-01-26 13:02:23,249 INFO  [Thread-0] root: Initialize server ...
+2023-01-26 13:02:23,265 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-26 13:02:30,035 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50392
+2023-01-26 13:02:35,038 INFO  [Thread-1] root: READ 80
+2023-01-26 13:02:35,038 INFO  [Thread-1] root: 13
+2023-01-26 13:14:31,681 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-26 13:14:49,036 INFO  [Thread-0] root: Initialize server ...
+2023-01-26 13:14:49,036 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-26 13:14:54,801 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50451
+2023-01-26 13:14:58,537 INFO  [Thread-1] root: READ -1
+2023-01-26 13:14:58,542 INFO  [Thread-1] root: 131072
+2023-01-26 13:15:31,551 INFO  [Thread-0] root: Initialize server ...
+2023-01-26 13:15:31,566 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-26 13:15:35,292 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50453
+2023-01-26 13:15:40,671 INFO  [Thread-1] root: READ -1
+2023-01-26 13:15:40,686 ERROR [Thread-1] root: Error! Connection lost!
+2023-01-27 14:05:20,508 INFO  [Thread-0] root: Initialize server ...
+2023-01-27 14:05:20,521 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-27 14:05:29,656 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50110
+2023-01-27 14:06:30,517 ERROR [Thread-1] root: Error! Connection lost!
+java.io.IOException: Input stream closed
+	at shared.communication.KVCommunication.receiveMessage(KVCommunication.java:59)
+	at app_kvServer.TempClientConnection.run(TempClientConnection.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2023-01-27 14:07:17,852 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50111
+2023-01-28 15:54:55,049 INFO  [Thread-0] root: Initialize server ...
+2023-01-28 15:54:55,065 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-28 15:56:15,128 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50934
+2023-01-28 15:59:27,233 INFO  [Thread-0] root: Initialize server ...
+2023-01-28 15:59:27,250 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-28 15:59:46,886 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50988
+2023-01-28 16:00:27,530 INFO  [Thread-0] root: Initialize server ...
+2023-01-28 16:00:27,537 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-28 16:00:34,549 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50992
+2023-01-28 16:01:13,251 INFO  [Thread-0] root: Initialize server ...
+2023-01-28 16:01:13,259 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-28 16:01:25,201 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 50995
+2023-01-30 18:54:27,002 INFO  [Thread-0] root: Initialize server ...
+2023-01-30 18:54:27,018 INFO  [Thread-0] root: Server listening on port: 25565
+2023-01-30 18:55:17,979 INFO  [Thread-0] root: Connected to 127.0.0.1 on port 59972
+2023-01-30 18:55:24,162 INFO  [Thread-1] root: Received a message of type 'GET' with key 'foo' and value ''
+2023-01-30 18:55:24,162 ERROR [Thread-1] root: Key 'foo' is not in the database
+2023-01-30 18:55:24,162 INFO  [Thread-1] root: Sent a message of type 'GET_ERROR' with key 'foo' and value ''
+2023-01-30 18:55:39,718 INFO  [Thread-1] root: Received a message of type 'GET' with key 'hello' and value ''
+2023-01-30 18:55:39,718 INFO  [Thread-1] root: Retrieved value 'world' for key 'hello' from database
+2023-01-30 18:55:39,718 INFO  [Thread-1] root: Sent a message of type 'GET_SUCCESS' with key 'hello' and value 'world'
+2023-01-30 18:56:09,919 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'foo' and value 'bar'
+2023-01-30 18:56:09,919 INFO  [Thread-1] root: Added key 'foo' and value 'bar' to database
+2023-01-30 18:56:09,934 INFO  [Thread-1] root: Sent a message of type 'PUT_SUCCESS' with key 'foo' and value 'bar'
+2023-01-30 18:56:36,589 INFO  [Thread-1] root: Received a message of type 'GET' with key 'foo' and value ''
+2023-01-30 18:56:36,589 INFO  [Thread-1] root: Retrieved value 'bar' for key 'foo' from database
+2023-01-30 18:56:36,589 INFO  [Thread-1] root: Sent a message of type 'GET_SUCCESS' with key 'foo' and value 'bar'
+2023-01-30 18:56:42,313 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'foo' and value 'poo'
+2023-01-30 18:56:42,313 INFO  [Thread-1] root: Updated value associated with key 'foo' to 'poo'
+2023-01-30 18:56:42,313 INFO  [Thread-1] root: Sent a message of type 'PUT_UPDATE' with key 'foo' and value 'poo'
+2023-01-30 18:57:42,326 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'blah' and value ''
+2023-01-30 18:57:42,326 ERROR [Thread-1] root: Key 'blah' is not in the database
+2023-01-30 18:57:42,326 INFO  [Thread-1] root: Sent a message of type 'DELETE_ERROR' with key 'blah' and value ''
+2023-01-30 18:58:26,637 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'foo' and value ''
+2023-01-30 18:58:26,637 INFO  [Thread-1] root: Deleted key 'foo' from database
+2023-01-30 18:58:26,637 INFO  [Thread-1] root: Sent a message of type 'DELETE_SUCCESS' with key 'foo' and value ''
+2023-02-01 21:18:25,859 INFO  [Thread-0] root: Initialize server ...
+2023-02-01 21:18:25,862 INFO  [Thread-0] root: Server listening on port: 3557
+2023-02-01 21:19:32,993 INFO  [Thread-0] root: Connected to localhost on port 58186
+2023-02-01 21:19:46,200 INFO  [Thread-1] root: Received a message of type 'PUT' with key 'bungus' and value 'shmungus'
+2023-02-01 21:19:46,213 INFO  [Thread-1] root: Added key 'bungus' and value 'shmungus' to database
+2023-02-01 21:19:46,214 INFO  [Thread-1] root: Sent a message of type 'PUT_SUCCESS' with key 'bungus' and value 'shmungus'
+2023-02-01 21:20:08,636 INFO  [Thread-1] root: Received a message of type 'GET' with key 'shmungus' and value ''
+2023-02-01 21:20:08,637 ERROR [Thread-1] root: Key 'shmungus' is not in the database
+2023-02-01 21:20:08,638 INFO  [Thread-1] root: Sent a message of type 'GET_ERROR' with key 'shmungus' and value ''
+2023-02-01 21:20:23,695 INFO  [Thread-1] root: Received a message of type 'GET' with key 'bungus' and value ''
+2023-02-01 21:20:23,696 INFO  [Thread-1] root: Retrieved value 'shmungus' for key 'bungus' from database
+2023-02-01 21:20:23,697 INFO  [Thread-1] root: Sent a message of type 'GET_SUCCESS' with key 'bungus' and value 'shmungus'
+2023-02-01 21:21:56,279 ERROR [Thread-1] root: Error! Connection lost!

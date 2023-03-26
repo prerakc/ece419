@@ -1,0 +1,299 @@
+2023-02-01 21:37:27,057 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 21:37:27,062 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 21:37:27,065 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 21:37:27,065 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 21:37:27,068 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 21:37:27,070 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 21:37:27,071 ERROR [Thread-7] root: Key 'an unset value' is not in the database
+2023-02-01 21:37:27,071 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 21:39:27,969 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 21:39:27,972 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 21:39:27,975 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 21:39:27,976 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 21:39:27,977 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 21:39:27,977 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 21:39:27,977 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 21:40:48,686 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 21:40:48,693 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 21:40:48,695 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 21:40:48,696 ERROR [Thread-4] root: Key 'an unset value' is not in the database
+2023-02-01 21:40:48,696 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 21:40:48,697 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 21:40:48,700 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 21:40:48,700 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 21:41:20,974 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 21:41:20,976 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 21:41:20,976 ERROR [Thread-4] root: Key 'an unset value' is not in the database
+2023-02-01 21:41:20,977 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 21:41:20,978 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 21:41:20,981 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 21:41:20,981 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 21:44:25,241 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 21:44:25,244 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 21:44:25,244 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 21:44:25,245 ERROR [Thread-5] root: Key 'an unset value' is not in the database
+2023-02-01 21:44:25,246 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 21:44:25,247 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 21:44:25,249 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 21:48:10,612 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 21:48:10,617 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 21:48:10,620 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 21:48:10,623 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 21:48:10,625 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 21:48:10,625 ERROR [Thread-7] root: Key 'an unset value' is not in the database
+2023-02-01 21:48:10,625 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 21:48:15,367 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 21:48:15,367 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 21:48:15,369 ERROR [Thread-3] root: Key 'an unset value' is not in the database
+2023-02-01 21:48:15,369 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 21:48:15,375 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 21:48:15,377 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 21:48:15,379 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 21:48:15,381 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:05:15,224 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:05:15,230 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:05:15,231 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:05:15,232 ERROR [Thread-4] root: Key 'an unset value' is not in the database
+2023-02-01 22:05:15,232 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:05:15,232 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:05:15,234 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:05:15,237 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:12:03,923 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:12:03,928 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:12:03,932 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:12:03,934 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:12:03,935 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:12:03,936 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 22:12:03,936 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:12:03,936 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:13:27,876 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:13:27,883 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:13:27,884 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:13:27,885 ERROR [Thread-4] root: Key 'an unset value' is not in the database
+2023-02-01 22:13:27,885 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:13:27,886 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:13:27,890 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:13:27,890 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:14:17,716 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:14:17,716 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:14:17,722 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:14:17,725 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:14:17,727 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:14:17,728 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:14:17,729 ERROR [Thread-7] root: Key 'an unset value' is not in the database
+2023-02-01 22:14:17,729 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:14:21,817 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:14:21,823 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:14:21,827 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:14:21,830 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:14:21,831 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:14:21,832 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 22:14:21,832 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:14:21,832 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:48:24,246 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:48:24,247 ERROR [Thread-2] root: Key 'an unset value' is not in the database
+2023-02-01 22:48:24,248 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:48:24,252 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:48:24,255 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:48:24,257 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:48:24,259 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:48:24,260 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:50:19,018 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:50:19,020 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:50:19,021 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:50:19,022 ERROR [Thread-5] root: Key 'an unset value' is not in the database
+2023-02-01 22:50:19,023 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:50:19,024 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:50:19,025 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:50:52,400 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:50:52,400 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:50:52,406 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:50:52,409 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:50:52,410 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:50:52,411 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 22:50:52,411 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:50:52,413 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:57:37,813 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:57:37,819 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:57:37,821 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:57:37,821 ERROR [Thread-4] root: Key 'an unset value' is not in the database
+2023-02-01 22:57:37,822 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:57:37,823 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:57:37,826 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:57:37,826 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:57:52,334 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:57:52,337 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:57:52,339 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:57:52,341 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:57:52,341 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 22:57:52,342 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:57:52,342 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:58:01,546 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:58:01,546 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:58:01,552 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:58:01,555 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:58:01,556 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:58:01,557 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 22:58:01,557 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:58:01,558 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:58:31,378 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:58:31,384 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:58:31,387 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:58:31,388 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:58:31,389 ERROR [Thread-5] root: Key 'an unset value' is not in the database
+2023-02-01 22:58:31,389 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:58:31,391 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:58:31,392 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:58:39,389 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:58:39,390 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:58:39,390 ERROR [Thread-4] root: Key 'an unset value' is not in the database
+2023-02-01 22:58:39,391 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:58:39,392 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:58:39,396 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:58:39,397 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:58:58,813 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:58:58,819 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:58:58,822 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:58:58,823 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:58:58,825 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:58:58,826 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 22:58:58,826 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:58:58,827 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:59:19,247 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:59:19,251 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:59:19,253 ERROR [Thread-3] root: Key 'an unset value' is not in the database
+2023-02-01 22:59:19,253 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:59:19,258 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:59:19,260 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:59:19,261 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:59:19,262 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 22:59:42,800 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 22:59:42,801 ERROR [Thread-2] root: Key 'an unset value' is not in the database
+2023-02-01 22:59:42,802 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 22:59:42,802 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 22:59:42,808 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 22:59:42,812 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 22:59:42,814 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 22:59:42,816 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 23:04:40,045 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 23:04:40,050 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 23:04:40,053 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 23:04:40,055 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 23:04:40,056 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 23:04:40,057 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 23:04:40,057 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 23:04:40,057 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 23:04:51,431 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 23:04:51,436 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 23:04:51,438 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 23:04:51,440 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 23:04:51,442 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 23:04:51,442 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 23:04:51,442 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 23:04:51,443 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 23:04:53,854 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 23:04:53,857 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 23:04:53,859 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 23:04:53,860 ERROR [Thread-4] root: Key 'an unset value' is not in the database
+2023-02-01 23:04:53,860 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 23:04:53,861 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 23:04:53,863 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 23:04:53,864 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 23:05:08,209 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 23:05:08,211 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 23:05:08,212 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 23:05:08,213 ERROR [Thread-5] root: Key 'an unset value' is not in the database
+2023-02-01 23:05:08,213 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 23:05:08,214 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 23:05:08,215 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 23:05:13,417 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 23:05:13,422 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 23:05:13,425 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 23:05:13,427 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 23:05:13,429 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 23:05:13,429 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 23:05:13,429 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 23:05:13,430 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 23:05:15,734 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 23:05:15,735 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 23:05:15,735 ERROR [Thread-4] root: Key 'an unset value' is not in the database
+2023-02-01 23:05:15,736 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 23:05:15,737 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 23:05:15,739 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 23:05:15,740 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-01 23:05:17,291 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-01 23:05:17,296 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-01 23:05:17,299 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-01 23:05:17,301 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-01 23:05:17,302 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-01 23:05:17,303 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-01 23:05:17,303 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-01 23:05:17,303 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-04 02:42:56,790 ERROR [Thread-1] root: Error! Connection lost!
+2023-02-04 02:42:56,797 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-04 02:42:56,801 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-04 02:42:56,804 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-04 02:42:56,806 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-04 02:42:56,807 ERROR [Thread-6] root: Key 'an unset value' is not in the database
+2023-02-04 02:42:56,808 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-04 02:42:56,809 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-05 17:08:18,617 ERROR [Thread-2] root: Key 'an unset value' is not in the database
+2023-02-05 17:08:18,618 ERROR [Thread-2] root: Error! Connection lost!
+2023-02-05 17:08:18,618 ERROR [Thread-3] root: Error! Connection lost!
+2023-02-05 17:08:18,624 ERROR [Thread-4] root: Error! Connection lost!
+2023-02-05 17:08:18,626 ERROR [Thread-5] root: Error! Connection lost!
+2023-02-05 17:08:18,628 ERROR [Thread-6] root: Error! Connection lost!
+2023-02-05 17:08:18,630 ERROR [Thread-7] root: Error! Connection lost!
+2023-02-05 17:08:18,630 ERROR [Thread-8] root: Key 'doesNotExist' is not in the database
+2023-02-05 17:08:18,631 ERROR [Thread-8] root: Key 'doesNotExist' is not in the database
+2023-02-05 17:08:18,631 ERROR [Thread-8] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-10] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-9] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-19] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-18] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-17] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-16] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-15] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-14] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-13] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-12] root: Error! Connection lost!
+2023-02-05 17:08:18,638 ERROR [Thread-11] root: Error! Connection lost!
+2023-02-05 17:08:18,651 ERROR [Thread-21] root: Error! Connection lost!
+2023-02-05 17:08:18,651 ERROR [Thread-25] root: Error! Connection lost!
+2023-02-05 17:08:18,651 ERROR [Thread-30] root: Error! Connection lost!
+2023-02-05 17:08:18,651 ERROR [Thread-29] root: Error! Connection lost!
+2023-02-05 17:08:18,651 ERROR [Thread-27] root: Error! Connection lost!
+2023-02-05 17:08:18,651 ERROR [Thread-28] root: Error! Connection lost!
+2023-02-05 17:08:18,651 ERROR [Thread-26] root: Error! Connection lost!
+2023-02-05 17:08:18,651 ERROR [Thread-24] root: Error! Connection lost!
+2023-02-05 17:08:18,651 ERROR [Thread-23] root: Error! Connection lost!
+2023-02-05 17:08:18,651 ERROR [Thread-22] root: Error! Connection lost!
+2023-02-05 17:08:18,652 ERROR [Thread-20] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-32] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-41] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-31] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-40] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-39] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-38] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-37] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-35] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-34] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-36] root: Error! Connection lost!
+2023-02-05 17:08:18,664 ERROR [Thread-33] root: Error! Connection lost!
+2023-02-05 17:08:18,688 ERROR [Thread-43] root: Error! Connection lost!
+2023-02-05 17:08:18,689 ERROR [Thread-42] root: Error! Connection lost!
+2023-02-05 17:08:18,689 ERROR [Thread-52] root: Error! Connection lost!
+2023-02-05 17:08:18,689 ERROR [Thread-51] root: Error! Connection lost!
+2023-02-05 17:08:18,689 ERROR [Thread-48] root: Error! Connection lost!
+2023-02-05 17:08:18,689 ERROR [Thread-47] root: Error! Connection lost!
+2023-02-05 17:08:18,689 ERROR [Thread-49] root: Error! Connection lost!
+2023-02-05 17:08:18,689 ERROR [Thread-50] root: Error! Connection lost!
+2023-02-05 17:08:18,688 ERROR [Thread-46] root: Error! Connection lost!
+2023-02-05 17:08:18,688 ERROR [Thread-45] root: Error! Connection lost!
+2023-02-05 17:08:18,688 ERROR [Thread-44] root: Error! Connection lost!
+2023-02-05 17:08:18,690 ERROR [Thread-54] root: Error! Connection lost!
+2023-02-05 17:08:18,689 ERROR [Thread-53] root: Error! Connection lost!
+2023-02-05 17:08:18,693 ERROR [Thread-55] root: Error! Connection lost!
+2023-02-05 17:08:18,693 ERROR [Thread-56] root: Error! Connection lost!
+2023-02-05 17:08:18,694 ERROR [Thread-57] root: Error! Connection lost!
+2023-02-05 17:08:18,695 ERROR [Thread-58] root: Error! Connection lost!
