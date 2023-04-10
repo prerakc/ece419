@@ -1,0 +1,31 @@
+2023-04-09 18:55:45,994 INFO  [Thread-0] root: Initialize server ...
+2023-04-09 18:55:45,996 INFO  [Thread-0] root: Server listening on port: 8081
+2023-04-09 18:56:01,247 INFO  [main] root: Socket timeout: 0
+2023-04-09 18:56:01,250 INFO  [main] root: connected to address 127.0.0.1 at port 8082
+2023-04-09 18:56:35,574 INFO  [main] root: Sent a message of type 'PUT' with key 'hello' and value 'world'
+2023-04-09 18:56:35,583 INFO  [Thread-0] root: Socket timeout: 0
+2023-04-09 18:56:35,584 INFO  [Thread-1] root: Recieved message with raw bytes [B@50a9aebf
+2023-04-09 18:56:35,584 INFO  [Thread-1] root: Raw bytes: [78, 79, 84, 73, 70, 73, 67, 65, 84, 73, 79, 78, 31, 104, 101, 108, 108, 111, 31, 119, 111, 114, 108, 100, 31, 10]
+2023-04-09 18:56:35,584 INFO  [Thread-1] root: Message: NOTIFICATIONhelloworld
+
+2023-04-09 18:56:35,584 INFO  [Thread-1] root: Received a message of type 'NOTIFICATION' with key 'hello' and value 'world'
+2023-04-09 18:56:35,585 INFO  [Thread-1] root: Sent a message of type 'NOTIFICATION_ACK' with key 'hello' and value 'world'
+2023-04-09 18:56:35,585 ERROR [Thread-1] root: Error! Connection lost!
+2023-04-09 18:56:35,585 INFO  [Thread-1] root: Closing connection
+2023-04-09 18:56:35,585 INFO  [main] root: Recieved message with raw bytes [B@22927a81
+2023-04-09 18:56:35,586 INFO  [main] root: Raw bytes: [80, 85, 84, 95, 83, 85, 67, 67, 69, 83, 83, 31, 104, 101, 108, 108, 111, 31, 119, 111, 114, 108, 100, 31, 10]
+2023-04-09 18:56:35,586 INFO  [main] root: Message: PUT_SUCCESShelloworld
+
+2023-04-09 18:56:35,586 INFO  [main] root: Received a message of type 'PUT_SUCCESS' with key 'hello' and value 'world'
+2023-04-09 18:56:35,586 INFO  [main] root: true
+2023-04-09 18:56:35,587 INFO  [Thread-0] root: Connected to localhost on port 38522
+2023-04-09 19:05:37,348 INFO  [Thread-0] root: Initialize server ...
+2023-04-09 19:05:37,350 INFO  [Thread-0] root: Server listening on port: 8081
+2023-04-09 19:08:52,622 INFO  [Thread-0] root: Initialize server ...
+2023-04-09 19:08:52,625 INFO  [Thread-0] root: Server listening on port: 8081
+2023-04-09 19:19:13,941 INFO  [Thread-0] root: Initialize server ...
+2023-04-09 19:19:13,943 INFO  [Thread-0] root: Server listening on port: 8081
+2023-04-09 19:26:17,212 INFO  [Thread-0] root: Initialize server ...
+2023-04-09 19:26:17,215 INFO  [Thread-0] root: Server listening on port: 8081
+2023-04-09 19:52:40,982 INFO  [Thread-0] root: Initialize server ...
+2023-04-09 19:52:40,985 INFO  [Thread-0] root: Server listening on port: 8081

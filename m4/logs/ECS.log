@@ -1,0 +1,497 @@
+2023-04-09 18:54:42,443 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-04-09 18:54:42,443 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug213.eecg.toronto.edu
+2023-04-09 18:54:42,443 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-04-09 18:54:42,443 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-04-09 18:54:42,443 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-04-09 18:54:42,443 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-04-09 18:54:42,443 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-04-09 18:54:42,443 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-04-09 18:54:42,444 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-04-09 18:54:42,444 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-04-09 18:54:42,444 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-04-09 18:54:42,444 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-04-09 18:54:42,444 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-04-09 18:54:42,444 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-04-09 18:54:42,444 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m4
+2023-04-09 18:54:42,444 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-04-09 18:54:42,453 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 18:54:42,457 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 18:54:42,470 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b130000, negotiated timeout = 40000
+2023-04-09 18:54:42,472 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-04-09 18:54:42,472 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 18:54:42,473 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 18:54:42,475 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b130001, negotiated timeout = 40000
+2023-04-09 18:55:22,315 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 18:55:22,317 INFO  [main-EventThread] root: 1
+2023-04-09 18:55:22,317 INFO  [main-EventThread] root: 0
+2023-04-09 18:55:22,323 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 18:55:22,323 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:03:24,067 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:03:24,068 INFO  [main-EventThread] root: 0
+2023-04-09 19:03:24,069 INFO  [main-EventThread] root: 1
+2023-04-09 19:03:24,069 INFO  [main-EventThread] root: PMETADAT HR: []
+2023-04-09 19:04:38,472 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-04-09 19:04:38,472 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug213.eecg.toronto.edu
+2023-04-09 19:04:38,472 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-04-09 19:04:38,472 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-04-09 19:04:38,472 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-04-09 19:04:38,472 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-04-09 19:04:38,473 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-04-09 19:04:38,473 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-04-09 19:04:38,473 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-04-09 19:04:38,473 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-04-09 19:04:38,473 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-04-09 19:04:38,473 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-04-09 19:04:38,473 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-04-09 19:04:38,473 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-04-09 19:04:38,473 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m4
+2023-04-09 19:04:38,473 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-04-09 19:04:38,482 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 19:04:38,486 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 19:04:38,490 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b130006, negotiated timeout = 40000
+2023-04-09 19:04:38,491 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-04-09 19:04:38,492 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 19:04:38,492 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 19:04:38,494 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b130007, negotiated timeout = 40000
+2023-04-09 19:04:38,500 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /workers
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createWorkersNode(ECS.java:332)
+	at ecs.ECS.initializeZK(ECS.java:152)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-04-09 19:04:38,502 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /server_status
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createServerNode(ECS.java:380)
+	at ecs.ECS.initializeZK(ECS.java:153)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-04-09 19:04:55,400 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:04:55,400 INFO  [main-EventThread] root: 1
+2023-04-09 19:04:55,400 INFO  [main-EventThread] root: 0
+2023-04-09 19:04:55,406 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:04:55,406 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:05:01,022 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:05:01,024 INFO  [main-EventThread] root: 2
+2023-04-09 19:05:01,024 INFO  [main-EventThread] root: 1
+2023-04-09 19:05:01,026 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:05:01,026 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:05:01,026 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:05:07,210 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:05:07,212 INFO  [main-EventThread] root: 3
+2023-04-09 19:05:07,212 INFO  [main-EventThread] root: 2
+2023-04-09 19:05:07,216 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:05:07,216 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:05:07,216 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:05:07,216 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:05:20,648 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:05:20,650 INFO  [main-EventThread] root: 4
+2023-04-09 19:05:20,650 INFO  [main-EventThread] root: 3
+2023-04-09 19:05:20,655 INFO  [main-EventThread] root: PMETADAT HR: [0725393394f806b42f6213da4dabc3db, 6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:05:20,655 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8085
+2023-04-09 19:05:20,655 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:05:20,655 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:05:20,655 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:08:10,849 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:08:10,850 INFO  [main-EventThread] root: 3
+2023-04-09 19:08:10,850 INFO  [main-EventThread] root: 4
+2023-04-09 19:08:10,853 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:08:10,854 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:08:10,854 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:08:10,854 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:08:13,260 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:08:13,261 INFO  [main-EventThread] root: 2
+2023-04-09 19:08:13,261 INFO  [main-EventThread] root: 3
+2023-04-09 19:08:13,264 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:08:13,264 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:08:13,264 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:08:15,030 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:08:15,032 INFO  [main-EventThread] root: 1
+2023-04-09 19:08:15,032 INFO  [main-EventThread] root: 2
+2023-04-09 19:08:15,034 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:08:15,034 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:08:17,418 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:08:17,419 INFO  [main-EventThread] root: 0
+2023-04-09 19:08:17,419 INFO  [main-EventThread] root: 1
+2023-04-09 19:08:17,421 INFO  [main-EventThread] root: PMETADAT HR: []
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug213.eecg.toronto.edu
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-04-09 19:08:37,519 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m4
+2023-04-09 19:08:37,520 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-04-09 19:08:37,529 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 19:08:37,533 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 19:08:37,537 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b130010, negotiated timeout = 40000
+2023-04-09 19:08:37,538 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-04-09 19:08:37,539 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 19:08:37,539 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 19:08:37,541 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b130011, negotiated timeout = 40000
+2023-04-09 19:08:37,546 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /workers
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createWorkersNode(ECS.java:332)
+	at ecs.ECS.initializeZK(ECS.java:152)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-04-09 19:08:37,549 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /server_status
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createServerNode(ECS.java:380)
+	at ecs.ECS.initializeZK(ECS.java:153)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-04-09 19:08:41,644 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:08:41,645 INFO  [main-EventThread] root: 1
+2023-04-09 19:08:41,645 INFO  [main-EventThread] root: 0
+2023-04-09 19:08:41,651 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:08:41,651 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:08:44,203 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:08:44,204 INFO  [main-EventThread] root: 2
+2023-04-09 19:08:44,204 INFO  [main-EventThread] root: 1
+2023-04-09 19:08:44,206 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:08:44,206 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:08:44,206 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:08:46,640 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:08:46,641 INFO  [main-EventThread] root: 3
+2023-04-09 19:08:46,641 INFO  [main-EventThread] root: 2
+2023-04-09 19:08:46,644 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:08:46,644 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:08:46,644 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:08:46,644 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:08:49,182 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:08:49,183 INFO  [main-EventThread] root: 4
+2023-04-09 19:08:49,183 INFO  [main-EventThread] root: 3
+2023-04-09 19:08:49,187 INFO  [main-EventThread] root: PMETADAT HR: [0725393394f806b42f6213da4dabc3db, 6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:08:49,187 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8085
+2023-04-09 19:08:49,187 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:08:49,187 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:08:49,187 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:18:42,530 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:18:42,531 INFO  [main-EventThread] root: 3
+2023-04-09 19:18:42,531 INFO  [main-EventThread] root: 4
+2023-04-09 19:18:42,534 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:18:42,534 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:18:42,534 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:18:42,534 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:18:44,540 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:18:44,541 INFO  [main-EventThread] root: 2
+2023-04-09 19:18:44,542 INFO  [main-EventThread] root: 3
+2023-04-09 19:18:44,544 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:18:44,544 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:18:44,544 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:18:46,462 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:18:46,463 INFO  [main-EventThread] root: 1
+2023-04-09 19:18:46,463 INFO  [main-EventThread] root: 2
+2023-04-09 19:18:46,465 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:18:46,465 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:18:47,923 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:18:47,924 INFO  [main-EventThread] root: 0
+2023-04-09 19:18:47,924 INFO  [main-EventThread] root: 1
+2023-04-09 19:18:47,926 INFO  [main-EventThread] root: PMETADAT HR: []
+2023-04-09 19:19:02,097 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-04-09 19:19:02,097 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug213.eecg.toronto.edu
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m4
+2023-04-09 19:19:02,098 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-04-09 19:19:02,107 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 19:19:02,111 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 19:19:02,115 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b13001a, negotiated timeout = 40000
+2023-04-09 19:19:02,116 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-04-09 19:19:02,117 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 19:19:02,117 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 19:19:02,119 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b13001b, negotiated timeout = 40000
+2023-04-09 19:19:02,124 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /workers
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createWorkersNode(ECS.java:332)
+	at ecs.ECS.initializeZK(ECS.java:152)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-04-09 19:19:02,127 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /server_status
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createServerNode(ECS.java:380)
+	at ecs.ECS.initializeZK(ECS.java:153)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-04-09 19:19:04,500 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:19:04,501 INFO  [main-EventThread] root: 1
+2023-04-09 19:19:04,501 INFO  [main-EventThread] root: 0
+2023-04-09 19:19:04,507 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:19:04,507 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:19:07,046 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:19:07,047 INFO  [main-EventThread] root: 2
+2023-04-09 19:19:07,047 INFO  [main-EventThread] root: 1
+2023-04-09 19:19:07,049 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:19:07,049 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:19:07,049 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:19:09,192 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:19:09,193 INFO  [main-EventThread] root: 3
+2023-04-09 19:19:09,193 INFO  [main-EventThread] root: 2
+2023-04-09 19:19:09,196 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:19:09,196 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:19:09,196 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:19:09,196 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:19:11,449 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:19:11,450 INFO  [main-EventThread] root: 4
+2023-04-09 19:19:11,450 INFO  [main-EventThread] root: 3
+2023-04-09 19:19:11,453 INFO  [main-EventThread] root: PMETADAT HR: [0725393394f806b42f6213da4dabc3db, 6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:19:11,454 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8085
+2023-04-09 19:19:11,454 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:19:11,454 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:19:11,454 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:25:21,997 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:25:21,998 INFO  [main-EventThread] root: 3
+2023-04-09 19:25:21,998 INFO  [main-EventThread] root: 4
+2023-04-09 19:25:22,001 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:25:22,001 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:25:22,001 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:25:22,001 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:25:23,432 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:25:23,433 INFO  [main-EventThread] root: 2
+2023-04-09 19:25:23,433 INFO  [main-EventThread] root: 3
+2023-04-09 19:25:23,435 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:25:23,435 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:25:23,435 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:25:26,060 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:25:26,061 INFO  [main-EventThread] root: 1
+2023-04-09 19:25:26,061 INFO  [main-EventThread] root: 2
+2023-04-09 19:25:26,062 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:25:26,062 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:25:27,741 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:25:27,742 INFO  [main-EventThread] root: 0
+2023-04-09 19:25:27,742 INFO  [main-EventThread] root: 1
+2023-04-09 19:25:27,743 INFO  [main-EventThread] root: PMETADAT HR: []
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug213.eecg.toronto.edu
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-04-09 19:25:58,753 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-04-09 19:25:58,754 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-04-09 19:25:58,754 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m4
+2023-04-09 19:25:58,754 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-04-09 19:25:58,763 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 19:25:58,767 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 19:25:58,771 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b130024, negotiated timeout = 40000
+2023-04-09 19:25:58,772 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-04-09 19:25:58,773 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 19:25:58,773 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 19:25:58,775 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b130025, negotiated timeout = 40000
+2023-04-09 19:25:58,780 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /workers
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createWorkersNode(ECS.java:332)
+	at ecs.ECS.initializeZK(ECS.java:152)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-04-09 19:25:58,782 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /server_status
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createServerNode(ECS.java:380)
+	at ecs.ECS.initializeZK(ECS.java:153)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-04-09 19:26:03,770 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:26:03,771 INFO  [main-EventThread] root: 1
+2023-04-09 19:26:03,771 INFO  [main-EventThread] root: 0
+2023-04-09 19:26:03,777 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:26:03,777 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:26:06,437 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:26:06,438 INFO  [main-EventThread] root: 2
+2023-04-09 19:26:06,438 INFO  [main-EventThread] root: 1
+2023-04-09 19:26:06,440 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:26:06,441 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:26:06,441 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:26:09,017 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:26:09,018 INFO  [main-EventThread] root: 3
+2023-04-09 19:26:09,018 INFO  [main-EventThread] root: 2
+2023-04-09 19:26:09,021 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:26:09,021 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:26:09,021 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:26:09,021 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:26:13,442 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:26:13,442 INFO  [main-EventThread] root: 4
+2023-04-09 19:26:13,442 INFO  [main-EventThread] root: 3
+2023-04-09 19:26:13,447 INFO  [main-EventThread] root: PMETADAT HR: [0725393394f806b42f6213da4dabc3db, 6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:26:13,447 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8085
+2023-04-09 19:26:13,447 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:26:13,447 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:26:13,447 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:34:19,264 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:34:19,264 INFO  [main-EventThread] root: 3
+2023-04-09 19:34:19,265 INFO  [main-EventThread] root: 4
+2023-04-09 19:34:19,267 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:34:19,267 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:34:19,267 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:34:19,267 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:34:20,909 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:34:20,909 INFO  [main-EventThread] root: 2
+2023-04-09 19:34:20,910 INFO  [main-EventThread] root: 3
+2023-04-09 19:34:20,912 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:34:20,912 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:34:20,912 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:34:22,676 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:34:22,677 INFO  [main-EventThread] root: 1
+2023-04-09 19:34:22,677 INFO  [main-EventThread] root: 2
+2023-04-09 19:34:22,679 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:34:22,679 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:34:24,650 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:34:24,652 INFO  [main-EventThread] root: 0
+2023-04-09 19:34:24,652 INFO  [main-EventThread] root: 1
+2023-04-09 19:34:24,653 INFO  [main-EventThread] root: PMETADAT HR: []
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:zookeeper.version=3.4.11-37e277162d567b55a07d1755f0b31c32e93c01a0, built on 11/01/2017 18:06 GMT
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:host.name=ug213.eecg.toronto.edu
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.version=11.0.18
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.vendor=Debian
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.home=/usr/lib/jvm/java-11-openjdk-amd64
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.class.path=m2-ecs.jar
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.library.path=/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.io.tmpdir=/tmp
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:java.compiler=<NA>
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.name=Linux
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.arch=amd64
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:os.version=5.10.0-21-amd64
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.name=chaud496
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.home=/homes/c/chaud496
+2023-04-09 19:52:29,888 INFO  [main] org.apache.zookeeper.ZooKeeper: Client environment:user.dir=/nfs/ug/homes-2/c/chaud496/ece419/m4
+2023-04-09 19:52:29,889 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=ecs.ECS$5@6a6824be
+2023-04-09 19:52:29,897 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 19:52:29,901 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 19:52:29,905 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b13002e, negotiated timeout = 40000
+2023-04-09 19:52:29,907 INFO  [main] org.apache.zookeeper.ZooKeeper: Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=300000000 watcher=shared.zookeeper_comms.ZKConnection$1@8807e25
+2023-04-09 19:52:29,907 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Opening socket connection to server 127.0.0.1/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+2023-04-09 19:52:29,907 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Socket connection established to 127.0.0.1/127.0.0.1:2181, initiating session
+2023-04-09 19:52:29,910 INFO  [main-SendThread(127.0.0.1:2181)] org.apache.zookeeper.ClientCnxn: Session establishment complete on server 127.0.0.1/127.0.0.1:2181, sessionid = 0x10087e28b13002f, negotiated timeout = 40000
+2023-04-09 19:52:29,915 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /workers
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createWorkersNode(ECS.java:332)
+	at ecs.ECS.initializeZK(ECS.java:152)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-04-09 19:52:29,917 ERROR [main] root: Unable to create znodes
+org.apache.zookeeper.KeeperException$NodeExistsException: KeeperErrorCode = NodeExists for /server_status
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:122)
+	at org.apache.zookeeper.KeeperException.create(KeeperException.java:54)
+	at org.apache.zookeeper.ZooKeeper.create(ZooKeeper.java:786)
+	at shared.zookeeper_comms.ZKManagerImpl.create(ZKManagerImpl.java:34)
+	at ecs.ECS.createServerNode(ECS.java:380)
+	at ecs.ECS.initializeZK(ECS.java:153)
+	at ecs.ECS.<init>(ECS.java:56)
+	at app_kvECS.ECSClient.<init>(ECSClient.java:38)
+	at app_kvECS.ECSClient.main(ECSClient.java:137)
+2023-04-09 19:52:32,016 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:52:32,017 INFO  [main-EventThread] root: 1
+2023-04-09 19:52:32,017 INFO  [main-EventThread] root: 0
+2023-04-09 19:52:32,023 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:52:32,023 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:52:33,851 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:52:33,852 INFO  [main-EventThread] root: 2
+2023-04-09 19:52:33,852 INFO  [main-EventThread] root: 1
+2023-04-09 19:52:33,854 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:52:33,854 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:52:33,854 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:52:35,744 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:52:35,745 INFO  [main-EventThread] root: 3
+2023-04-09 19:52:35,745 INFO  [main-EventThread] root: 2
+2023-04-09 19:52:35,748 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:52:35,748 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:52:35,748 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:52:35,748 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 19:52:37,460 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 19:52:37,461 INFO  [main-EventThread] root: 4
+2023-04-09 19:52:37,461 INFO  [main-EventThread] root: 3
+2023-04-09 19:52:37,465 INFO  [main-EventThread] root: PMETADAT HR: [0725393394f806b42f6213da4dabc3db, 6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 19:52:37,465 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8085
+2023-04-09 19:52:37,465 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 19:52:37,465 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 19:52:37,465 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 22:30:48,550 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 22:30:48,551 INFO  [main-EventThread] root: 3
+2023-04-09 22:30:48,551 INFO  [main-EventThread] root: 4
+2023-04-09 22:30:48,554 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 85d27949e81cbe4c3d605c59cd7d7dc3, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 22:30:48,554 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 22:30:48,554 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8084
+2023-04-09 22:30:48,554 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 22:30:50,423 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 22:30:50,423 INFO  [main-EventThread] root: 2
+2023-04-09 22:30:50,423 INFO  [main-EventThread] root: 3
+2023-04-09 22:30:50,426 INFO  [main-EventThread] root: PMETADAT HR: [6a93711a8c3f9c2641dfc71c359a1abe, 91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 22:30:50,426 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8083
+2023-04-09 22:30:50,426 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 22:30:52,148 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 22:30:52,149 INFO  [main-EventThread] root: 1
+2023-04-09 22:30:52,149 INFO  [main-EventThread] root: 2
+2023-04-09 22:30:52,150 INFO  [main-EventThread] root: PMETADAT HR: [91d8c8e93642cca5c0f2be69d199ee22]
+2023-04-09 22:30:52,150 INFO  [main-EventThread] root: IN HASH RING: 127.0.0.1:8082
+2023-04-09 22:30:53,662 INFO  [main-EventThread] root: ZNode children change on /workers
+2023-04-09 22:30:53,663 INFO  [main-EventThread] root: 0
+2023-04-09 22:30:53,663 INFO  [main-EventThread] root: 1
+2023-04-09 22:30:53,665 INFO  [main-EventThread] root: PMETADAT HR: []
