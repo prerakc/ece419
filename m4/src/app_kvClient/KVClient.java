@@ -27,8 +27,8 @@ public class KVClient implements IKVClient {
     int port;
 
     public KVClient(int port) {
-		this.port = port;
-	} 
+        this.port = port;
+    }
 
     @Override
     public void newConnection(String hostname, int port) throws Exception {
@@ -45,7 +45,7 @@ public class KVClient implements IKVClient {
     }
 
     private void disconnect() {
-        if(kvStore != null && kvStore.isRunning()) {
+        if (kvStore != null && kvStore.isRunning()) {
             kvStore.disconnect();
             kvStore = null;
             System.out.println(PROMPT + "Disconnected from server");
@@ -76,7 +76,7 @@ public class KVClient implements IKVClient {
                     serverAddress = tokens[1];
                     serverPort = Integer.parseInt(tokens[2]);
                     newConnection(serverAddress, serverPort);
-                } catch(NumberFormatException nfe) {
+                } catch (NumberFormatException nfe) {
                     printError("No valid address. Port must be a number!");
                     logger.info("Unable to parse argument <port>", nfe);
                 } catch (UnknownHostException e) {
@@ -99,13 +99,13 @@ public class KVClient implements IKVClient {
         }
 
         else if (tokens[0].equals("put")) {
-            if(tokens.length >= 2) {
+            if (tokens.length >= 2) {
                 if (kvStore != null && kvStore.isRunning()) {
                     String key = tokens[1];
                     StringBuilder value = new StringBuilder();
-                    for(int i = 2; i < tokens.length; i++) {
+                    for (int i = 2; i < tokens.length; i++) {
                         value.append(tokens[i]);
-                        if (i != tokens.length -1 ) {
+                        if (i != tokens.length - 1) {
                             value.append(" ");
                         }
                     }
@@ -129,7 +129,7 @@ public class KVClient implements IKVClient {
         }
 
         else if (tokens[0].equals("get")) {
-            if(tokens.length == 2) {
+            if (tokens.length == 2) {
                 if (kvStore != null && kvStore.isRunning()) {
                     String key = tokens[1];
                     try {
@@ -149,69 +149,66 @@ public class KVClient implements IKVClient {
             } else {
                 printError("Invalid input! Usage: get <key>");
             }
-        }
-        else if(tokens[0].equals("keyrange")){
+        } else if (tokens[0].equals("keyrange")) {
             try {
-                    IKVMessage ret = kvStore.keyrange();
-                    printMessage(ret);
+                IKVMessage ret = kvStore.keyrange();
+                printMessage(ret);
 
-                    } catch (IOException ioe) {
-                        printError("Server not available");
-                        logger.warn("Server not available", ioe);
-                        disconnect();
-                    } catch (Exception e) {
-                        printError("Unexpected exception: " + e.getMessage());
-                        logger.error("Unexpected exception", e);
-                    }
-        }
-        else if(tokens[0].equals("keyrange_read")){
+            } catch (IOException ioe) {
+                printError("Server not available");
+                logger.warn("Server not available", ioe);
+                disconnect();
+            } catch (Exception e) {
+                printError("Unexpected exception: " + e.getMessage());
+                logger.error("Unexpected exception", e);
+            }
+        } else if (tokens[0].equals("keyrange_read")) {
             try {
-                    IKVMessage ret = kvStore.keyrange_read();
-                    printMessage(ret);
+                IKVMessage ret = kvStore.keyrange_read();
+                printMessage(ret);
 
-                    } catch (IOException ioe) {
-                        printError("Server not available");
-                        logger.warn("Server not available", ioe);
-                        disconnect();
-                    } catch (Exception e) {
-                        printError("Unexpected exception: " + e.getMessage());
-                        logger.error("Unexpected exception", e);
-                    }
-        }
-        else if(tokens[0].equals("subscribe")){
+            } catch (IOException ioe) {
+                printError("Server not available");
+                logger.warn("Server not available", ioe);
+                disconnect();
+            } catch (Exception e) {
+                printError("Unexpected exception: " + e.getMessage());
+                logger.error("Unexpected exception", e);
+            }
+        } else if (tokens[0].equals("subscribe")) {
             try {
-                    IKVMessage ret = kvStore.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE, String.format("%s:%d", "127.0.0.1", this.port), "subscribe");
-                    printMessage(ret);
-                    System.out.println(PROMPT + "Subscribed to notifications");
+                IKVMessage ret = kvStore.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                        String.format("%s:%d", "127.0.0.1", this.port), "subscribe");
+                printMessage(ret);
+                System.out.println(PROMPT + "Subscribed to notifications");
 
-                    } catch (IOException ioe) {
-                        printError("Server not available");
-                        logger.warn("Server not available", ioe);
-                        disconnect();
-                    } catch (Exception e) {
-                        printError("Unexpected exception: " + e.getMessage());
-                        logger.error("Unexpected exception", e);
-                    }
-        }
-        else if(tokens[0].equals("unsubscribe")){
+            } catch (IOException ioe) {
+                printError("Server not available");
+                logger.warn("Server not available", ioe);
+                disconnect();
+            } catch (Exception e) {
+                printError("Unexpected exception: " + e.getMessage());
+                logger.error("Unexpected exception", e);
+            }
+        } else if (tokens[0].equals("unsubscribe")) {
             try {
-                    IKVMessage ret = kvStore.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE, String.format("%s:%d", "127.0.0.1", this.port), "unsubscribe");
-                    printMessage(ret);
-                    System.out.println(PROMPT + "Unsubscribed to notifications");
+                IKVMessage ret = kvStore.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                        String.format("%s:%d", "127.0.0.1", this.port), "unsubscribe");
+                printMessage(ret);
+                System.out.println(PROMPT + "Unsubscribed to notifications");
 
-                    } catch (IOException ioe) {
-                        printError("Server not available");
-                        logger.warn("Server not available", ioe);
-                        disconnect();
-                    } catch (Exception e) {
-                        printError("Unexpected exception: " + e.getMessage());
-                        logger.error("Unexpected exception", e);
-                    }
-        }
-        else if(tokens[0].equals("logLevel")) {
-            if(tokens.length == 2) {
+            } catch (IOException ioe) {
+                printError("Server not available");
+                logger.warn("Server not available", ioe);
+                disconnect();
+            } catch (Exception e) {
+                printError("Unexpected exception: " + e.getMessage());
+                logger.error("Unexpected exception", e);
+            }
+        } else if (tokens[0].equals("logLevel")) {
+            if (tokens.length == 2) {
                 String level = setLevel(tokens[1]);
-                if(level.equals(LogSetup.UNKNOWN_LEVEL)) {
+                if (level.equals(LogSetup.UNKNOWN_LEVEL)) {
                     printError("No valid log level!");
                     printPossibleLogLevels();
                 } else {
@@ -289,25 +286,25 @@ public class KVClient implements IKVClient {
     }
 
     private String setLevel(String levelString) {
-        if(levelString.equals(Level.ALL.toString())) {
+        if (levelString.equals(Level.ALL.toString())) {
             logger.setLevel(Level.ALL);
             return Level.ALL.toString();
-        } else if(levelString.equals(Level.DEBUG.toString())) {
+        } else if (levelString.equals(Level.DEBUG.toString())) {
             logger.setLevel(Level.DEBUG);
             return Level.DEBUG.toString();
-        } else if(levelString.equals(Level.INFO.toString())) {
+        } else if (levelString.equals(Level.INFO.toString())) {
             logger.setLevel(Level.INFO);
             return Level.INFO.toString();
-        } else if(levelString.equals(Level.WARN.toString())) {
+        } else if (levelString.equals(Level.WARN.toString())) {
             logger.setLevel(Level.WARN);
             return Level.WARN.toString();
-        } else if(levelString.equals(Level.ERROR.toString())) {
+        } else if (levelString.equals(Level.ERROR.toString())) {
             logger.setLevel(Level.ERROR);
             return Level.ERROR.toString();
-        } else if(levelString.equals(Level.FATAL.toString())) {
+        } else if (levelString.equals(Level.FATAL.toString())) {
             logger.setLevel(Level.FATAL);
             return Level.FATAL.toString();
-        } else if(levelString.equals(Level.OFF.toString())) {
+        } else if (levelString.equals(Level.OFF.toString())) {
             logger.setLevel(Level.OFF);
             return Level.OFF.toString();
         } else {
@@ -315,30 +312,30 @@ public class KVClient implements IKVClient {
         }
     }
 
-    private void printError(String error){
-        System.out.println(PROMPT + "Error! " +  error);
+    private void printError(String error) {
+        System.out.println(PROMPT + "Error! " + error);
     }
 
     public static void main(String[] args) {
         try {
             new LogSetup("logs/client.log", Level.INFO);
-            if(args.length != 1) {
-				System.out.println("Error! Invalid number of arguments!");
-				System.out.println("Usage: Client <port>");
-			} else {
-				int port = Integer.parseInt(args[0]);
-				new NotificationServer(port).start();
+            if (args.length != 1) {
+                System.out.println("Error! Invalid number of arguments!");
+                System.out.println("Usage: Client <port>");
+            } else {
+                int port = Integer.parseInt(args[0]);
+                new NotificationServer(port).start();
                 KVClient client = new KVClient(port);
                 client.run();
-			}
+            }
         } catch (IOException e) {
             System.out.println("Error! Unable to initialize logger!");
             e.printStackTrace();
             System.exit(1);
-        }  catch (NumberFormatException nfe) {
-			System.out.println("Error! Invalid argument <port>! Not a number!");
-			System.out.println("Usage: Client <port>");
-			System.exit(1);
-		}
+        } catch (NumberFormatException nfe) {
+            System.out.println("Error! Invalid argument <port>! Not a number!");
+            System.out.println("Usage: Client <port>");
+            System.exit(1);
+        }
     }
 }

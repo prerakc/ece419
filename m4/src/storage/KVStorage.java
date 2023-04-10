@@ -40,11 +40,11 @@ public class KVStorage {
             dataProps.load(fs);
             fs.close();
 
-            for (String key: dataProps.stringPropertyNames()) {
+            for (String key : dataProps.stringPropertyNames()) {
                 db.put(key, dataProps.getProperty(key));
             }
         } catch (Exception e) {
-           logger.error("Storage initialization failed", e);
+            logger.error("Storage initialization failed", e);
         }
     }
 
@@ -52,7 +52,7 @@ public class KVStorage {
         Properties dataProps = new Properties();
 
         dataProps.putAll(db);
-        
+
         try {
             FileOutputStream fs = new FileOutputStream(this.propertiesPath);
             dataProps.store(fs, null);
@@ -60,28 +60,28 @@ public class KVStorage {
         } catch (Exception e) {
             logger.error("Failed to write database to disk", e);
         }
-        
+
     }
 
     private synchronized void loadPersistedData() {
         Properties dataProps = new Properties();
         try {
             FileInputStream fs = new FileInputStream(this.propertiesPath);
-			dataProps.load(fs);
+            dataProps.load(fs);
             fs.close();
-            for (String key: dataProps.stringPropertyNames()) {
+            for (String key : dataProps.stringPropertyNames()) {
                 db.put(key, dataProps.getProperty(key));
             }
-		} catch (Exception e) {
-			logger.error("Failed to load data from disk", e);
-		}
+        } catch (Exception e) {
+            logger.error("Failed to load data from disk", e);
+        }
     }
 
     public synchronized String get(String key) {
         String value;
 
         try {
-            if(db.get(key) == null){
+            if (db.get(key) == null) {
                 loadPersistedData();
             }
             value = db.get(key);
@@ -119,7 +119,9 @@ public class KVStorage {
         return db.containsKey(key);
     }
 
-    public synchronized Map<String, String> getDatabase() { return db; }
+    public synchronized Map<String, String> getDatabase() {
+        return db;
+    }
 
     public synchronized void clear() {
         db.clear();
@@ -128,28 +130,27 @@ public class KVStorage {
     }
 
     public synchronized List<Entry<String, String>> findEntriesInRange(String low, String high) {
-		
-		List<Entry<String, String>> ret = new ArrayList<>();
-		for(Entry<String, String> entry: db.entrySet()){
-            if(isKeyInRange(entry.getKey(), low, high)){
+
+        List<Entry<String, String>> ret = new ArrayList<>();
+        for (Entry<String, String> entry : db.entrySet()) {
+            if (isKeyInRange(entry.getKey(), low, high)) {
                 ret.add(entry);
             }
         }
-		return ret;
-	}
+        return ret;
+    }
 
-
-    public synchronized void removeEntriesBetweenrange(String low, String high){
+    public synchronized void removeEntriesBetweenrange(String low, String high) {
         List<Entry<String, String>> toBeRemoved = this.findEntriesInRange(low, high);
-        for(Entry<String, String> entry: toBeRemoved){
+        for (Entry<String, String> entry : toBeRemoved) {
             db.remove(entry.getKey());
         }
         persist();
     }
 
-    public boolean isKeyInRange(String key, String low, String high){
-		if(low.compareTo(high) < 0) //if hash range does not wrap around
-			return (key.compareTo(low) > 0) &&  (key.compareTo(high) <= 0);
-		return (key.compareTo(low) < 0) ||  (key.compareTo(high) > 0); //hash range does wrap around
+    public boolean isKeyInRange(String key, String low, String high) {
+        if (low.compareTo(high) < 0) // if hash range does not wrap around
+            return (key.compareTo(low) > 0) && (key.compareTo(high) <= 0);
+        return (key.compareTo(low) < 0) || (key.compareTo(high) > 0); // hash range does wrap around
     }
 }

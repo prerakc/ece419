@@ -14,43 +14,46 @@ public class ZKManagerImpl implements ZKManager {
     private static ZooKeeper zkeeper;
     private static ZKConnection zkConnection;
 
-    public ZKManagerImpl(String connectString) throws InterruptedException, IOException{
+    public ZKManagerImpl(String connectString) throws InterruptedException, IOException {
         initialize(connectString);
     }
 
-    private void initialize(String connectString) throws InterruptedException, IOException{
+    private void initialize(String connectString) throws InterruptedException, IOException {
         zkConnection = new ZKConnection();
         zkeeper = zkConnection.connect(connectString);
     }
 
-    public void closeConnection() throws InterruptedException{
+    public void closeConnection() throws InterruptedException {
         zkConnection.close();
     }
 
-    public void create(String path, byte[] data) 
-      throws KeeperException, 
-      InterruptedException {
- 
+    public void create(String path, byte[] data)
+            throws KeeperException,
+            InterruptedException {
+
         zkeeper.create(
-          path, 
-          data, 
-          ZooDefs.Ids.OPEN_ACL_UNSAFE, 
-          CreateMode.PERSISTENT);
+                path,
+                data,
+                ZooDefs.Ids.OPEN_ACL_UNSAFE,
+                CreateMode.PERSISTENT);
     }
 
-    public String getZNodeDataCallback(String path, Watcher callbackWatcher) throws KeeperException, InterruptedException, UnsupportedEncodingException {
+    public String getZNodeDataCallback(String path, Watcher callbackWatcher)
+            throws KeeperException, InterruptedException, UnsupportedEncodingException {
         byte[] b = null;
-        b = zkeeper.getData(path, callbackWatcher,null);
+        b = zkeeper.getData(path, callbackWatcher, null);
         return new String(b, "UTF-8");
     }
 
-    public void getZNodeChildrenCallback(String path, Watcher callbackWatcher, ChildrenCallback callback) throws KeeperException, InterruptedException, UnsupportedEncodingException {
+    public void getZNodeChildrenCallback(String path, Watcher callbackWatcher, ChildrenCallback callback)
+            throws KeeperException, InterruptedException, UnsupportedEncodingException {
         List<String> children;
         zkeeper.getChildren(path, callbackWatcher, callback, null);
         // return children;
     }
 
-    public String getZNodeData(String path, boolean watch) throws KeeperException, InterruptedException, UnsupportedEncodingException {
+    public String getZNodeData(String path, boolean watch)
+            throws KeeperException, InterruptedException, UnsupportedEncodingException {
         byte[] b = null;
         b = zkeeper.getData(path, watch, null);
         return new String(b, "UTF-8");
@@ -60,8 +63,8 @@ public class ZKManagerImpl implements ZKManager {
         zkeeper.delete(path, -1);
     }
 
-    public void update(String path, byte[] data) throws KeeperException, 
-      InterruptedException {
+    public void update(String path, byte[] data) throws KeeperException,
+            InterruptedException {
         // int version = zkeeper.exists(path, true).getVersion();
         zkeeper.setData(path, data, -1);
     }

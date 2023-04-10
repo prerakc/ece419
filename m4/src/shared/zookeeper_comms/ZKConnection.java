@@ -11,22 +11,21 @@ import org.apache.zookeeper.Watcher.Event.KeeperState;
 public class ZKConnection {
     private ZooKeeper zk;
     CountDownLatch connectionLatch = new CountDownLatch(1);
-    
+
     public ZooKeeper connect(String host) throws IOException, InterruptedException {
         zk = new ZooKeeper(host, 300000000, new Watcher() {
-        public void process(WatchedEvent we) {
-            if (we.getState() == KeeperState.SyncConnected) {
-                connectionLatch.countDown();
+            public void process(WatchedEvent we) {
+                if (we.getState() == KeeperState.SyncConnected) {
+                    connectionLatch.countDown();
+                }
             }
-          }
-      });
+        });
 
-      connectionLatch.await();
-      return zk;
-  }
+        connectionLatch.await();
+        return zk;
+    }
 
-  public void close() throws InterruptedException {
-      zk.close();
-  }
+    public void close() throws InterruptedException {
+        zk.close();
+    }
 }
-

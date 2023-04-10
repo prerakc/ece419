@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Arrays;
 
-
 public class KVCommunication {
     private Logger logger = Logger.getRootLogger();
 
@@ -47,7 +46,8 @@ public class KVCommunication {
         byte[] serialized = message.getBytes();
         output.write(serialized, 0, serialized.length);
         output.flush();
-        logger.info(String.format("Sent a message of type '%s' with key '%s' and value '%s'", message.getStatus().toString(), message.getKey(), message.getValue()));
+        logger.info(String.format("Sent a message of type '%s' with key '%s' and value '%s'",
+                message.getStatus().toString(), message.getKey(), message.getValue()));
     }
 
     public KVMessage receiveMessage() throws IOException {
@@ -63,10 +63,10 @@ public class KVCommunication {
             throw new IOException("Input stream closed");
         }
 
-        while(read != 13 && reading) {/* carriage return */
+        while (read != 13 && reading) {/* carriage return */
             /* if buffer filled, copy to msg array */
-            if(index == BUFFER_SIZE) {
-                if(msgBytes == null){
+            if (index == BUFFER_SIZE) {
+                if (msgBytes == null) {
                     tmp = new byte[BUFFER_SIZE];
                     System.arraycopy(bufferBytes, 0, tmp, 0, BUFFER_SIZE);
                 } else {
@@ -85,7 +85,7 @@ public class KVCommunication {
             index++;
 
             /* stop reading is DROP_SIZE is reached */
-            if(msgBytes != null && msgBytes.length + index >= DROP_SIZE) {
+            if (msgBytes != null && msgBytes.length + index >= DROP_SIZE) {
                 reading = false;
             }
 
@@ -93,7 +93,7 @@ public class KVCommunication {
             read = (byte) input.read();
         }
 
-        if(msgBytes == null){
+        if (msgBytes == null) {
             tmp = new byte[index];
             System.arraycopy(bufferBytes, 0, tmp, 0, index);
         } else {
@@ -104,13 +104,14 @@ public class KVCommunication {
 
         msgBytes = tmp;
         logger.info(String.format("Recieved message with raw bytes %s", msgBytes.toString()));
-        if(Arrays.equals(msgBytes, new byte[] {10, 31, 10}) ){
+        if (Arrays.equals(msgBytes, new byte[] { 10, 31, 10 })) {
             logger.info("Got message indicating buffer out of sync!");
             return receiveMessage();
         }
         KVMessage message = new KVMessage(msgBytes);
 
-        logger.info(String.format("Received a message of type '%s' with key '%s' and value '%s'", message.getStatus().toString(), message.getKey(), message.getValue()));
+        logger.info(String.format("Received a message of type '%s' with key '%s' and value '%s'",
+                message.getStatus().toString(), message.getKey(), message.getValue()));
 
         return message;
     }

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
-
 import logger.LogSetup;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -31,35 +30,34 @@ import org.apache.zookeeper.Watcher.Event.KeeperState;
 
 public class ECSClient implements IECSClient {
     private static Logger logger = Logger.getRootLogger();
-     private ECS ecs;
-    
-    
-    public ECSClient(String address, int port, boolean ecsMaster){
-        this.ecs = new ECS(address,port,ecsMaster);
+    private ECS ecs;
+
+    public ECSClient(String address, int port, boolean ecsMaster) {
+        this.ecs = new ECS(address, port, ecsMaster);
     }
 
-    public void addKVServer(String name){
+    public void addKVServer(String name) {
         this.ecs.addServer(name);
         this.ecs.addServerStatus(name);
     }
 
-    public void addStatusServerWatch(String name){
+    public void addStatusServerWatch(String name) {
         this.ecs.addStatusWatch(name);
     }
 
-    public void addMetadataServerWatch(String name){
+    public void addMetadataServerWatch(String name) {
         this.ecs.addMetadataWatch(name);
     }
 
-    public void removeKVServer(String name){
+    public void removeKVServer(String name) {
         this.ecs.removeServer(name);
     }
 
-    public void removeServerStatus(String name){
+    public void removeServerStatus(String name) {
         this.ecs.removeServerStatus(name);
     }
 
-    public Map<String, ECSNode> getMetadataFromNode(String path){
+    public Map<String, ECSNode> getMetadataFromNode(String path) {
         return ECSNode.deserializeToECSNodeMap(this.ecs.getNodeData(path));
     }
 
@@ -123,29 +121,28 @@ public class ECSClient implements IECSClient {
         return null;
     }
 
-
-
     public static void main(String[] args) {
         try {
-			new LogSetup("logs/ECS.log", Level.INFO);
-			if(args.length != 2) {
-				System.out.println("Error! Invalid number of arguments!");
-				System.out.println("Usage: Server <address> <port>!");
-			} else {
-				String addr = args[0];
-				int port = Integer.parseInt(args[1]);
-				new ECSClient(addr,port,true).start();
-                while(true){}
-			}
-		} catch (IOException e) {
-			System.out.println("Error! Unable to initialize logger!");
-			e.printStackTrace();
-			System.exit(1);
-		} catch (NumberFormatException nfe) {
-			System.out.println("Error! Invalid argument <port>! Not a number!");
-			System.out.println("Usage: Server <address> <port>!");
-			System.exit(1);
-		}
+            new LogSetup("logs/ECS.log", Level.INFO);
+            if (args.length != 2) {
+                System.out.println("Error! Invalid number of arguments!");
+                System.out.println("Usage: Server <address> <port>!");
+            } else {
+                String addr = args[0];
+                int port = Integer.parseInt(args[1]);
+                new ECSClient(addr, port, true).start();
+                while (true) {
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error! Unable to initialize logger!");
+            e.printStackTrace();
+            System.exit(1);
+        } catch (NumberFormatException nfe) {
+            System.out.println("Error! Invalid argument <port>! Not a number!");
+            System.out.println("Usage: Server <address> <port>!");
+            System.exit(1);
+        }
     }
 
 }

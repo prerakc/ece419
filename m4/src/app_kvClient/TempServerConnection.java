@@ -8,12 +8,11 @@ import shared.messages.KVMessage;
 import java.io.IOException;
 import java.net.Socket;
 
-
 /**
- * Represents a connection end point for a particular client that is 
- * connected to the server. This class is responsible for message reception 
- * and sending. 
- * The class also implements the echo functionality. Thus whenever a message 
+ * Represents a connection end point for a particular client that is
+ * connected to the server. This class is responsible for message reception
+ * and sending.
+ * The class also implements the echo functionality. Thus whenever a message
  * is received it is going to be echoed back to the client.
  */
 public class TempServerConnection implements Runnable {
@@ -30,6 +29,7 @@ public class TempServerConnection implements Runnable {
 
 	/**
 	 * Constructs a new CientConnection object for a given TCP socket.
+	 * 
 	 * @param clientSocket the Socket object for the client connection.
 	 */
 	public TempServerConnection(Socket clientSocket, NotificationServer server) throws IOException {
@@ -38,9 +38,9 @@ public class TempServerConnection implements Runnable {
 		this.server = server;
 		this.kvCommunication = new KVCommunication(clientSocket);
 	}
-	
+
 	/**
-	 * Initializes and starts the client connection. 
+	 * Initializes and starts the client connection.
 	 * Loops until the connection is closed or aborted by the client.
 	 */
 	public void run() {
@@ -49,8 +49,10 @@ public class TempServerConnection implements Runnable {
 				KVMessage latestMsg = kvCommunication.receiveMessage();
 				KVMessage responseMsg = handleMessage(latestMsg);
 				kvCommunication.sendMessage(responseMsg);
-			/* connection either terminated by the client or lost due to
-			 * network problems*/
+				/*
+				 * connection either terminated by the client or lost due to
+				 * network problems
+				 */
 			} catch (IOException ioe) {
 				logger.error("Error! Connection lost!");
 				isOpen = false;
@@ -73,7 +75,8 @@ public class TempServerConnection implements Runnable {
 				if (value.equals("null") || value.isEmpty()) {
 					System.out.println(String.format("Notification> " + "Key '%s' has been deleted", key));
 				} else {
-					System.out.println(String.format("Notification> " + "Value of key '%s' has been changed to '%s'", key, value));
+					System.out.println(
+							String.format("Notification> " + "Value of key '%s' has been changed to '%s'", key, value));
 				}
 				responseStatus = StatusType.NOTIFICATION_ACK;
 				break;

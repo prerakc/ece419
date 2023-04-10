@@ -137,7 +137,7 @@ public class NonDistributedKVServerTest extends TestCase {
 	}
 
 	@Test
-	public void testNullKey(){
+	public void testNullKey() {
 		String value = "validValue";
 		IKVMessage response = null;
 		Exception ex = null;
@@ -160,7 +160,7 @@ public class NonDistributedKVServerTest extends TestCase {
 	}
 
 	@Test
-	public void testNullValue(){
+	public void testNullValue() {
 		String key = "validKey";
 		IKVMessage response = null;
 		Exception ex = null;
@@ -175,7 +175,7 @@ public class NonDistributedKVServerTest extends TestCase {
 	}
 
 	@Test
-	public void testBlankValueDelete(){
+	public void testBlankValueDelete() {
 		String key = "blankKey";
 		String value = "validValue";
 		IKVMessage response = null;
@@ -192,7 +192,7 @@ public class NonDistributedKVServerTest extends TestCase {
 	}
 
 	@Test
-	public void testBlankKey(){
+	public void testBlankKey() {
 		String value = "validValue";
 		IKVMessage response = null;
 		Exception ex = null;
@@ -213,7 +213,7 @@ public class NonDistributedKVServerTest extends TestCase {
 
 		char[] keyArr = new char[keySize];
 
-		for (int i =0; i<keySize; i++){
+		for (int i = 0; i < keySize; i++) {
 			keyArr[i] = '0';
 		}
 
@@ -246,7 +246,7 @@ public class NonDistributedKVServerTest extends TestCase {
 
 		char[] valueArr = new char[valueSize];
 
-		for (int i =0; i<valueSize; i++){
+		for (int i = 0; i < valueSize; i++) {
 			valueArr[i] = '0';
 		}
 
@@ -307,27 +307,27 @@ public class NonDistributedKVServerTest extends TestCase {
 			ex = e;
 		}
 
-		for(int i =0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			kvClientArr[i] = new KVStore(address, port);
 			try {
 				kvClientArr[i].connect();
 			} catch (Exception e) {
 				ex = e;
 			}
-			assert(ex == null);
+			assert (ex == null);
 		}
 
-		for(int i = 0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			try {
 				response = kvClientArr[i].get(key);
 			} catch (Exception e) {
 				ex = e;
 			}
 			assertTrue(ex == null && response.getValue().equals("getMultiClientValue"));
-			assertTrue(response.getStatus() == StatusType.GET_SUCCESS );
+			assertTrue(response.getStatus() == StatusType.GET_SUCCESS);
 		}
 
-		for(int i =0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			kvClientArr[i].disconnect();
 		}
 	}
@@ -340,28 +340,28 @@ public class NonDistributedKVServerTest extends TestCase {
 		IKVMessage response = null;
 		Exception ex = null;
 
-		for(int i =0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			kvClientArr[i] = new KVStore(address, port);
 			try {
 				kvClientArr[i].connect();
 			} catch (Exception e) {
 				ex = e;
 			}
-			assert(ex == null);
+			assert (ex == null);
 		}
 
-		for(int i = 0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			try {
 				response = kvClientArr[i].put(Integer.toString(i), Integer.toString(i));
 			} catch (Exception e) {
 				ex = e;
 			}
 			assertTrue(ex == null && response.getValue().equals(Integer.toString(i)));
-			assertTrue(response.getStatus() == StatusType.PUT_SUCCESS );
+			assertTrue(response.getStatus() == StatusType.PUT_SUCCESS);
 
 		}
 
-		for(int i =0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			kvClientArr[i].disconnect();
 		}
 	}
@@ -375,17 +375,17 @@ public class NonDistributedKVServerTest extends TestCase {
 		IKVMessage response = null;
 		Exception ex = null;
 
-		for(int i =0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			kvClientArr[i] = new KVStore(address, port);
 			try {
 				kvClientArr[i].connect();
 			} catch (Exception e) {
 				ex = e;
 			}
-			assert(ex == null);
+			assert (ex == null);
 		}
 
-		for(int i = 0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			try {
 				response = kvClientArr[i].put(key, Integer.toString(i));
 			} catch (Exception e) {
@@ -393,13 +393,13 @@ public class NonDistributedKVServerTest extends TestCase {
 			}
 			assertTrue(ex == null && response.getValue().equals(Integer.toString(i)));
 			if (i == 0) {
-				assertTrue(response.getStatus() == StatusType.PUT_SUCCESS );
+				assertTrue(response.getStatus() == StatusType.PUT_SUCCESS);
 			} else {
-				assertTrue(response.getStatus() == StatusType.PUT_UPDATE );
+				assertTrue(response.getStatus() == StatusType.PUT_UPDATE);
 			}
 		}
 
-		for(int i =0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			kvClientArr[i].disconnect();
 		}
 	}
@@ -413,17 +413,17 @@ public class NonDistributedKVServerTest extends TestCase {
 		IKVMessage response = null;
 		Exception ex = null;
 
-		for(int i =0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			kvClientArr[i] = new KVStore(address, port);
 			try {
 				kvClientArr[i].connect();
 			} catch (Exception e) {
 				ex = e;
 			}
-			assert(ex == null);
+			assert (ex == null);
 		}
 
-		for(int i = 0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			try {
 				response = kvClientArr[i].put(key, Integer.toString(i));
 				response = kvClientArr[i].put(key, "null");
@@ -433,7 +433,7 @@ public class NonDistributedKVServerTest extends TestCase {
 			assertTrue(ex == null && response.getStatus() == StatusType.DELETE_SUCCESS);
 		}
 
-		for(int i =0; i<numClients; i++){
+		for (int i = 0; i < numClients; i++) {
 			kvClientArr[i].disconnect();
 		}
 	}

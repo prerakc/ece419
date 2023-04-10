@@ -18,7 +18,7 @@ public class KVMessage implements IKVMessage {
 
     private byte[] serialized;
 
-    public KVMessage (StatusType status, String key, String value) {
+    public KVMessage(StatusType status, String key, String value) {
         this.status = status;
         this.key = key;
         this.value = value;
@@ -26,7 +26,7 @@ public class KVMessage implements IKVMessage {
         String messageString = status.toString() + DELIMITER + key + DELIMITER + value + DELIMITER;
 
         byte[] messageBytes = messageString.getBytes(StandardCharsets.UTF_8);
-        byte[] controlBytes = new byte[]{LINE_FEED, RETURN};
+        byte[] controlBytes = new byte[] { LINE_FEED, RETURN };
         byte[] tmp = new byte[messageBytes.length + controlBytes.length];
 
         System.arraycopy(messageBytes, 0, tmp, 0, messageBytes.length);
@@ -35,7 +35,7 @@ public class KVMessage implements IKVMessage {
         serialized = tmp;
     }
 
-    public KVMessage (byte[] serialized) {
+    public KVMessage(byte[] serialized) {
         logger.info("Raw bytes: " + Arrays.toString(serialized));
         String messageString = new String(serialized, StandardCharsets.UTF_8);
 
@@ -45,7 +45,7 @@ public class KVMessage implements IKVMessage {
         this.key = fields[1];
         this.value = fields[2];
 
-        byte[] controlBytes = new byte[]{LINE_FEED, RETURN};
+        byte[] controlBytes = new byte[] { LINE_FEED, RETURN };
         byte[] tmp = new byte[serialized.length + controlBytes.length];
 
         System.arraycopy(serialized, 0, tmp, 0, serialized.length);

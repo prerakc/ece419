@@ -28,8 +28,9 @@ public class KVStore implements KVCommInterface {
 
 	/**
 	 * Initialize KVStore with address and port of KVServer
+	 * 
 	 * @param address the address of the KVServer
-	 * @param port the port of the KVServer
+	 * @param port    the port of the KVServer
 	 */
 	public KVStore(String address, int port) {
 		// TODO Auto-generated method stub
@@ -60,10 +61,10 @@ public class KVStore implements KVCommInterface {
 	@Override
 	public IKVMessage put(String key, String value) throws Exception {
 		// TODO Auto-generated method stub
-		if(!verifyKey(key)){
+		if (!verifyKey(key)) {
 			return new KVMessage(IKVMessage.StatusType.PUT_ERROR, key, value);
 		}
-		if(!verifyValue(value)){
+		if (!verifyValue(value)) {
 			return new KVMessage(IKVMessage.StatusType.PUT_ERROR, key, value);
 		}
 		KVMessage message = new KVMessage(IKVMessage.StatusType.PUT, key, value);
@@ -71,7 +72,7 @@ public class KVStore implements KVCommInterface {
 		KVMessage ackMessage = kvCommunication.receiveMessage();
 		boolean sentToCorrectServer = messageSentToCorrectServer(ackMessage);
 		logger.info(sentToCorrectServer);
-		while(!sentToCorrectServer){
+		while (!sentToCorrectServer) {
 			updateConnection(key, ackMessage);
 			kvCommunication.sendMessage(message);
 			logger.info("LOOKING FOR SERVER");
@@ -90,10 +91,10 @@ public class KVStore implements KVCommInterface {
 
 	public IKVMessage datatransfer(String key, String value) throws Exception {
 		// TODO Auto-generated method stub
-		if(!verifyKey(key)){
+		if (!verifyKey(key)) {
 			return new KVMessage(IKVMessage.StatusType.PUT_ERROR, key, value);
 		}
-		if(!verifyValue(value)){
+		if (!verifyValue(value)) {
 			return new KVMessage(IKVMessage.StatusType.PUT_ERROR, key, value);
 		}
 		KVMessage message = new KVMessage(IKVMessage.StatusType.DATATRANSFER, key, value);
@@ -105,23 +106,28 @@ public class KVStore implements KVCommInterface {
 	private void randomConnection() {
 		ArrayList<ECSNode> servers = new ArrayList<ECSNode>();
 
-		String thisNodeHash = HashUtils.getHashString(String.format("%s:%d",this.address,this.port));
+		String thisNodeHash = HashUtils.getHashString(String.format("%s:%d", this.address, this.port));
 
 		ECSNode primary = this.metaData.getServerForHashValue(thisNodeHash);
 		ECSNode replica1 = (primary == null) ? null : this.metaData.getSuccessorNodeFromIpHash(thisNodeHash);
-		ECSNode replica2 = (replica1 == null) ? null : this.metaData.getSuccessorNodeFromIpHash(replica1.getIpPortHash());
+		ECSNode replica2 = (replica1 == null) ? null
+				: this.metaData.getSuccessorNodeFromIpHash(replica1.getIpPortHash());
 
-        if (primary != null) servers.add(primary);
-		if (replica1 != null) servers.add(replica1);
-		if (replica2 != null) servers.add(replica2);
+		if (primary != null)
+			servers.add(primary);
+		if (replica1 != null)
+			servers.add(replica1);
+		if (replica2 != null)
+			servers.add(replica2);
 
-		if (servers.size() == 0) return;
+		if (servers.size() == 0)
+			return;
 
 		Collections.shuffle(servers);
 
 		ECSNode randomServer = servers.get(0);
 
-		try{
+		try {
 			disconnect();
 			this.address = randomServer.getNodeHost();
 			this.port = randomServer.getNodePort();
@@ -134,7 +140,7 @@ public class KVStore implements KVCommInterface {
 	@Override
 	public IKVMessage get(String key) throws Exception {
 		// TODO Auto-generated method stub
-		if(!verifyKey(key)){
+		if (!verifyKey(key)) {
 			return new KVMessage(IKVMessage.StatusType.GET_ERROR, key, "");
 		}
 		randomConnection();
@@ -143,7 +149,7 @@ public class KVStore implements KVCommInterface {
 		KVMessage ackMessage = kvCommunication.receiveMessage();
 		boolean sentToCorrectServer = messageSentToCorrectServer(ackMessage);
 		logger.info(sentToCorrectServer);
-		while(!sentToCorrectServer){
+		while (!sentToCorrectServer) {
 			updateConnection(key, ackMessage);
 			randomConnection();
 			kvCommunication.sendMessage(message);
@@ -155,21 +161,21 @@ public class KVStore implements KVCommInterface {
 	}
 
 	public IKVMessage recurGet(String key) throws Exception {
-		try{
+		try {
 			return get(key);
-		} catch (IOException e){
-			
-			logger.error("IOException happened during get", e);
-			String thisNodeHash = HashUtils.getHashString(String.format("%s:%d",this.address,this.port));
+		} catch (IOException e) {
 
-			logger.info(String.format("%s:%d",this.address,this.port));
+			logger.error("IOException happened during get", e);
+			String thisNodeHash = HashUtils.getHashString(String.format("%s:%d", this.address, this.port));
+
+			logger.info(String.format("%s:%d", this.address, this.port));
 			logger.info(this.metaData.getHashRing().keySet());
 			logger.info(thisNodeHash);
 
 			ECSNode nodeNext = this.metaData.getSuccessorNodeFromIpHash(thisNodeHash);
 			this.metaData.removeServer(thisNodeHash);
 
-			try{
+			try {
 				disconnect();
 				this.address = nodeNext.getNodeHost();
 				this.port = nodeNext.getNodePort();
@@ -193,101 +199,100 @@ public class KVStore implements KVCommInterface {
 		return kvCommunication.receiveMessage();
 	}
 
-
 	public boolean isRunning() {
 		return (kvCommunication != null) && kvCommunication.isOpen();
 	}
 
-	public boolean verifyKey(String key){
-		if (key == null){
+	public boolean verifyKey(String key) {
+		if (key == null) {
 			logger.info(String.format("Key cannot be null!"));
 			return false;
 		}
 
-		if (isKeyTooBig(key)){
+		if (isKeyTooBig(key)) {
 			logger.info(String.format("Key is too large!"));
 			return false;
 		}
 
-		if (key.isEmpty()){
+		if (key.isEmpty()) {
 			logger.info(String.format("Key cannot be empty!"));
 			return false;
 		}
-		
+
 		return true;
 	}
 
-	public boolean verifyValue(String value){
-		if (value == null){
+	public boolean verifyValue(String value) {
+		if (value == null) {
 			logger.info(String.format("Value cannot be null"));
 			return false;
 		}
-		if (isValueTooBig(value)){
+		if (isValueTooBig(value)) {
 			logger.info(String.format("Value is too large!"));
 			return false;
 		}
 		return true;
 	}
 
-	public boolean isKeyTooBig(String key){
+	public boolean isKeyTooBig(String key) {
 		return key.length() >= 1024;
 	}
 
-	public boolean isValueTooBig(String value){
-		return value.length() >= 1024*10;
+	public boolean isValueTooBig(String value) {
+		return value.length() >= 1024 * 10;
 	}
 
-	public void updateMetaData(String metaDataPayload){
-		//can put bnoth of these functions into a singular deserializeToHashRing
-		try{
-			Map<String,ECSNode>  nodesMap = ECSNode.deserializeToECSNodeMap(metaDataPayload);
+	public void updateMetaData(String metaDataPayload) {
+		// can put bnoth of these functions into a singular deserializeToHashRing
+		try {
+			Map<String, ECSNode> nodesMap = ECSNode.deserializeToECSNodeMap(metaDataPayload);
 			System.out.println("******************");
 			System.out.println(nodesMap.isEmpty());
 			this.metaData = HashRing.getHashRingFromNodeMap(nodesMap);
-		}catch(Exception e){
+		} catch (Exception e) {
 			logger.error("Unable to deserialize metadata payload! \n", e);
 		}
 	}
 
-	public void updateConnection(String key, KVMessage message){
+	public void updateConnection(String key, KVMessage message) {
 		updateMetaData(message.getValue());
 		String hashValue = HashUtils.getHashString(key);
 		ECSNode node = metaData.getServerForHashValue(hashValue);
-		
+
 		// disconnect form old server and connect to correct server
-		try{
+		try {
 			disconnect();
 			this.address = node.getNodeHost();
 			this.port = node.getNodePort();
-		}catch(Exception e){
+		} catch (Exception e) {
 
 		}
-		try{
+		try {
 			connect();
-		}catch(Exception e){
-			
+		} catch (Exception e) {
+
 		}
 
-		//print that connection was updated
+		// print that connection was updated
 
 	}
 
-	public boolean messageSentToCorrectServer(IKVMessage message){
+	public boolean messageSentToCorrectServer(IKVMessage message) {
 		// if the server is not responsible or it is removed
 		return (message.getStatus() != KVMessage.StatusType.SERVER_NOT_RESPONSIBLE);
 
-		// return (message.getStatus() == KVMessage.StatusType.SERVER_NOT_RESPONSIBLE || message.getStatus() == KVMessage.StatusType.SERVER_REMOVED);
-		
+		// return (message.getStatus() == KVMessage.StatusType.SERVER_NOT_RESPONSIBLE ||
+		// message.getStatus() == KVMessage.StatusType.SERVER_REMOVED);
 
 	}
 
-	public void notify (IKVMessage.StatusType status, String key, String value) throws Exception {
+	public void notify(IKVMessage.StatusType status, String key, String value) throws Exception {
 		KVMessage message = new KVMessage(status, key, value);
 		kvCommunication.sendMessage(message);
 		KVMessage ackMessage = kvCommunication.receiveMessage();
 	}
 
-	public KVMessage notify2 (IKVMessage.StatusType status, String key, String value) throws Exception {
+	public KVMessage notify2(IKVMessage.StatusType status, String key, String value) throws Exception {
 		KVMessage message = new KVMessage(status, key, value);
 		kvCommunication.sendMessage(message);
 		return kvCommunication.receiveMessage();

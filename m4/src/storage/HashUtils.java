@@ -14,11 +14,12 @@ import org.apache.log4j.Logger;
 public class HashUtils {
 
     private static Logger logger = Logger.getRootLogger();
+
     public static BigInteger mdHash(String key) {
         MessageDigest md = null;
-        try{
+        try {
             md = MessageDigest.getInstance("MD5");
-        }catch(NoSuchAlgorithmException e){
+        } catch (NoSuchAlgorithmException e) {
             logger.error(e.toString());
         }
         System.out.println("*******************HASH OF KEY********************");
@@ -29,43 +30,42 @@ public class HashUtils {
         return md_key;
     }
 
-    public static String getHashString(String key){
+    public static String getHashString(String key) {
         // return mdHash(key).toString();
         MessageDigest md = null;
-        try{
+        try {
             md = MessageDigest.getInstance("MD5");
-        }catch(NoSuchAlgorithmException e){
+        } catch (NoSuchAlgorithmException e) {
             logger.error(e.toString());
         }
         return bytesToHex(md.digest(key.getBytes()));
     }
 
     public static String bytesToHex(byte[] bytes) {
-    StringBuilder sb = new StringBuilder();
-    for (byte b : bytes) {
-        sb.append(String.format("%02x", b));
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
-    return sb.toString();
-}
 
-public static String incrementHexString(String hexString) {
+    public static String incrementHexString(String hexString) {
         // Convert hex string to integer
         long intValue = Long.parseLong(hexString, 16);
-        
+
         // Increment integer
         intValue++;
-        
+
         // Convert integer back to hex string
         String incrementedHexString = Long.toHexString(intValue);
-        
-        // If the resulting string has an odd number of characters, pad it with a leading zero
+
+        // If the resulting string has an odd number of characters, pad it with a
+        // leading zero
         if (incrementedHexString.length() % 2 != 0) {
             incrementedHexString = "0" + incrementedHexString;
         }
-        
+
         return incrementedHexString;
     }
-
-    
 
 }

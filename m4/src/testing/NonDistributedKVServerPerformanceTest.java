@@ -6,7 +6,7 @@ import org.junit.Test;
 import client.KVStore;
 import junit.framework.TestCase;
 
-public class NonDistributedKVServerPerformanceTest extends TestCase{
+public class NonDistributedKVServerPerformanceTest extends TestCase {
 
 	private KVStore kvClient;
 
@@ -33,13 +33,13 @@ public class NonDistributedKVServerPerformanceTest extends TestCase{
 		kvClient.disconnect();
 	}
 
-	public void runPerformance(int putNumber, int getNumber){
+	public void runPerformance(int putNumber, int getNumber) {
 		Exception ex = null;
 
 		String baseKey = "PERFORMANCE_BASELINE_KEY_";
 		String baseValue = "PERFORMANCE_BASELINE_VALUE_";
 
-		for(int i=0; i<putNumber;i++){
+		for (int i = 0; i < putNumber; i++) {
 			try {
 				kvClient.put(baseKey + Integer.toString(i), baseValue + Integer.toString(i));
 			} catch (Exception e) {
@@ -47,7 +47,7 @@ public class NonDistributedKVServerPerformanceTest extends TestCase{
 			}
 		}
 
-		for(int i=0; i<getNumber;i++){
+		for (int i = 0; i < getNumber; i++) {
 			try {
 				kvClient.get(baseKey + Integer.toString(i));
 			} catch (Exception e) {
@@ -57,7 +57,7 @@ public class NonDistributedKVServerPerformanceTest extends TestCase{
 	}
 
 	@Test
-	public void testPerformance(){
+	public void testPerformance() {
 		int totalTest = 5000;
 		int putNumber;
 		int getNumber;
@@ -65,30 +65,30 @@ public class NonDistributedKVServerPerformanceTest extends TestCase{
 		long startTime;
 		long endTime;
 
-		//  80% puts, 20% gets
-		putNumber = (int)(totalTest * 0.8);
+		// 80% puts, 20% gets
+		putNumber = (int) (totalTest * 0.8);
 		getNumber = totalTest - putNumber;
 
 		startTime = System.currentTimeMillis();
-		runPerformance(putNumber,getNumber);
+		runPerformance(putNumber, getNumber);
 		endTime = System.currentTimeMillis();
 		System.out.println("+++ 80% puts, 20% gets: " + (endTime - startTime) + " ms +++");
 
 		// 50%/50%
-		putNumber = (int)(totalTest * .5);
+		putNumber = (int) (totalTest * .5);
 		getNumber = totalTest - putNumber;
 
 		startTime = System.currentTimeMillis();
-		runPerformance(putNumber,getNumber);
+		runPerformance(putNumber, getNumber);
 		endTime = System.currentTimeMillis();
 		System.out.println("+++ 50% puts, 50% gets: " + (endTime - startTime) + " ms +++");
 
 		// 80% gets, 20% puts
-		putNumber = (int)(totalTest * .2);
+		putNumber = (int) (totalTest * .2);
 		getNumber = totalTest - putNumber;
 
 		startTime = System.currentTimeMillis();
-		runPerformance(putNumber,getNumber);
+		runPerformance(putNumber, getNumber);
 		endTime = System.currentTimeMillis();
 		System.out.println("+++ 20% puts, 80% gets: " + (endTime - startTime) + " ms +++");
 
@@ -99,6 +99,7 @@ public class NonDistributedKVServerPerformanceTest extends TestCase{
 		// startTime = System.nanoTime();
 		// db.get("Test");
 		// endTime = System.nanoTime();
-		// System.out.println("ARRAY MAP READ TIMING " + (endTime - startTime) + " ns +++");
+		// System.out.println("ARRAY MAP READ TIMING " + (endTime - startTime) + " ns
+		// +++");
 	}
 }

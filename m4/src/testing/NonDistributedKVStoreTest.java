@@ -8,7 +8,6 @@ import client.KVStore;
 import junit.framework.TestCase;
 import org.junit.Test;
 
-
 public class NonDistributedKVStoreTest extends TestCase {
 
 	private static String address = "localhost";
@@ -25,14 +24,14 @@ public class NonDistributedKVStoreTest extends TestCase {
 	@Test
 	public void testConnectionSuccess() {
 		Exception ex = null;
-		
+
 		KVStore kvClient = new KVStore(address, port);
 		try {
 			kvClient.connect();
 		} catch (Exception e) {
 			ex = e;
-		}	
-		
+		}
+
 		assertNull(ex);
 
 		kvClient.disconnect();
@@ -42,13 +41,13 @@ public class NonDistributedKVStoreTest extends TestCase {
 	public void testUnknownHost() {
 		Exception ex = null;
 		KVStore kvClient = new KVStore("unknown", port);
-		
+
 		try {
 			kvClient.connect();
 		} catch (Exception e) {
-			ex = e; 
+			ex = e;
 		}
-		
+
 		assertTrue(ex instanceof UnknownHostException);
 	}
 
@@ -56,13 +55,13 @@ public class NonDistributedKVStoreTest extends TestCase {
 	public void testIllegalPort() {
 		Exception ex = null;
 		KVStore kvClient = new KVStore(address, 123456789);
-		
+
 		try {
 			kvClient.connect();
 		} catch (Exception e) {
-			ex = e; 
+			ex = e;
 		}
-		
+
 		assertTrue(ex instanceof IllegalArgumentException);
 	}
 }
