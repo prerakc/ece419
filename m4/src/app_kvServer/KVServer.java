@@ -53,7 +53,7 @@ public class KVServer extends Thread implements IKVServer {
 
 	private boolean distributedMode;
 
-	private HashSet<ClientNode> clientListeners;
+	private static HashSet<ClientNode> clientListeners;
 
 	/**
 	 * Start KV Server at given port
@@ -108,7 +108,7 @@ public class KVServer extends Thread implements IKVServer {
 
 		distributedMode = true;
 
-		this.clientListeners = new HashSet<ClientNode>();
+		KVServer.clientListeners = new HashSet<ClientNode>();
 	}
 
 	public KVServer(String address, int port, int cacheSize, String strategy) {
@@ -134,7 +134,7 @@ public class KVServer extends Thread implements IKVServer {
 
 		distributedMode = false;
 
-		this.clientListeners = new HashSet<ClientNode>();
+		KVServer.clientListeners = new HashSet<ClientNode>();
 	}
 
 	public StatusType getStatus() {
@@ -293,13 +293,26 @@ public class KVServer extends Thread implements IKVServer {
 		ECSNode thisNode = getCurrentServerNode(oldMeta, newMeta);
 		String thisNodeHash = thisNode.getIpPortHash();
 
+		ECSNode predNode = newMeta.getPredecessorNodeFromIpHash(thisNodeHash);
+		if(predNode != null && serverIsAdded(oldMeta, predNode)){
+			logger.info("predNode name: " + predNode.getNodeName() + " was added");
+			logger.info("curr node name is " + thisNode.getNodeName());
+			Iterator<ClientNode> it = clientListeners.iterator();
+
+			while (it.hasNext()) {
+				ClientNode clientListener = it.next();
+				String key = String.format("%s:%d", clientListener.getAddress(), clientListener.getPort());
+				gossipNotificationsToServer(predNode, key, "subscribe");
+			}
+		}
+
 		if (currentServerIsAdded(oldMeta, newMeta)) {
 			logger.info(String.format("%s was added and is obtaining keys from successor", thisNode.getNodeName()));
 			ECSNode successorNode = newMeta.getSuccessorNodeFromIpHash(thisNode.getIpPortHash());
 			if (successorNode != null)
 				transferData(successorNode, thisNode, false);
 
-			ECSNode predNode = newMeta.getPredecessorNodeFromIpHash(thisNode.getIpPortHash());
+			predNode = newMeta.getPredecessorNodeFromIpHash(thisNode.getIpPortHash());
 			int numNodes = newMeta.getHashRing().size();
 			if (numNodes <= 1) {
 				// KVServer.metaDataLock.unlock();
@@ -322,6 +335,8 @@ public class KVServer extends Thread implements IKVServer {
 			}
 			// KVServer.metaDataLock.unlock();
 		}
+
+
 	}
 
 	// logger.info("ADDED IN UPDATE
@@ -378,6 +393,16 @@ public class KVServer extends Thread implements IKVServer {
 	public static boolean currentServerIsAdded(HashRing oldMeta, HashRing newMeta) {
 		for (Map.Entry<String, ECSNode> entry : oldMeta.getHashRing().entrySet()) {
 			if (entry.getValue().getNodeName().equals(KVServer.serverName)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean serverIsAdded(HashRing oldMeta, ECSNode node) {
+		for (Map.Entry<String, ECSNode> entry : oldMeta.getHashRing().entrySet()) {
+			logger.info("checking if node name " + entry.getValue().getNodeName() + " matches " + node.getNodeName());
+			if (entry.getValue().getNodeName().equals(node.getNodeName())) {
 				return false;
 			}
 		}
@@ -501,9 +526,9 @@ public class KVServer extends Thread implements IKVServer {
 		logger.info(String.format("%s was removed and is obtaining keys from successor", thisNode.getNodeName()));
 		// get first succesor node
 		ECSNode successorNodeFirst = KVServer.metaData.getSuccessorNodeFromIpHash(thisNode.getIpPortHash());
-		logger.info("FIRST SUCC: " + successorNodeFirst.getIpPortHash());
 		if (successorNodeFirst != null) {
 			// get second if first is found
+			logger.info("FIRST SUCC: " + successorNodeFirst.getIpPortHash());
 			ECSNode successorNodeSecond = KVServer.metaData
 					.getSuccessorNodeFromIpHash(successorNodeFirst.getIpPortHash());
 			if (successorNodeSecond != null)
@@ -541,6 +566,17 @@ public class KVServer extends Thread implements IKVServer {
 				logger.error("Failed to notify client", e);
 				it.remove();
 			}
+		}
+	}
+
+	public static void gossipNotificationsToServer(ECSNode server, String key, String value){
+		try {
+			KVStore client = new KVStore(server.getNodeHost(), server.getNodePort());
+			client.connect();
+			client.notify(StatusType.NOTIFICATION_FORWARD, key, value);
+			client.disconnect();
+		} catch (Exception e) {
+			logger.error("Failed to gossip to server", e);
 		}
 	}
 
