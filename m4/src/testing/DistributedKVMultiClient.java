@@ -10,9 +10,15 @@ import storage.KVStorage;
 
 import client.KVStore;
 import shared.messages.IKVMessage;
+import shared.messages.KVMessage;
 import shared.messages.IKVMessage.StatusType;
+import java.net.*;
 
+import app_kvClient.TempServerConnection;
+import app_kvClient.NotificationServer;
 import java.lang.Thread;
+
+import java.io.*;
 
 public class DistributedKVMultiClient extends TestCase {
 
@@ -24,357 +30,464 @@ public class DistributedKVMultiClient extends TestCase {
     public KVStore kvClientA;
     public KVStore kvClientB;
 
-    @Test
-    public void testMultiPutNew() {
+    @Test 
+    public void testSubscribe(){
         IKVMessage responseA = null;
-        IKVMessage responseB = null;
         Exception ex = null;
         String value = "test";
         boolean inValue = true;
         // start one node and add some data
+        int clientPort = 8086;
+        
+
         TestingUtils.spinUpServers(3, dataDir, dataProps);
         kvClientA = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
-        kvClientB = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
+
         try {
             kvClientA.connect();
-            kvClientB.connect();
         } catch (Exception ignored) {
             System.out.println(ignored);
         }
-
-        try {
-            responseA = kvClientA.put("keyA", value);
-            responseB = kvClientB.put("keyB", value);
-
-            // System.out.println(response);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
+        try{
+            responseA = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPort), "subscribe");
         } catch (Exception e) {
             ex = e;
+            e.printStackTrace();
         }
 
-        KVStorage kvstore = new KVStorage("./data",
-                String.format("%s:%d.properties", TestingVars.SERVER_A_ADDRESS, TestingVars.PORT_ARRAY[0]));
-
-        inValue = kvstore.exists("keyA");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            System.out.println(e);
-        }
-        inValue = kvstore.exists("keyB");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            System.out.println(e);
-        }
-
-        kvstore = null;
-        kvClientA.disconnect();
-        kvClientB.disconnect();
         TestingUtils.spinDownServers();
         AllTests.clearTestData();
 
-        assertTrue(ex == null && responseA.getStatus() == StatusType.PUT_SUCCESS
-                && responseB.getStatus() == StatusType.PUT_SUCCESS && inValue);
-
+        assertTrue(ex == null && responseA.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseA.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPort)) && responseA.getValue().equals("subscribe"));
     }
 
-    @Test
-    public void testMultiPutUpdate() {
+    @Test 
+    public void testSubThenUnsub(){
         IKVMessage responseA = null;
         IKVMessage responseB = null;
+
         Exception ex = null;
         String value = "test";
         boolean inValue = true;
         // start one node and add some data
+        int clientPort = 8086;
+        
+
         TestingUtils.spinUpServers(3, dataDir, dataProps);
         kvClientA = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
-        kvClientB = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
+
         try {
             kvClientA.connect();
-            kvClientB.connect();
         } catch (Exception ignored) {
             System.out.println(ignored);
         }
 
-        try {
-            responseA = kvClientA.put("keyA", value);
-            responseB = kvClientB.put("keyB", value);
-
-            // System.out.println(response);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
+        try{
+            responseA = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPort), "subscribe");
         } catch (Exception e) {
             ex = e;
+            e.printStackTrace();
         }
 
-        try {
-            responseA = kvClientA.put("keyA", "aGone");
-            responseB = kvClientB.put("keyB", "bGone");
-
-            // System.out.println(response);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
+        try{
+            responseB = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPort), "unsubscribe");
         } catch (Exception e) {
             ex = e;
+            e.printStackTrace();
         }
 
-        KVStorage kvstore = new KVStorage("./data",
-                String.format("%s:%d.properties", TestingVars.SERVER_A_ADDRESS, TestingVars.PORT_ARRAY[0]));
-        System.out.println(kvstore.getDatabase());
-        inValue = false;
-        try {
-            inValue = kvstore.getDatabase().get("keyA").equals("aGone");
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-            inValue = inValue && kvstore.getDatabase().get("keyB").equals("bGone");
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-        } catch (Exception e) {
-        }
-
-        kvstore = null;
-        kvClientA.disconnect();
-        kvClientB.disconnect();
         TestingUtils.spinDownServers();
         AllTests.clearTestData();
 
-        assertTrue(ex == null && responseA.getStatus() == StatusType.PUT_UPDATE
-                && responseB.getStatus() == StatusType.PUT_UPDATE && inValue);
-
+        assertTrue(ex == null && responseA.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseA.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPort)) && responseA.getValue().equals("subscribe")
+                && responseB.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseB.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPort)) && responseB.getValue().equals("unsubscribe"));
     }
 
-    @Test
-    public void testMultiDeleteUpdate() {
+    @Test 
+    public void testSubPut(){
         IKVMessage responseA = null;
         IKVMessage responseB = null;
+
         Exception ex = null;
         String value = "test";
         boolean inValue = true;
         // start one node and add some data
+        int clientPort = 8089;
+
         TestingUtils.spinUpServers(3, dataDir, dataProps);
         kvClientA = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
-        kvClientB = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
+
         try {
             kvClientA.connect();
-            kvClientB.connect();
         } catch (Exception ignored) {
             System.out.println(ignored);
         }
 
-        try {
-            responseA = kvClientA.put("keyA", value);
-            responseB = kvClientB.put("keyB", value);
-            responseB = kvClientB.put("keyC", value);
 
-            // System.out.println(response);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
+
+        // start notification server
+        try {
+            new NotificationServer(clientPort).start();
+        } catch (Exception e) {
+			ex=e;
+		}
+
+        // capture output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        // old stream
+        PrintStream old = System.out;
+        // set new stream
+        System.setOut(new PrintStream(baos));
+
+        try{
+            responseA = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPort), "subscribe");
+            kvClientA.put("keyA", value);           
         } catch (Exception e) {
             ex = e;
         }
-
-        try {
-            responseA = kvClientA.put("keyA", "");
-            responseB = kvClientB.put("keyB", "");
-
-            // System.out.println(response);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-        } catch (Exception e) {
-            ex = e;
-        }
-
-        KVStorage kvstore = new KVStorage("./data",
-                String.format("%s:%d.properties", TestingVars.SERVER_A_ADDRESS, TestingVars.PORT_ARRAY[1]));
-
-        inValue = false;
-        try {
-            inValue = kvstore.getDatabase().get("keyA") == null;
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-            inValue = inValue && kvstore.getDatabase().get("keyB") == null;
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-        } catch (Exception e) {
-        }
-
-        kvstore = null;
-        kvClientA.disconnect();
-        kvClientB.disconnect();
+        System.out.flush();
+        System.setOut(old);
+        // System.out.println("LOOKING HERE "+ baos.toString().split("\n")[2] + "AND HERE");
         TestingUtils.spinDownServers();
         AllTests.clearTestData();
 
-        assertTrue(ex == null && responseA.getStatus() == StatusType.DELETE_SUCCESS
-                && responseB.getStatus() == StatusType.DELETE_SUCCESS && inValue);
-
+        assertTrue(ex == null && responseA.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseA.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPort)) && responseA.getValue().equals("subscribe")
+                && baos.toString().split("\n")[2].equals("Notification> Value of key 'keyA' has been changed to 'test'"));
     }
 
-    @Test
-    public void testPutDeleteCollisionRep() {
+    @Test 
+    public void testSubDel(){
         IKVMessage responseA = null;
         IKVMessage responseB = null;
+
         Exception ex = null;
         String value = "test";
         boolean inValue = true;
         // start one node and add some data
+        int clientPort = 8090;
+
         TestingUtils.spinUpServers(3, dataDir, dataProps);
-        kvClientA = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
-        kvClientB = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
+        kvClientA = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_B_PORT);
+
         try {
             kvClientA.connect();
-            kvClientB.connect();
+            kvClientA.put("keyA", value);           
         } catch (Exception ignored) {
             System.out.println(ignored);
         }
 
-        try {
-            responseA = kvClientA.put("keyA", value);
 
-            // System.out.println(response);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
+
+        // start notification server
+        try {
+            new NotificationServer(clientPort).start();
+        } catch (Exception e) {
+           // e.printStackTrace();
+			ex=e;
+		}
+
+        // capture output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        // old stream
+        PrintStream old = System.out;
+        // set new stream
+        System.setOut(new PrintStream(baos));
+
+        try{
+            responseA = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPort), "subscribe");
+            kvClientA.put("keyA", "null");
+            Thread.sleep(100);           
         } catch (Exception e) {
             ex = e;
+            e.printStackTrace();
         }
-
-        try {
-            responseA = kvClientA.put("keyA", "aabb");
-            responseB = kvClientB.put("keyA", "");
-
-            // System.out.println(response);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-        } catch (Exception e) {
-            ex = e;
-        }
-
-        KVStorage kvstore = new KVStorage("./data",
-                String.format("%s:%d.properties", TestingVars.SERVER_A_ADDRESS, TestingVars.PORT_ARRAY[1]));
-
-        inValue = false;
-        try {
-            inValue = kvstore.getDatabase().get("keyA") == null;
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-        } catch (Exception e) {
-        }
-
-        kvstore = null;
-        kvClientA.disconnect();
-        kvClientB.disconnect();
+        
+        System.out.flush();
+        System.setOut(old);
+        System.out.println(baos.toString());
         TestingUtils.spinDownServers();
         AllTests.clearTestData();
 
-        assertTrue(ex == null && responseA.getStatus() == StatusType.PUT_UPDATE
-                && responseB.getStatus() == StatusType.DELETE_SUCCESS && inValue);
+        //System.out.println("TESTSUBDEL      " + baos.toString());
 
+        assertTrue(ex == null && responseA.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseA.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPort)) && responseA.getValue().equals("subscribe")
+                && baos.toString().split("\n")[0].equals("Notification> Key 'keyA' has been deleted"));
     }
 
-    @Test
-    public void testDeleteReplicaAndPrimary() {
+    @Test 
+    public void testSubUpdate(){
         IKVMessage responseA = null;
         IKVMessage responseB = null;
+
         Exception ex = null;
         String value = "test";
         boolean inValue = true;
         // start one node and add some data
+        int clientPort = 8089;
+
         TestingUtils.spinUpServers(3, dataDir, dataProps);
         kvClientA = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
-        kvClientB = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_B_PORT);
+
         try {
             kvClientA.connect();
-            kvClientB.connect();
+            kvClientA.put("keyA", value);           
         } catch (Exception ignored) {
             System.out.println(ignored);
         }
 
-        try {
-            responseA = kvClientA.put("keyA", value);
 
-            // System.out.println(response);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
+
+        // start notification server
+        try {
+            new NotificationServer(clientPort).start();
+        } catch (Exception e) {
+			ex=e;
+		}
+
+        // capture output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        // old stream
+        PrintStream old = System.out;
+        // set new stream
+        System.setOut(new PrintStream(baos));
+
+        try{
+            responseA = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPort), "subscribe");
+            kvClientA.put("keyA", "update");           
         } catch (Exception e) {
             ex = e;
         }
-
-        try {
-            responseA = kvClientA.put("keyA", "");
-            responseB = kvClientB.put("keyA", "");
-
-            // System.out.println(response);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-        } catch (Exception e) {
-            ex = e;
-        }
-
-        KVStorage kvstore = new KVStorage("./data",
-                String.format("%s:%d.properties", TestingVars.SERVER_A_ADDRESS, TestingVars.PORT_ARRAY[1]));
-
-        inValue = false;
-        try {
-            inValue = kvstore.getDatabase().get("keyA") == null;
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-        } catch (Exception e) {
-        }
-
-        kvstore = null;
-        kvClientA.disconnect();
-        kvClientB.disconnect();
+        System.out.flush();
+        System.setOut(old);
+        // System.out.println(baos.toString().split("\n")[0]);
         TestingUtils.spinDownServers();
         AllTests.clearTestData();
 
-        assertTrue(ex == null && responseA.getStatus() == StatusType.DELETE_SUCCESS
-                && responseB.getStatus() == StatusType.DELETE_ERROR && inValue);
-
+        assertTrue(ex == null && responseA.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseA.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPort)) && responseA.getValue().equals("subscribe")
+                && baos.toString().split("\n")[0].equals("Notification> Value of key 'keyA' has been changed to 'update'"));
     }
+
+    @Test 
+    public void testMultiSubPut(){
+        IKVMessage responseA = null;
+        IKVMessage responseB = null;
+
+        Exception ex = null;
+        String value = "test";
+        boolean inValue = true;
+        // start one node and add some data
+        int clientPortA = 8089;
+        int clientPortB = 8090;
+
+
+        TestingUtils.spinUpServers(3, dataDir, dataProps);
+        kvClientA = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
+
+        try {
+            kvClientA.connect();
+        } catch (Exception ignored) {
+            System.out.println(ignored);
+        }
+
+
+
+        // start notification server
+        try {
+            new NotificationServer(clientPortA).start();
+            new NotificationServer(clientPortB).start();
+        } catch (Exception e) {
+			ex=e;
+		}
+
+        // capture output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        // old stream
+        PrintStream old = System.out;
+        // set new stream
+        System.setOut(new PrintStream(baos));
+
+        try{
+            responseA = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPortA), "subscribe");
+            responseB = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPortB), "subscribe");
+            kvClientA.put("keyA", value);           
+        } catch (Exception e) {
+            ex = e;
+        }
+        System.out.flush();
+        System.setOut(old);
+        System.out.println("LOOK HERE");
+
+        System.out.println(baos.toString());
+    
+        System.out.println(baos.toString().split("\n")[2]);
+        System.out.println(baos.toString().split("\n")[3]);
+        System.out.println("LOOK HERE");
+
+        TestingUtils.spinDownServers();
+        AllTests.clearTestData();
+
+        assertTrue(ex == null && responseA.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseA.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPortA)) && responseA.getValue().equals("subscribe")
+                && responseB.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseB.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPortB)) && responseB.getValue().equals("subscribe")
+                && baos.toString().split("\n")[2].equals(baos.toString().split("\n")[3]) 
+                && baos.toString().split("\n")[2].equals("Notification> Value of key 'keyA' has been changed to 'test'")
+                );
+    }
+
+    @Test 
+    public void testMultiSubDelete(){
+        IKVMessage responseA = null;
+        IKVMessage responseB = null;
+
+        Exception ex = null;
+        String value = "test";
+        boolean inValue = true;
+        // start one node and add some data
+        int clientPortA = 8089;
+        int clientPortB = 8090;
+
+
+        TestingUtils.spinUpServers(3, dataDir, dataProps);
+        kvClientA = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
+
+        try {
+            kvClientA.connect();
+            kvClientA.put("keyA", "test");   
+        } catch (Exception ignored) {
+            System.out.println(ignored);
+        }
+
+
+
+        // start notification server
+        try {
+            new NotificationServer(clientPortA).start();
+            new NotificationServer(clientPortB).start();
+        } catch (Exception e) {
+			ex=e;
+		}
+
+        // capture output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        // old stream
+        PrintStream old = System.out;
+        // set new stream
+        System.setOut(new PrintStream(baos));
+
+        try{
+            responseA = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPortA), "subscribe");
+            responseB = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPortB), "subscribe");
+            kvClientA.put("keyA", "");           
+        } catch (Exception e) {
+            ex = e;
+        }
+        System.out.flush();
+        System.setOut(old);
+        System.out.println("LOOK HERE1");
+
+        System.out.println(baos.toString());
+    
+        System.out.println(baos.toString().split("\n")[0]);
+        System.out.println(baos.toString().split("\n")[1]);
+        System.out.println("LOOK HERE1");
+
+        TestingUtils.spinDownServers();
+        AllTests.clearTestData();
+
+        assertTrue(ex == null && responseA.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseA.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPortA)) && responseA.getValue().equals("subscribe")
+                && responseB.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseB.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPortB)) && responseB.getValue().equals("subscribe")
+                && baos.toString().split("\n")[0].equals(baos.toString().split("\n")[1]) 
+                && baos.toString().split("\n")[1].equals("Notification> Key 'keyA' has been deleted")
+                );
+    }
+
+    @Test 
+    public void testMultiSubUpdate(){
+        IKVMessage responseA = null;
+        IKVMessage responseB = null;
+
+        Exception ex = null;
+        String value = "test";
+        boolean inValue = true;
+        // start one node and add some data
+        int clientPortA = 8089;
+        int clientPortB = 8090;
+
+
+        TestingUtils.spinUpServers(3, dataDir, dataProps);
+        kvClientA = new KVStore(TestingVars.SERVER_A_ADDRESS, TestingVars.SERVER_A_PORT);
+
+        try {
+            kvClientA.connect();
+        } catch (Exception ignored) {
+            System.out.println(ignored);
+        }
+
+
+
+        // start notification server
+        try {
+            new NotificationServer(clientPortA).start();
+            new NotificationServer(clientPortB).start();
+        } catch (Exception e) {
+			ex=e;
+		}
+
+        // capture output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        // old stream
+        PrintStream old = System.out;
+        // set new stream
+        System.setOut(new PrintStream(baos));
+
+        try{
+            responseA = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPortA), "subscribe");
+            responseB = kvClientA.notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+                            String.format("%s:%d", "127.0.0.1", clientPortB), "subscribe");
+            kvClientA.put("keyA", "update");           
+        } catch (Exception e) {
+            ex = e;
+        }
+        System.out.flush();
+        System.setOut(old);
+        System.out.println("LOOK HERE2");
+
+        System.out.println(baos.toString());
+    
+        System.out.println(baos.toString().split("\n")[2]);
+        System.out.println(baos.toString().split("\n")[3]);
+        System.out.println("LOOK HERE2");
+
+        TestingUtils.spinDownServers();
+        AllTests.clearTestData();
+
+        assertTrue(ex == null && responseA.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseA.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPortA)) && responseA.getValue().equals("subscribe")
+                && responseB.getStatus() == StatusType.NOTIFICATION_ACK
+                && responseB.getKey().equals(String.format("%s:%d", "127.0.0.1", clientPortB)) && responseB.getValue().equals("subscribe")
+                && baos.toString().split("\n")[2].equals(baos.toString().split("\n")[3]) 
+                && baos.toString().split("\n")[2].equals("Notification> Value of key 'keyA' has been changed to 'update'")
+                );
+    }
+
 }
