@@ -131,13 +131,12 @@ public class TempClientConnection implements Runnable {
 						server.deleteKVReplica(key);
 						responseStatus = StatusType.DELETE_SUCCESS;
 						logger.info(String.format("Deleted key '%s' from the database", key));
-
 						server.sendNotification(StatusType.NOTIFICATION, key, value);
-
 					} catch (Exception e) {
 						responseStatus = StatusType.DELETE_ERROR;
-						logger.error(e.getMessage());
+						logger.error("Delete failed!", e.getMessage());
 					}
+					
 				} else {
 					boolean existingKey = server.inStorage(key);
 					try {

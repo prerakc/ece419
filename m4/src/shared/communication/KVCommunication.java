@@ -103,7 +103,7 @@ public class KVCommunication {
         }
 
         msgBytes = tmp;
-        logger.info(String.format("Recieved message with raw bytes %s", msgBytes.toString()));
+        // logger.info(String.format("Recieved message with raw bytes %s", msgBytes.toString()));
         if (Arrays.equals(msgBytes, new byte[] { 10, 31, 10 })) {
             logger.info("Got message indicating buffer out of sync!");
             return receiveMessage();
