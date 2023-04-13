@@ -50,9 +50,10 @@ public class AllTests {
 		// clientSuite.addTestSuite(NonDistributedKVServerPerformanceTest.class);
 		// clientSuite.addTestSuite(DistributedKVStoreTest.class);
 		// clientSuite.addTestSuite(HashRingTests.class);
-		clientSuite.addTestSuite(DistributedKVServerPerformanceTest.class);
-		// clientSuite.addTestSuite(DistributedKVMultiClient.class);
 		// clientSuite.addTestSuite(DistributedKVServerTest.class);
+
+		//clientSuite.addTestSuite(DistributedKVMultiClient.class);
+		clientSuite.addTestSuite(DistributedKVServerPerformanceTest.class);
 		return clientSuite;
 	}
 }

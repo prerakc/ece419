@@ -5,6 +5,9 @@ import org.junit.Test;
 
 import client.KVStore;
 import junit.framework.TestCase;
+import shared.messages.IKVMessage;
+import shared.messages.KVMessage;
+import shared.messages.IKVMessage.StatusType;
 
 public class DistributedKVServerPerformanceTest extends TestCase {
 
@@ -18,12 +21,13 @@ public class DistributedKVServerPerformanceTest extends TestCase {
 	private static String dataProps = "non_distributed_kvserver_performance_test.properties";
 	int[] clientCounts = { 1, 5, 20, 50, 100 };
 	// int[] serverCounts = {1, 5, 10, 50, 100};
-	int[] serverCounts = { 10 };
+	int[] serverCounts = { 5 };
 	KVStore[] clientList;
 
 	int sCount = 1;
-	int cCount = 10;
-
+	int cCount = 50;
+	int notifCount = 0;
+	
 	public void runPerformance(int putNumber, int getNumber) {
 		Exception ex = null;
 
@@ -61,10 +65,11 @@ public class DistributedKVServerPerformanceTest extends TestCase {
 		clientList = new KVStore[cCount];
 		for (int i = 0; i < cCount; i++) {
 			clientList[i] = new KVStore(TestingVars.SERVER_A_ADDRESS,
-					TestingVars.PORT_ARRAY[i % TestingVars.PORT_ARRAY.length]);
+					TestingVars.PORT_ARRAY[i % (TestingVars.PORT_ARRAY.length-1)]);
 			try {
 				clientList[i].connect();
 			} catch (Exception ignored) {
+				System.out.println(TestingVars.PORT_ARRAY[i % (TestingVars.PORT_ARRAY.length-1)]);
 				System.out.println("errrorrrrorr");
 				System.out.println(ignored);
 			}
@@ -94,13 +99,24 @@ public class DistributedKVServerPerformanceTest extends TestCase {
 		// int serverCount = 1;
 		for (int serverCount : serverCounts) {
 
-			System.out.println(String.format("====== CLIENT COUNT: %d,  SERVER COUNT: %d ======", 1, serverCount));
+			System.out.println(String.format("====== CLIENT COUNT: %d,  SERVER COUNT: %d ======", cCount, serverCount));
 			// 80% puts, 20% gets
 			putNumber = (int) (totalTest * 0.8);
 			getNumber = totalTest - putNumber;
 
 			TestingUtils.spinUpServers(serverCount, dataDir, dataProps);
 			connectClient();
+
+			// enables notififcation to client
+			for (int i=0;i<notifCount;i++){
+				try{
+					clientList[0].notify2(IKVMessage.StatusType.NOTIFICATION_TOGGLE,
+								String.format("%s:%d", "127.0.0.1", TestingVars.PORT_ARRAY[i % (TestingVars.PORT_ARRAY.length-1)]), "subscribe");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+							
 			startTime = System.currentTimeMillis();
 			runPerformance(putNumber, getNumber);
 			endTime = System.currentTimeMillis();
