@@ -1,10 +1,14 @@
 # quick explanation of how to run program and tests
 
-## 1. start ecs in a terminal:
+## 1. open a terminal and build the project:
+
+`ant && ant build-ecs-jar`
+
+## 2. start ecs:
 
 `java -jar m2-ecs.jar 127.0.0.1 2181`
 
-## 2. open another terminal and run this command:
+## 3. open another terminal and run this command:
 
 `zookeeper-3.4.11/bin/zkCli.sh`
 
@@ -14,7 +18,9 @@ if not run: `create /server_status a`.
 
 if u ever need to delete it for some reason, run `rmr /server_status`.
 
-## 3. open 4 more terminals and start 1 server in each:
+exit the cli tool once you have confirmed the above.
+
+## 4. open 3 more terminals and start 1 server in each:
 
 `java -jar m2-server.jar 127.0.0.1 8081 10000 i 127.0.0.1 2181`
 
@@ -22,15 +28,13 @@ if u ever need to delete it for some reason, run `rmr /server_status`.
 
 `java -jar m2-server.jar 127.0.0.1 8083 10000 i 127.0.0.1 2181`
 
-`java -jar m2-server.jar 127.0.0.1 8084 10000 i 127.0.0.1 2181` (optional for tests)
+`java -jar m2-server.jar 127.0.0.1 8084 10000 i 127.0.0.1 2181` (not needed for tests)
 
-## 4. open one last terminal. use this to build the project and run tests:
-
-`ant && ant build-ecs-jar`
+## 5. if running tests, open another terminal and enter the following command:
 
 `ant test`
 
-## 5. with two open terminals, run the clients as follows:
+## 6. to start the client side, open as many terminals as needed and run the client jar. the below is for 2 clients:
 
 `java -jar m2-client.jar 8085`
 
