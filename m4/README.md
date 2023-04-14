@@ -41,7 +41,7 @@ exit the cli tool once you have confirmed the above.
 `java -jar m2-client.jar 8086`
 
 
-## NOTE:
+## TESTING NOTE:
 
 before running the tests, make sure ecs and the servers are down (take down servers first then ecs).
 
@@ -52,3 +52,7 @@ then build the project.
 then start ecs and the servers (in that order).
 
 now run the tests.
+
+## MILESTONE 4 DEMO NOTE:
+
+to subscribe or unsubscribe to notifications as a client, connect to a server and then use either the `subscribe` or `unsubscribe` commands.
