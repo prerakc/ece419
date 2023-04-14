@@ -134,7 +134,7 @@ public class TempClientConnection implements Runnable {
 						server.sendNotification(StatusType.NOTIFICATION, key, value);
 					} catch (Exception e) {
 						responseStatus = StatusType.DELETE_ERROR;
-						logger.error("Delete failed!", e.getMessage());
+						logger.error("Delete failed!", e);
 					}
 					
 				} else {
