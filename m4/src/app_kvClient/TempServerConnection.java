@@ -73,10 +73,10 @@ public class TempServerConnection implements Runnable {
 		switch (status) {
 			case NOTIFICATION:
 				if (value.equals("null") || value.isEmpty()) {
-					System.out.println(String.format("Notification> " + "Key '%s' has been deleted", key));
+					System.out.println(String.format("\nNotification> " + "Key '%s' has been deleted", key));
 				} else {
 					System.out.println(
-							String.format("Notification> " + "Value of key '%s' has been changed to '%s'", key, value));
+							String.format("\nNotification> " + "Value of key '%s' has been changed to '%s'", key, value));
 				}
 				responseStatus = StatusType.NOTIFICATION_ACK;
 				break;

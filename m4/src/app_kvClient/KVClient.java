@@ -60,6 +60,7 @@ public class KVClient implements IKVClient {
             try {
                 String cmdLine = stdin.readLine();
                 this.handleCommand(cmdLine);
+                // System.out.println("");
             } catch (IOException e) {
                 stop = true;
                 printError("CLI does not respond - Application terminated ");

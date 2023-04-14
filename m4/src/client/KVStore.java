@@ -246,8 +246,8 @@ public class KVStore implements KVCommInterface {
 		// can put bnoth of these functions into a singular deserializeToHashRing
 		try {
 			Map<String, ECSNode> nodesMap = ECSNode.deserializeToECSNodeMap(metaDataPayload);
-			System.out.println("******************");
-			System.out.println(nodesMap.isEmpty());
+			// System.out.println("******************");
+			// System.out.println(nodesMap.isEmpty());
 			this.metaData = HashRing.getHashRingFromNodeMap(nodesMap);
 		} catch (Exception e) {
 			logger.error("Unable to deserialize metadata payload! \n", e);
